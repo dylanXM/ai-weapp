@@ -1,0 +1,12 @@
+<!--pages/chat/conponents/empty/index.wxml-->
+<view class="c-empty-container">
+  <view>
+
+  </view>
+  <view>
+
+  </view>
+  <view>
+    <van-button type="info" bind:tap="createChatGroup">新建对话</van-button>
+  </view>
+</view>

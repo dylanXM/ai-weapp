@@ -1,0 +1,63 @@
+export interface QueryFrontRes {
+  siteName: string;
+	vxNumber: string;
+	robotAvatar: string;
+	baiduCode: string;
+	buyCramiAddress: string;
+	registerSendStatus: string;
+	registerSendModel3Count: string;
+	registerSendModel4Count: string;
+	registerSendDrawMjCount: string;
+	firstRegisterSendStatus: string;
+	firstRegisterSendRank: string;
+	firstRregisterSendModel3Count: string;
+	firstRregisterSendModel4Count: string;
+	firstRregisterSendDrawMjCount: string;
+	inviteSendStatus: string;
+	inviteGiveSendModel3Count: string;
+	inviteGiveSendModel4Count: string;
+	inviteGiveSendDrawMjCount: string;
+	invitedGuestSendModel3Count: string;
+	invitedGuestSendModel4Count: string;
+	invitedGuestSendDrawMjCount: string;
+	isVerifyEmail: string;
+	emailRegisterStatus: string;
+	emailLoginStatus: string;
+	filingNumber: string;
+	companyName: string;
+	siteRobotName: string;
+	isShowAppCatIcon: string;
+	clientFavoIconPath: string;
+	clientLogoPath: string;
+	clientHomePath: string;
+	signInStatus: string;
+	signInModel3Count: string;
+	signInModel4Count: string;
+	signInMjDrawToken: string;
+	payAliStatus: string;
+	mindDefaultData: string;
+	isAutoOpenNotice: boolean;
+	wechatRegisterStatus: string;
+	wechatSilentLoginStatus: string;
+	phoneRegisterStatus: string;
+	phoneLoginStatus: string;
+	isUseWxLogin: boolean;
+}
+
+export interface Menu {
+	id: number;
+	createdAt: string;
+	updatedAt: string;
+	deletedAt?: string;
+	menuName: string;
+	menuPath: string;
+	menuIcon: string;
+	menuTipText: string;
+	menuType: number;
+	menuPlatform: number;
+	menuIframeUrl?: string;
+	order: number;
+	isShow: boolean;
+	isJump: boolean;
+	isNeedAuth: boolean;
+}

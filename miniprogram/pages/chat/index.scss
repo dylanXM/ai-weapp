@@ -1,0 +1,60 @@
+/* pages/chat/index.wxss */
+.p-chat-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.p-chat-operations {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  margin: 8px 8px 0;
+}
+
+.p-chat-search {
+  height: 54px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+}
+
+.p-chat-search-border {
+  width: 100%;
+  padding: 4px 12px;
+  margin: 0 8px 0 0;
+  border: 1px solid #ebedf0;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.p-chat-search-input {
+  flex: 1;
+}
+
+.p-navbar-container {
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+}
+
+.p-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}

@@ -1,0 +1,60 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+  <van-icon name="list-switch" bind:click="showPopup" size="24" />
+  <view>GPT-3.5</view>
+  <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="24" />
+  </view>
+</view>
+
+<view
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+>
+  <view class="p-chat-container" wx:if="{{groups.length !== 0}}">
+    <!-- 聊天记录区 -->
+    <scroll-view scroll-y class="p-chat-messages" style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);">
+      <view wx:for="{{messages}}" wx:key="chatId" wx:for-item="message">
+        <view>{{message.text}}</view>
+      </view>
+    </scroll-view>
+    <!-- 搜索区 -->
+    <view class="p-chat-search">
+      <view class="p-chat-search-border">
+        <van-field
+          placeholder="请输入搜索内容"
+          border="{{ false }}"
+          clearable
+          custom-style="padding: 0px;"
+          value="{{ value }}"
+          class="p-chat-search-input"
+          adjust-position="{{false}}"
+          bind:change="handleValueChange"
+          confirm-type="send"
+          confirm-hold="{{true}}"
+          bind:confirm="chatProcess"
+        />
+      </view>
+      <van-icon name="upgrade" size="34" bind:click="chatProcess" />
+    </view>
+  </view>
+
+  <view class="p-chat-container" wx:if="{{groups.length === 0}}">
+    <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
+  </view>
+
+  <van-popup
+    custom-style="height: 100%; width: 75%;"
+    position="left"
+    show="{{ popupVisible }}"
+    bind:close="closePopup"
+  >
+    <view style="padding-top: {{navBar.menuTop - 12}}px;">
+      <van-search placeholder="请输入搜索关键词" />
+    </view>
+    <view>
+    
+    </view>
+  </van-popup>
+</view>

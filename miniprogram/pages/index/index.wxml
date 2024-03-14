@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="p-index-container">
+  <chat
+    style="display: {{activeNav === 'chat' && !loading ? 'block' : 'none'}}; height: 100%;"
+  />
+
+  <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" />
+
+  <van-dialog id="van-dialog" />
+  <van-toast id="van-toast" />
+</view>
