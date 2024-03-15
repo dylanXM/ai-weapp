@@ -22,7 +22,6 @@ export const listenKeyboardHeightChange = ({ safeHieghtCallback, keyboardHeightC
 
   // 监听键盘高度变化事件
   wx.onKeyboardHeightChange((event: any) => {
-    console.log('keyboardHeight', event.height);
     keyboardHeightCallback(event.height);
   });
 }

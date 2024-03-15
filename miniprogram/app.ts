@@ -1,5 +1,6 @@
-import { IAppOption, ListenersType } from '../typings';
+import { GlobalData, GlobalDataKey, IAppOption, ListenersType } from '../typings';
 import { UserData } from './api/auth/type';
+import { QueryFrontRes } from './api/config/type';
 import {
   getWechatSession,
   queryFront,
@@ -43,7 +44,13 @@ App<IAppOption>({
       },
     });
     // 获取页面配置信息
-    queryFront().then(res => this.globalData = { ...this.globalData, ...res });
+    queryFront().then(res => {
+      console.log('res', res);
+      // @ts-ignore
+      Object.keys(res).forEach(<T extends keyof QueryFrontRes>(key: T) => {
+        this.globalData[key] = res[key] as GlobalData[T];
+      })
+    });
     // queryMenuList().then(res => this.globalData = { ...this.globalData, menuList: res });
     // 获取模型数据
     queryBaseModel().then(res => this.setGlobalData('model', res));

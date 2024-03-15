@@ -2,6 +2,12 @@ import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
 import { chatProcrssOnce, createChat, queryChat, queryChatGroup } from '../../api/chat/index';
+import { UserData } from 'miniprogram/api/auth/type';
+import { BaseModelData } from 'miniprogram/api/model/type';
+// @ts-ignore
+import { requestAnimationFrame } from '@vant/weapp/common/utils';
+// @ts-ignore
+import Toast from '@vant/weapp/toast/toast';
 
 const app = getApp<IAppOption>();
 
@@ -19,7 +25,7 @@ Component({
    */
   data: {
     groups: [] as ChatGroup[],
-    messages: [] as Message[],
+    messages: {} as Message[],
     currengGroup: {} as ChatGroup,
     value: '',
     bottomSafeHeight: 0,
@@ -32,12 +38,28 @@ Component({
     },
     popupVisible: false,
     loading: false,
+    user: app.globalData.user,
+    model: app.globalData.model,
+    modelList: app.globalData.modelList,
+    viewId: '',
+    robotAvatar: app.globalData.robotAvatar,
+    isStreamIn: true,
+    typingStatusEnd: true,
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    scrollToBottm: function () {
+      const { messages } = this.data;
+      const length = messages.length;
+      if (!length) {
+        return;
+      }
+      const lastMessage = messages[length - 1];
+      this.setData({ viewId: String(lastMessage.chatId) });
+    },
     chatGroup: async function() {
       const res = await queryChatGroup();
       this.setData({ groups: res });
@@ -59,15 +81,26 @@ Component({
       console.log('chatList', res);
       this.setData({ messages: res });
     },
-    addGroupChat: function(params: Message) {
+    addGroupChat: function(message: Message) {
       console.log('addGroupChat', this.data);
       const { messages } = this.data;
-      messages.push(params);
+      messages.push(message);
+      this.setData({ messages });
+    },
+    updateGroupChat: function(index: number, message: Partial<Message>) {
+      const { messages } = this.data;
+      const length = messages.length;
+      if (length - 1 < index) {
+        return;
+      }
+      messages[index] = { ...messages[index], ...message };
+      console.log('index', index);
       this.setData({ messages });
     },
     chatProcess: async function() {
       console.log('chatProcess', this.data);
-      const { value, loading,  currengGroup } = this.data;
+      const _this = this;
+      const { value, loading,  currengGroup, isStreamIn, messages, model } = _this.data;
       if (!value || value.trim() === '' || loading) {
         return;
       }
@@ -80,30 +113,168 @@ Component({
         conversationOptions: null,
         requestOptions: { prompt: value, options: null },
       });
-      this.setData({ loading: true });
+      this.setData({ loading: true, value: '' });
+      this.scrollToBottm();
 
       const options = {
         groupId: currengGroup.appId,
         usingNetwork: false,
       };
-  
-      const params = {
-        appId: null,
-        prompt: `${value}\n`,
-        options,
-      };
       // 增加一条chatgpt虚拟信息
       this.addGroupChat({
         dateTime: new Date().toLocaleString(),
-        text: 'AI思考中',
+        text: '',
         loading: true,
         inversion: false,
         error: false,
         conversationOptions: null,
         requestOptions: { prompt: value, options: { ...options } },
       });
+      this.scrollToBottm();
       // chatProcrssOnce(params);
-      this.setData({ loading: false });
+      const timer: any = null;
+      let cacheResText = '';
+      let data: any = null;
+      _this.setData({ isStreamIn: true });
+      let userBanance: any = {};
+
+      // 匀速输出
+      try {
+        const fetchChatAPIOnce = async () => {
+          let i = 0;
+          let shouldContinue = true;
+          let currentText = '';
+          async function update() {
+            if (shouldContinue) {
+              if (cacheResText && cacheResText[i]) {
+                _this.setData({ typingStatusEnd: false });
+
+                /* 如果缓存字数太多则一次全加了 */
+                if (cacheResText.length - i > 150) {
+                  currentText += cacheResText.substring(i, i + 10)
+                  i += 10
+                } else if (cacheResText.length - i > 200) {
+                  currentText += cacheResText.substring(i)
+                  i += cacheResText.length - i
+                } else {
+                  currentText += cacheResText[i]
+                  i++
+                }
+                _this.updateGroupChat(messages.length - 1, {
+                  dateTime: new Date().toLocaleString(),
+                  text: currentText,
+                  inversion: false,
+                  usage: data?.detail?.usage,
+                  error: false,
+                  loading: true,
+                  conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+                  requestOptions: { prompt: value, options: { ...options } },
+                });
+              }
+              // TODO 如果在底部要继续滚动到底部
+              const curLen = currentText ? currentText.length : 0
+              const cacheResLen = cacheResText ? cacheResText.length : 0
+              if (!isStreamIn && curLen === cacheResLen) {
+                _this.setData({ typingStatusEnd: true });
+                _this.updateGroupChat(messages.length - 1, {
+                  loading: false,
+                  conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+                  requestOptions: { prompt: value, options: { ...options } },
+                });
+                _this.setData({ loading: false });
+                // TODO 更新用户余额
+
+                if (messages.length === 2 && !currengGroup.appId) {
+                  const title = messages[1].text.length > 5 ? messages.slice(0, 5) : messages[1].text
+                  // TODO 更新组信息
+                }
+                shouldContinue = false // 结束动画循环
+              }
+              /* 有多余的再请求下一帧 */
+              if (cacheResText.length && cacheResText.length > currentText.length) {
+                requestAnimationFrame(update);
+              } else {
+                setTimeout(() => {
+                  requestAnimationFrame(update)
+                }, 1000)
+              }
+            }
+          }
+          requestAnimationFrame(update) // 启动动画循环
+          await chatProcrssOnce({
+            appId: null,
+            prompt: `${value}\n`,
+            options,
+            onDownloadProgress: ({ event }: { event: any }) => {
+              const xhr = event.target;
+              const { responseText } = xhr;
+              if ([1].includes(model.modelInfo.keyType)) {
+                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
+                let chunk = responseText;
+                if (lastIndex !== -1)
+                  chunk = responseText.substring(lastIndex);
+
+                try {
+                  data = JSON.parse(chunk);
+                }
+                catch (error) {
+                  /* 二次解析 */
+                  // const parseData = parseTextToJSON(responseText)
+                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
+                  console.log('parse data erro from openai: ');
+                  if (chunk.includes('OpenAI timed out waiting for response')) {
+                    Toast.fail('会话超时了、告知管理员吧~~~');
+                  }
+                }
+              }
+
+              /* 处理和百度一样格式的模型消息解析 */
+              if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+                const lines = responseText
+                  .toString()
+                  .split('\n')
+                  .filter((line: string) => line.trim() !== '');
+
+                let cacheResult = ''; // 拿到本轮传入的所有字段信息
+                let tem: any = {};
+                for (const line of lines) {
+                  try {
+                    const parseData = JSON.parse(line);
+                    cacheResult += parseData.result;
+                    tem = parseData;
+                  }
+                  catch (error) {
+                    console.log('Json parse 2 3 type error: ');
+                  }
+                }
+                tem.result = cacheResult;
+                data = tem;
+              }
+
+              try {
+                /* 如果出现输出内容不一致就需要处理了 */
+                if (model.modelInfo.keyType === 1) {
+                  cacheResText = data.text;
+                  if (data?.userBanance)
+                    userBanance = data?.userBanance;
+                }
+    
+                if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+                  const { result, is_end } = data;
+                  cacheResText = result;
+                  _this.setData({ isStreamIn: !is_end });
+                  data?.userBanance && (userBanance = data?.userBanance);
+                }
+              } catch (error) {}
+            }
+          });
+        };
+        await fetchChatAPIOnce();
+      } catch (error) {
+
+      } finally {
+
+      }
     },
     showPopup: function() {
       this.setData({ popupVisible: true });
@@ -118,21 +289,25 @@ Component({
 
   lifetimes: {
     attached() {
+      console.log('chat data', this.data);
       // 添加监听器
-      if (Object.keys(app.globalData.user || {}).length > 0) {
+      app.addListener('user', user => {
+        console.log('user', user);
+        this.setData({ user: user as UserData });
         this.chatGroup();
-      } else {
-        app.addListener('user', this.chatGroup.bind(this));
-      }
+      });
+
+      app.addListener('model', model => {
+        console.log('model', model);
+        this.setData({ model: model as BaseModelData });
+      });
 
       // 全局注册键盘高度
       listenKeyboardHeightChange({
         safeHieghtCallback: (safeBottom: number) => {
-          console.log('safeBottom', safeBottom);
           this.setData({ bottomSafeHeight: safeBottom });
         },
         keyboardHeightCallback: (keyboardHeight: number) => {
-          console.log('keyboardHeight', keyboardHeight);
           this.setData({ keyboardHeight });
         }
       });

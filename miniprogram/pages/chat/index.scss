@@ -23,9 +23,9 @@
   padding: 0 12px;
   display: flex;
   align-items: center;
-  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  backdrop-filter: blur(20px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-chat-search-border {
@@ -48,13 +48,63 @@
   top: 0;
   width: 100%;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
-  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+  -webkit-backdrop-filter: blur(20px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 12px 12px;
+}
+
+.p-chat-messages {
+  width: 100%;
   padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.p-chat-message {
+  margin-top: 12px;
+}
+
+.p-chat-message-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.p-chat-message-title-name {
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+.p-chat-message-container {
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.p-chat-message-robot {
+  
+}
+
+.p-chat-message-loading {
+  margin-left: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: black; /* 小圆球的颜色，这里使用蓝色 */
+  border-radius: 50%; /* 使元素呈现圆形 */
+  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+
+  @keyframes ball-breath {
+    0%, 100% {
+      transform: scale(1); /* 原始大小 */
+      opacity: 1; /* 较高的透明度 */
+    }
+    50% {
+      transform: scale(0.8); /* 扩大到120%的大小 */
+      opacity: 0.7; /* 不透明 */
+    }
+  }
 }

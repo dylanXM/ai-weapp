@@ -14,9 +14,27 @@
 >
   <view class="p-chat-container" wx:if="{{groups.length !== 0}}">
     <!-- 聊天记录区 -->
-    <scroll-view scroll-y class="p-chat-messages" style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);">
+    <scroll-view class="p-chat-messages" scroll-y class="p-chat-messages" style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);" scroll-into-view="{{viewId}}">
       <view wx:for="{{messages}}" wx:key="chatId" wx:for-item="message">
-        <view>{{message.text}}</view>
+        <!-- 用户信息 -->
+        <view class="p-chat-message" wx:if="{{message.inversion}}">
+          <view class="p-chat-message-title">
+            <van-image round width="22" height="22" src="{{user.userInfo.avatar}}" />
+            <view class="p-chat-message-title-name">You</view>
+          </view>
+          <view class="p-chat-message-container">{{message.text}}</view>
+        </view>
+
+        <view class="p-chat-message" wx:if="{{!message.inversion}}">
+          <view class="p-chat-message-title">
+            <van-image round width="22" height="22" src="{{robotAvatar}}" />
+            <view class="p-chat-message-title-name">{{model.modelInfo.modelName}}</view>
+          </view>
+          <view class="p-chat-message-container">
+            <view class="p-chat-message-robot">{{message.text}}</view>
+            <view class="p-chat-message-loading" />
+          </view>
+        </view>
       </view>
     </scroll-view>
     <!-- 搜索区 -->

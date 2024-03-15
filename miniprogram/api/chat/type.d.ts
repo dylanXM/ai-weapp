@@ -22,6 +22,7 @@ export interface Message {
 	text: string;
 	inversion: boolean;
   error: boolean;
+  usage?: number;
   loading?: boolean;
 	conversationOptions?: any;
 	requestOptions: RequestOption;
