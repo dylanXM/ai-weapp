@@ -81,12 +81,13 @@
 
 .p-chat-message-container {
   margin-left: 30px;
-  display: flex;
   align-items: center;
 }
 
 .p-chat-message-robot {
-  
+  margin-left: 30px;
+  word-break: break-all;
+  white-space: pre-line;
 }
 
 .p-chat-message-loading {

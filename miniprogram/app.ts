@@ -13,6 +13,7 @@ import { BaseModelData, ModelData } from './api/model/type';
 
 // app.ts
 App<IAppOption>({
+  towxml: require('./towxml/index'),
   globalData: {
     menuList: [],
     user: {} as UserData,

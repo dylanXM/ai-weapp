@@ -8,6 +8,7 @@
     "van-field": "@vant/weapp/field/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-search": "@vant/weapp/search/index",
-    "van-image": "@vant/weapp/image/index"
+    "van-image": "@vant/weapp/image/index",
+    "towxml": "/towxml/towxml"
   }
 }

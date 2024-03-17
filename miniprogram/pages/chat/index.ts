@@ -43,8 +43,8 @@ Component({
     modelList: app.globalData.modelList,
     viewId: '',
     robotAvatar: app.globalData.robotAvatar,
-    isStreamIn: true,
     typingStatusEnd: true,
+    scrollTop: 10000,
   },
 
   /**
@@ -52,13 +52,8 @@ Component({
    */
   methods: {
     scrollToBottm: function () {
-      const { messages } = this.data;
-      const length = messages.length;
-      if (!length) {
-        return;
-      }
-      const lastMessage = messages[length - 1];
-      this.setData({ viewId: String(lastMessage.chatId) });
+      const scrollTop = this.data.scrollTop + 1000;
+      this.setData({ scrollTop });
     },
     chatGroup: async function() {
       const res = await queryChatGroup();
@@ -79,13 +74,19 @@ Component({
     queryChatList: async function(groupId: number) {
       const res = await queryChat({ groupId });
       console.log('chatList', res);
-      this.setData({ messages: res });
+      const messages = res.map(message => ({
+        ...message,
+        text: message.inversion ? message.text : app.towxml(message.text, 'markdown', {}),
+      }));
+      this.setData({ messages });
+      this.scrollToBottm();
     },
     addGroupChat: function(message: Message) {
       console.log('addGroupChat', this.data);
       const { messages } = this.data;
       messages.push(message);
       this.setData({ messages });
+      this.scrollToBottm();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
       const { messages } = this.data;
@@ -93,14 +94,18 @@ Component({
       if (length - 1 < index) {
         return;
       }
+      if (message.text && typeof message.text === 'string') {
+        message.text = app.towxml(message.text, 'markdown', {});
+      }
       messages[index] = { ...messages[index], ...message };
       console.log('index', index);
       this.setData({ messages });
+      this.scrollToBottm();
     },
     chatProcess: async function() {
       console.log('chatProcess', this.data);
       const _this = this;
-      const { value, loading,  currengGroup, isStreamIn, messages, model } = _this.data;
+      const { value, loading,  currengGroup, messages, model } = _this.data;
       if (!value || value.trim() === '' || loading) {
         return;
       }
@@ -114,10 +119,9 @@ Component({
         requestOptions: { prompt: value, options: null },
       });
       this.setData({ loading: true, value: '' });
-      this.scrollToBottm();
 
       const options = {
-        groupId: currengGroup.appId,
+        groupId: currengGroup.id,
         usingNetwork: false,
       };
       // 增加一条chatgpt虚拟信息
@@ -130,12 +134,11 @@ Component({
         conversationOptions: null,
         requestOptions: { prompt: value, options: { ...options } },
       });
-      this.scrollToBottm();
       // chatProcrssOnce(params);
       const timer: any = null;
       let cacheResText = '';
       let data: any = null;
-      _this.setData({ isStreamIn: true });
+      let isStreamIn = true;
       let userBanance: any = {};
 
       // 匀速输出
@@ -201,72 +204,84 @@ Component({
             }
           }
           requestAnimationFrame(update) // 启动动画循环
-          await chatProcrssOnce({
-            appId: null,
-            prompt: `${value}\n`,
-            options,
-            onDownloadProgress: ({ event }: { event: any }) => {
-              const xhr = event.target;
-              const { responseText } = xhr;
-              if ([1].includes(model.modelInfo.keyType)) {
-                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
-                let chunk = responseText;
-                if (lastIndex !== -1)
-                  chunk = responseText.substring(lastIndex);
-
-                try {
-                  data = JSON.parse(chunk);
-                }
-                catch (error) {
-                  /* 二次解析 */
-                  // const parseData = parseTextToJSON(responseText)
-                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-                  console.log('parse data erro from openai: ');
-                  if (chunk.includes('OpenAI timed out waiting for response')) {
-                    Toast.fail('会话超时了、告知管理员吧~~~');
-                  }
-                }
-              }
-
-              /* 处理和百度一样格式的模型消息解析 */
-              if ([2, 3, 4].includes(model.modelInfo.keyType)) {
-                const lines = responseText
-                  .toString()
-                  .split('\n')
-                  .filter((line: string) => line.trim() !== '');
-
-                let cacheResult = ''; // 拿到本轮传入的所有字段信息
-                let tem: any = {};
-                for (const line of lines) {
-                  try {
-                    const parseData = JSON.parse(line);
-                    cacheResult += parseData.result;
-                    tem = parseData;
-                  }
-                  catch (error) {
-                    console.log('Json parse 2 3 type error: ');
-                  }
-                }
-                tem.result = cacheResult;
-                data = tem;
+          const requestTask = wx.request({
+            url: 'https://service.winmume.com/api/chatgpt/chat-process',
+            method: 'POST',
+            data: {
+              appId: null,
+              prompt: `${value}\n`,
+              options,
+            },
+            enableChunked: true,
+            header: {
+              Authorization: `Bearer ${wx.getStorageSync('token')}`,
+            }
+          });
+          requestTask.onChunkReceived(function (res) {
+            const decoder = new TextDecoder('utf-8');
+            const responseText = decoder.decode(res.data);
+            if ([1].includes(model.modelInfo.keyType)) {
+              const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
+              let chunk = responseText;
+              if (lastIndex !== -1) {
+                chunk = responseText.substring(lastIndex);
               }
 
               try {
-                /* 如果出现输出内容不一致就需要处理了 */
-                if (model.modelInfo.keyType === 1) {
-                  cacheResText = data.text;
-                  if (data?.userBanance)
-                    userBanance = data?.userBanance;
+                data = JSON.parse(chunk);
+              } catch (error) {
+                /* 二次解析 */
+                // const parseData = parseTextToJSON(responseText)
+                // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
+                console.log('parse data erro from openai: ');
+                if (chunk.includes('OpenAI timed out waiting for response')) {
+                  Toast.fail('会话超时了、告知管理员吧~~~');
                 }
-    
-                if ([2, 3, 4].includes(model.modelInfo.keyType)) {
-                  const { result, is_end } = data;
-                  cacheResText = result;
-                  _this.setData({ isStreamIn: !is_end });
-                  data?.userBanance && (userBanance = data?.userBanance);
-                }
-              } catch (error) {}
+              }
             }
+
+            /* 处理和百度一样格式的模型消息解析 */
+            if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+              const lines = responseText
+                .toString()
+                .split('\n')
+                .filter((line: string) => line.trim() !== '');
+
+              let cacheResult = ''; // 拿到本轮传入的所有字段信息
+              let tem: any = {};
+              for (const line of lines) {
+                try {
+                  const parseData = JSON.parse(line);
+                  cacheResult += parseData.result;
+                  tem = parseData;
+                }
+                catch (error) {
+                  console.log('Json parse 2 3 type error: ');
+                }
+              }
+              tem.result = cacheResult;
+              data = tem;
+            }
+
+            try {
+              /* 如果出现输出内容不一致就需要处理了 */
+              if (model.modelInfo.keyType === 1) {
+                cacheResText = data.text;
+                if (data?.userBanance) {
+                  userBanance = data?.userBanance;
+                }
+                if (data?.id) {
+                  isStreamIn = false;
+                }
+              }
+  
+              if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+                const { result, is_end } = data;
+                cacheResText = result;
+                isStreamIn = !is_end;
+                data?.userBanance && (userBanance = data?.userBanance);
+              }
+            } catch (error) {}
           });
         };
         await fetchChatAPIOnce();
