@@ -46,7 +46,6 @@ export const chatProcrssOnce = async params => {
     url: `${config.url}/chatgpt/chat-process`,
     method: 'POST',
     data: params,
-    onDownloadProgress: params.onDownloadProgress,
   });
   return res.data;
 }

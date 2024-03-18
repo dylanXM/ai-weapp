@@ -27,3 +27,12 @@ view .h2w {
 view .h2w__p {
   margin: 0px !important;
 }
+
+.h2w__ul, .h2w__ol {
+  margin-bottom: 0px !important;
+}
+
+.h2w__pre {
+  margin-bottom: 0px !important;
+  border-radius: 5px;
+}

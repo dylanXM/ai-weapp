@@ -1,13 +1,15 @@
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
-import { chatProcrssOnce, createChat, queryChat, queryChatGroup } from '../../api/chat/index';
+import { createChat, queryChat, queryChatGroup } from '../../api/chat/index';
 import { UserData } from 'miniprogram/api/auth/type';
 import { BaseModelData } from 'miniprogram/api/model/type';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
 import Toast from '@vant/weapp/toast/toast';
+import { formatModelOptions, getChooseModel } from '../../utils/model';
+import { formatAiText } from '../../utils/chat';
 
 const app = getApp<IAppOption>();
 
@@ -39,12 +41,18 @@ Component({
     popupVisible: false,
     loading: false,
     user: app.globalData.user,
-    model: app.globalData.model,
+    model: {
+      ...app.globalData?.model?.modelInfo
+    },
     modelList: app.globalData.modelList,
     viewId: '',
-    robotAvatar: app.globalData.robotAvatar,
+    robotAvatar: app.globalData.robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png',
     typingStatusEnd: true,
     scrollTop: 10000,
+    modelConfig: {
+      visible: false,
+      options: [] as any[],
+    },
   },
 
   /**
@@ -76,7 +84,7 @@ Component({
       console.log('chatList', res);
       const messages = res.map(message => ({
         ...message,
-        text: message.inversion ? message.text : app.towxml(message.text, 'markdown', {}),
+        text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
       }));
       this.setData({ messages });
       this.scrollToBottm();
@@ -95,10 +103,9 @@ Component({
         return;
       }
       if (message.text && typeof message.text === 'string') {
-        message.text = app.towxml(message.text, 'markdown', {});
+        message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
-      console.log('index', index);
       this.setData({ messages });
       this.scrollToBottm();
     },
@@ -220,7 +227,7 @@ Component({
           requestTask.onChunkReceived(function (res) {
             const decoder = new TextDecoder('utf-8');
             const responseText = decoder.decode(res.data);
-            if ([1].includes(model.modelInfo.keyType)) {
+            if ([1].includes(model.keyType)) {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
               let chunk = responseText;
               if (lastIndex !== -1) {
@@ -241,7 +248,7 @@ Component({
             }
 
             /* 处理和百度一样格式的模型消息解析 */
-            if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+            if ([2, 3, 4].includes(model.keyType)) {
               const lines = responseText
                 .toString()
                 .split('\n')
@@ -265,7 +272,7 @@ Component({
 
             try {
               /* 如果出现输出内容不一致就需要处理了 */
-              if (model.modelInfo.keyType === 1) {
+              if (model.keyType === 1) {
                 cacheResText = data.text;
                 if (data?.userBanance) {
                   userBanance = data?.userBanance;
@@ -275,7 +282,7 @@ Component({
                 }
               }
   
-              if ([2, 3, 4].includes(model.modelInfo.keyType)) {
+              if ([2, 3, 4].includes(model.keyType)) {
                 const { result, is_end } = data;
                 cacheResText = result;
                 isStreamIn = !is_end;
@@ -299,7 +306,25 @@ Component({
     },
     handleValueChange: function(event: any) {
       this.setData({ value: event.detail });
-    }
+    },
+    showModelActionSheet: function () {
+      const { modelConfig, model, modelList } = this.data;
+      const options = formatModelOptions(modelList.modelMaps, model);
+      modelConfig.visible = true;
+      modelConfig.options = options;
+      this.setData({ modelConfig });
+    },
+    closeModelActionSheet: function () {
+      const { modelConfig } = this.data;
+      modelConfig.visible = false;
+      this.setData({ modelConfig });
+    },
+    onSelectModel: function (event: any) {
+      console.log('model', event);
+      const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
+      const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
+      this.setData({ model });
+    },
   },
 
   lifetimes: {
@@ -324,6 +349,7 @@ Component({
         },
         keyboardHeightCallback: (keyboardHeight: number) => {
           this.setData({ keyboardHeight });
+          this.scrollToBottm();
         }
       });
     }
