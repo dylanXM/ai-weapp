@@ -87,7 +87,7 @@ Component({
       if (!query) {
         this.setData({ groups: allGroups, allGroups });        
       }
-      const newGroups = allGroups.filter(group => group.title.includes('query'));
+      const newGroups = allGroups.filter(group => group.title.includes(query));
       this.setData({ groups: newGroups });
     },
     queryChatList: async function(groupId: number) {
@@ -352,7 +352,7 @@ Component({
           this.chatGroup();
         });
       } else {
-        
+
       }
 
       app.addListener('model', (model: any) => {
