@@ -3,6 +3,7 @@ import { ModelData } from "miniprogram/api/model/type";
 interface ChooseModel {
   model: string;
   modelName: string;
+  keyType: number;
 }
 
 export const formatModelOptions = (modelMaps: ModelData['modelMaps'], chooseModel: ChooseModel) => {
@@ -37,7 +38,7 @@ export const getChooseModel = (
       const { modelName, model } = _model;
       const isCurrentModel = model === chooseModel.model && modelName === chooseModel.modelName;
       if (isCurrentModel) {
-        newModel = _model;
+        newModel = { ..._model, keyType: Number(key) };
       }
     });
   });

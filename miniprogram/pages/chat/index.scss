@@ -113,3 +113,31 @@
     }
   }
 }
+
+.p-chat-group-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.p-chat-group-search {
+  border-bottom: 1px solid #ebedf0;
+}
+
+.p-chat-group-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.p-chat-group-user {
+  border-top: 1px solid #ebedf0;
+  min-height: 120px;
+  box-sizing: border-box;
+}
+
+.p-chat-group-add {
+  min-height: 60px;
+  padding: 10px 16px;
+  box-sizing: border-box;
+}

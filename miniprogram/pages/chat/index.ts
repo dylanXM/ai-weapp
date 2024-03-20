@@ -10,6 +10,7 @@ import { requestAnimationFrame } from '@vant/weapp/common/utils';
 import Toast from '@vant/weapp/toast/toast';
 import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
+import { isEmptyObj } from '../../utils/common';
 
 const app = getApp<IAppOption>();
 
@@ -27,8 +28,9 @@ Component({
    */
   data: {
     groups: [] as ChatGroup[],
+    allGroups: [] as ChatGroup[],
     messages: {} as Message[],
-    currengGroup: {} as ChatGroup,
+    currentGroup: {} as ChatGroup,
     value: '',
     bottomSafeHeight: 0,
     keyboardHeight: 0,
@@ -53,6 +55,7 @@ Component({
       visible: false,
       options: [] as any[],
     },
+    AIName: app.globalData.siteName,
   },
 
   /**
@@ -65,28 +68,36 @@ Component({
     },
     chatGroup: async function() {
       const res = await queryChatGroup();
-      this.setData({ groups: res });
+      this.setData({ groups: res, allGroups: res });
       const firstGroup = res?.[0];
       if (!firstGroup) return;
-      this.setData({ currengGroup: firstGroup });
       this.queryChatList(firstGroup.id);
     },
     createChatGroup: async function(event: any) {
       const res = await createChat({ appId: event.detail.key });
       const groups = this.data.groups;
-      console.log('groups', groups);
       groups.unshift(res);
-      this.setData({ groups });
+      this.setData({ groups, allGroups: groups });
       this.queryChatList(res.id);
+      this.closePopup();
+    },
+    searchChatGroup: function (event: any) {
+      const query = event.detail;
+      const { allGroups } = this.data;
+      if (!query) {
+        this.setData({ groups: allGroups, allGroups });        
+      }
+      const newGroups = allGroups.filter(group => group.title.includes('query'));
+      this.setData({ groups: newGroups });
     },
     queryChatList: async function(groupId: number) {
       const res = await queryChat({ groupId });
-      console.log('chatList', res);
       const messages = res.map(message => ({
         ...message,
         text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
       }));
-      this.setData({ messages });
+      const chooseGroup = this.data.groups.find(group => group.id === groupId)
+      this.setData({ messages, currentGroup: chooseGroup });
       this.scrollToBottm();
     },
     addGroupChat: function(message: Message) {
@@ -110,9 +121,8 @@ Component({
       this.scrollToBottm();
     },
     chatProcess: async function() {
-      console.log('chatProcess', this.data);
       const _this = this;
-      const { value, loading,  currengGroup, messages, model } = _this.data;
+      const { value, loading,  currentGroup, messages, model } = _this.data;
       if (!value || value.trim() === '' || loading) {
         return;
       }
@@ -128,7 +138,7 @@ Component({
       this.setData({ loading: true, value: '' });
 
       const options = {
-        groupId: currengGroup.id,
+        groupId: currentGroup.id,
         usingNetwork: false,
       };
       // 增加一条chatgpt虚拟信息
@@ -146,7 +156,7 @@ Component({
       let cacheResText = '';
       let data: any = null;
       let isStreamIn = true;
-      let userBanance: any = {};
+      let userBalance: any = {};
 
       // 匀速输出
       try {
@@ -194,7 +204,7 @@ Component({
                 _this.setData({ loading: false });
                 // TODO 更新用户余额
 
-                if (messages.length === 2 && !currengGroup.appId) {
+                if (messages.length === 2 && !currentGroup.id) {
                   const title = messages[1].text.length > 5 ? messages.slice(0, 5) : messages[1].text
                   // TODO 更新组信息
                 }
@@ -274,8 +284,8 @@ Component({
               /* 如果出现输出内容不一致就需要处理了 */
               if (model.keyType === 1) {
                 cacheResText = data.text;
-                if (data?.userBanance) {
-                  userBanance = data?.userBanance;
+                if (data?.userBalance) {
+                  userBalance = data?.userBalance;
                 }
                 if (data?.id) {
                   isStreamIn = false;
@@ -286,7 +296,7 @@ Component({
                 const { result, is_end } = data;
                 cacheResText = result;
                 isStreamIn = !is_end;
-                data?.userBanance && (userBanance = data?.userBanance);
+                data?.userBalance && (userBalance = data?.userBalance);
               }
             } catch (error) {}
           });
@@ -325,21 +335,28 @@ Component({
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
       this.setData({ model });
     },
+    chooseGroup: function (event: any) {
+      const groupId = event.target.dataset.text;
+      this.queryChatList(groupId);
+      this.closePopup();
+    }
   },
 
   lifetimes: {
     attached() {
       console.log('chat data', this.data);
       // 添加监听器
-      app.addListener('user', user => {
-        console.log('user', user);
-        this.setData({ user: user as UserData });
-        this.chatGroup();
-      });
+      if (isEmptyObj(this.data.user)) {
+        app.addListener('user', user => {
+          this.setData({ user: user as UserData });
+          this.chatGroup();
+        });
+      } else {
+        
+      }
 
-      app.addListener('model', model => {
-        console.log('model', model);
-        this.setData({ model: model as BaseModelData });
+      app.addListener('model', (model: any) => {
+        this.setData({ model: model.modelInfo as BaseModelData['modelInfo'] });
       });
 
       // 全局注册键盘高度

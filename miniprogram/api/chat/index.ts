@@ -35,7 +35,7 @@ export const queryChat = async ({ groupId }: { groupId: number }): Promise<Messa
     method: 'GET',
     data: { groupId },
   });
-  return res.data;
+  return res.data || [];
 };
 
 /**

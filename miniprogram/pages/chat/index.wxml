@@ -3,7 +3,7 @@
     class="p-navbar"
     style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
-  <van-icon name="list-switch" bind:click="showPopup" size="24" />
+  <van-icon name="wap-nav" bind:click="showPopup" size="24" />
   <van-cell
     is-link
     title="{{model.modelName}}"
@@ -30,7 +30,7 @@
         <view class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
             <van-image round width="22" height="22" src="{{user.userInfo.avatar}}" />
-            <view class="p-chat-message-title-name">{{ message.dateTime }}</view>
+            <view class="p-chat-message-title-name">You</view>
           </view>
           <view class="p-chat-message-container">{{message.text}}</view>
         </view>
@@ -38,7 +38,7 @@
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
             <van-image round width="22" height="22" src="{{robotAvatar}}" />
-            <view class="p-chat-message-title-name">{{ message.dateTime }}</view>
+            <view class="p-chat-message-title-name">{{AIName || 'plumAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
@@ -75,16 +75,35 @@
   </view>
 
   <van-popup
-    custom-style="height: 100%; width: 75%;"
+    custom-style="height: 100%; width: 75%; overflow: hidden;"
     position="left"
     show="{{ popupVisible }}"
     bind:close="closePopup"
   >
-    <view style="padding-top: {{navBar.menuTop - 12}}px;">
-      <van-search placeholder="请输入搜索关键词" />
-    </view>
-    <view>
-    
+    <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
+      <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
+        <van-search placeholder="请输入搜索关键词" bind:search="searchChatGroup" />
+      </view>
+      <view class="p-chat-group-list">
+        <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
+          <van-cell
+            custom-style="background: {{group.id === currentGroup.id ? '#ebedf0' : 'unset'}};"
+            border="{{false}}"
+            title="{{group.title}}"
+            is-link
+            bind:click="chooseGroup"
+            data-text="{{group.id}}"
+          />
+        </view>
+      </view>
+      <view class="p-chat-group-user">
+        <van-cell title="普通额度" icon="coupon-o" border="{{ false }}" value="{{12}} 积分" />
+        <van-cell title="我已使用" icon="paid" border="{{ false }}" value="{{12}} tokens" />
+        <van-cell title="模型费用" icon="bill-o" border="{{ false }}" value="{{12}} 积分 / 对话" />
+      </view>
+      <view class="p-chat-group-add">
+        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建会话</van-button>
+      </view>
     </view>
   </van-popup>
 
