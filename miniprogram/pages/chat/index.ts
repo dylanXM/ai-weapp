@@ -56,6 +56,7 @@ Component({
       options: [] as any[],
     },
     AIName: app.globalData.siteName,
+    requestTask: null as any,
   },
 
   /**
@@ -300,6 +301,7 @@ Component({
               }
             } catch (error) {}
           });
+          this.setData({ requestTask });
         };
         await fetchChatAPIOnce();
       } catch (error) {
@@ -339,6 +341,21 @@ Component({
       const groupId = event.target.dataset.text;
       this.queryChatList(groupId);
       this.closePopup();
+    },
+    cancelChatProcess: function () {
+      const { loading, requestTask, messages } = this.data;
+      if (!loading || !requestTask) {
+        return;
+      }
+      requestTask.offChunkReceived();
+      requestTask.abort();
+      this.setData({ loading: false });
+      this.updateGroupChat(messages.length - 1, {
+        loading: false,
+        text: '',
+        conversationOptions: {},
+        requestOptions: { prompt: '', options: {} },
+      });
     }
   },
 
@@ -369,6 +386,9 @@ Component({
           this.scrollToBottm();
         }
       });
+    },
+    detached() {
+      this.setData({ requestTask: null });
     }
   }
 })

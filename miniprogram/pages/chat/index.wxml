@@ -65,8 +65,20 @@
           disabled="{{ loading }}"
         />
       </view>
-      <van-icon wx:if="{{!loading}}" name="upgrade" size="34" bind:click="chatProcess" />
-      <van-icon wx:if="{{loading}}" name="stop-circle-o" size="34" color="red" />
+      <van-icon
+        wx:if="{{!loading}}"
+        name="upgrade"
+        size="34"
+        bind:click="chatProcess"
+      />
+      <van-icon
+        wx:if="{{loading}}"
+        name="stop-circle-o"
+        size="34"
+        color="red"
+        bind:click="cancelChatProcess"
+        class="p-chat-icon-cancel"
+      />
     </view>
   </view>
 

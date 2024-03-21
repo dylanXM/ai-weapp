@@ -101,16 +101,20 @@
   background-color: black; /* 小圆球的颜色，这里使用蓝色 */
   border-radius: 50%; /* 使元素呈现圆形 */
   animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
 
-  @keyframes ball-breath {
-    0%, 100% {
-      transform: scale(1); /* 原始大小 */
-      opacity: 1; /* 较高的透明度 */
-    }
-    50% {
-      transform: scale(0.8); /* 扩大到120%的大小 */
-      opacity: 0.7; /* 不透明 */
-    }
+.p-chat-icon-cancel {
+  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
+
+@keyframes ball-breath {
+  0%, 100% {
+    transform: scale(1); /* 原始大小 */
+    opacity: 1; /* 较高的透明度 */
+  }
+  50% {
+    transform: scale(0.8); /* 扩大到120%的大小 */
+    opacity: 0.7; /* 不透明 */
   }
 }
 
