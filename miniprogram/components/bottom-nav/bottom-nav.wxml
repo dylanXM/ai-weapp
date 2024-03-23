@@ -1,7 +1,7 @@
 <!--components/bottom-nav/bottom-nav.wxml-->
 <van-tabbar active="{{value}}" bind:change="handleActiveNavChange">
-  <van-tabbar-item name="chat" icon="chat-o">对话聊天</van-tabbar-item>
-  <van-tabbar-item name="apps" icon="apps-o">应用广场</van-tabbar-item>
-  <van-tabbar-item name="draw" icon="photo-o">系统画图</van-tabbar-item>
-  <van-tabbar-item name="profile" icon="user-o">个人中心</van-tabbar-item>
+  <van-tabbar-item name="chat" icon="chat-o">聊天</van-tabbar-item>
+  <van-tabbar-item name="draw" icon="notes-o">模板</van-tabbar-item>
+  <van-tabbar-item name="apps" icon="apps-o">应用</van-tabbar-item>
+  <van-tabbar-item name="profile" icon="user-o">我的</van-tabbar-item>
 </van-tabbar>

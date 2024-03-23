@@ -15,6 +15,18 @@ export const queryChatGroup = async (): Promise<ChatGroup[]> => {
 };
 
 /**
+ * 更新对话组 
+ */
+export const updateGroup = async ({ groupId, title }: { groupId: number; title: string }) => {
+  const res = await request<ChatGroup[]>({
+    url: `${config.url}/group/update`,
+    method: 'POST',
+    data: { groupId, title },
+  });
+  return res.data;
+};
+
+/**
  * 创建一个会话
  */
 export const createChat = async ({ appId }: { appId: number }) => {

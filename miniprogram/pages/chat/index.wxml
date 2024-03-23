@@ -20,6 +20,7 @@
   <view class="p-chat-container" wx:if="{{groups.length !== 0}}">
     <!-- 聊天记录区 -->
     <scroll-view
+      bindscroll="onScroll"
       scroll-top="{{scrollTop}}"
       scroll-y
       class="p-chat-messages"
@@ -49,6 +50,13 @@
     </scroll-view>
     <!-- 搜索区 -->
     <view class="p-chat-search">
+      <van-icon
+        name="upgrade"
+        size="28"
+        class="p-chat-message-to-bottom"
+        bind:click="scrollToBottom"
+        wx:if="{{ groupScroll[currentGroup.id].toBottom }}"
+      />
       <view class="p-chat-search-border">
         <van-field
           placeholder="请输入你的问题或需求"
@@ -109,9 +117,9 @@
         </view>
       </view>
       <view class="p-chat-group-user">
-        <van-cell title="普通额度" icon="coupon-o" border="{{ false }}" value="{{12}} 积分" />
-        <van-cell title="我已使用" icon="paid" border="{{ false }}" value="{{12}} tokens" />
-        <van-cell title="模型费用" icon="bill-o" border="{{ false }}" value="{{12}} 积分 / 对话" />
+        <van-cell title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度" icon="coupon-o" border="{{ false }}" value="{{userBalance.modelCount}} 积分" />
+        <van-cell title="我已使用" icon="paid" border="{{ false }}" value="{{userBalance.useModelToken}} tokens" />
+        <van-cell title="模型费用" icon="bill-o" border="{{ false }}" value="{{userBalance.modelPrice}} 积分 / 对话" />
       </view>
       <view class="p-chat-group-add">
         <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建会话</van-button>

@@ -14,6 +14,7 @@
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
-    "van-dropdown-item": "@vant/weapp/dropdown-item/index"
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+    "van-transition": "@vant/weapp/transition/index"
   }
 }

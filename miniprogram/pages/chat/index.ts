@@ -1,7 +1,7 @@
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
-import { createChat, queryChat, queryChatGroup } from '../../api/chat/index';
+import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
 import { UserData } from 'miniprogram/api/auth/type';
 import { BaseModelData } from 'miniprogram/api/model/type';
 // @ts-ignore
@@ -11,6 +11,7 @@ import Toast from '@vant/weapp/toast/toast';
 import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
+import { modelTypeMap } from '../../const/config/index';
 
 const app = getApp<IAppOption>();
 
@@ -57,6 +58,13 @@ Component({
     },
     AIName: app.globalData.siteName,
     requestTask: null as any,
+    groupScroll: {},
+    userBalance: {
+      modelCount: 0,
+      useModelToken: 0,
+      modelPrice: 0,
+      modelType: 1,
+    },
   },
 
   /**
@@ -64,15 +72,23 @@ Component({
    */
   methods: {
     scrollToBottm: function () {
-      const scrollTop = this.data.scrollTop + 1000;
+      const scrollTop = this.data.scrollTop + 100;
       this.setData({ scrollTop });
     },
-    chatGroup: async function() {
+    chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
       this.setData({ groups: res, allGroups: res });
-      const firstGroup = res?.[0];
-      if (!firstGroup) return;
-      this.queryChatList(firstGroup.id);
+      if (!groupId) {
+        const firstGroup = res?.[0];
+        if (!firstGroup) return;
+        this.queryChatList(firstGroup.id);
+      }
+    },
+    updateGroup: async function(title: string) {
+      const { currentGroup } = this.data;
+      const currentGroupId = currentGroup.id;
+      await updateGroup({ groupId: currentGroupId, title });
+      this.chatGroup(currentGroupId);
     },
     createChatGroup: async function(event: any) {
       const res = await createChat({ appId: event.detail.key });
@@ -115,6 +131,7 @@ Component({
         return;
       }
       if (message.text && typeof message.text === 'string') {
+        message.originText = message.text;
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
@@ -124,8 +141,12 @@ Component({
     chatProcess: async function() {
       const _this = this;
       const { value, loading,  currentGroup, messages, model } = _this.data;
-      if (!value || value.trim() === '' || loading) {
+      if (!value || value.trim() === '') {
+        Toast('请输入你的问题或需求');
         return;
+      }
+      if (loading) {
+        Toast('请等待当前会话结束');
       }
       // 增加一条用户虚拟信息
       this.addGroupChat({
@@ -192,7 +213,6 @@ Component({
                   requestOptions: { prompt: value, options: { ...options } },
                 });
               }
-              // TODO 如果在底部要继续滚动到底部
               const curLen = currentText ? currentText.length : 0
               const cacheResLen = cacheResText ? cacheResText.length : 0
               if (!isStreamIn && curLen === cacheResLen) {
@@ -203,11 +223,12 @@ Component({
                   requestOptions: { prompt: value, options: { ...options } },
                 });
                 _this.setData({ loading: false });
-                // TODO 更新用户余额
+                _this.updateUserBalance({ userBalance }, model);
 
-                if (messages.length === 2 && !currentGroup.id) {
-                  const title = messages[1].text.length > 5 ? messages.slice(0, 5) : messages[1].text
-                  // TODO 更新组信息
+                if (messages.length === 2 && currentGroup.id) {
+                  const message = messages[1].originText || messages[1].text;
+                  const title = message.length > 5 ? message.slice(0, 5) : message;
+                  _this.updateGroup(title);
                 }
                 shouldContinue = false // 结束动画循环
               }
@@ -285,8 +306,8 @@ Component({
               /* 如果出现输出内容不一致就需要处理了 */
               if (model.keyType === 1) {
                 cacheResText = data.text;
-                if (data?.userBalance) {
-                  userBalance = data?.userBalance;
+                if (data?.userBanance) {
+                  userBalance = data?.userBanance;
                 }
                 if (data?.id) {
                   isStreamIn = false;
@@ -294,10 +315,10 @@ Component({
               }
   
               if ([2, 3, 4].includes(model.keyType)) {
-                const { result, is_end } = data;
-                cacheResText = result;
+                const { text, is_end } = data;
+                cacheResText = text;
                 isStreamIn = !is_end;
-                data?.userBalance && (userBalance = data?.userBalance);
+                data?.userBanance && (userBalance = data?.userBanance);
               }
             } catch (error) {}
           });
@@ -335,12 +356,25 @@ Component({
       console.log('model', event);
       const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
-      this.setData({ model });
+      console.log('model', model);
+      this.setData({ model: model as any });
+      this.updateUserBalance(this.data.user, model);
     },
-    chooseGroup: function (event: any) {
+    chooseGroup: async function (event: any) {
+      const { loading } = this.data;
+      if (loading) {
+        Toast('请等待当前会话结束');
+        return;
+      }
+      Toast.loading({
+        duration: 0,
+        forbidClick: true,
+        message: '会话加载中...',
+      });
       const groupId = event.target.dataset.text;
-      this.queryChatList(groupId);
+      await this.queryChatList(groupId);
       this.closePopup();
+      Toast.clear();
     },
     cancelChatProcess: function () {
       const { loading, requestTask, messages } = this.data;
@@ -356,26 +390,78 @@ Component({
         conversationOptions: {},
         requestOptions: { prompt: '', options: {} },
       });
-    }
-  },
-
-  lifetimes: {
-    attached() {
+    },
+    // 消息区滚动事件
+    onScroll: function(e: any) {
+      // console.log(e.detail.scrollTop, this.data.scrollTop);
+    },
+    // 更新userBalance
+    updateUserBalance: function(user: any, model: any) {
+      const userBalance: any = {};
+      const { deduct, deductType } = model;
+      userBalance.modelPrice = deduct;
+      userBalance.modelType = deductType;
+      const { count, useToken, countKey, useTokenKey } = modelTypeMap[deductType as '1' | '2'];
+      // @ts-ignore
+      userBalance[countKey] = user.userBalance[count] || 0;
+      // @ts-ignore
+      userBalance[useTokenKey] = user.userBalance[useToken] || 0;
+      this.setData({ userBalance: { ...this.data.userBalance, ...userBalance } });
+    },
+    // 监听全局变量
+    subscribeGlobalData: function () {
       console.log('chat data', this.data);
+      const { user, model, modelList, AIName, robotAvatar } = this.data;
       // 添加监听器
-      if (isEmptyObj(this.data.user)) {
+      if (isEmptyObj(user)) {
         app.addListener('user', user => {
           this.setData({ user: user as UserData });
           this.chatGroup();
+          if (!isEmptyObj(this.data.model)) {
+            this.updateUserBalance(user, this.data.model);
+          }
         });
       } else {
-
+        const { user, model } = this.data;
+        if (!isEmptyObj(model)) {
+          this.updateUserBalance(user, model);
+        }
       }
 
-      app.addListener('model', (model: any) => {
-        this.setData({ model: model.modelInfo as BaseModelData['modelInfo'] });
-      });
+      if (isEmptyObj(model)) {
+        app.addListener('model', (model: any) => {
+          this.setData({ model: model.modelInfo as BaseModelData['modelInfo'] });
+          if (!isEmptyObj(this.data.user)) {
+            this.updateUserBalance(this.data.user, model);
+          }
+        });
+      } else {
+        const { user, model } = this.data;
+        if (!isEmptyObj(user)) {
+          this.updateUserBalance(user, model);
+        }
+      }
 
+      if (isEmptyObj(modelList)) {
+        app.addListener('modelList', (modelList: any) => {
+          this.setData({ modelList });
+        });
+      }
+
+      if (!AIName) {
+        app.addListener('siteName', (siteName: any) => {
+          this.setData({ AIName: siteName });
+        });
+      }
+
+      if (!robotAvatar) {
+        app.addListener('robotAvatar', (robotAvatar: any) => {
+          this.setData({ robotAvatar });
+        });
+      }
+    },
+    // 监听键盘高度
+    subscribeKeyboard: function () {
       // 全局注册键盘高度
       listenKeyboardHeightChange({
         safeHieghtCallback: (safeBottom: number) => {
@@ -386,6 +472,14 @@ Component({
           this.scrollToBottm();
         }
       });
+    },
+  },
+
+  lifetimes: {
+    attached() {
+      this.subscribeGlobalData();
+
+      this.subscribeKeyboard();
     },
     detached() {
       this.setData({ requestTask: null });

@@ -25,5 +25,6 @@ export interface Message {
   usage?: number;
   loading?: boolean;
 	conversationOptions?: any;
-	requestOptions: RequestOption;
+  requestOptions: RequestOption;
+  originText?: string;
 }
