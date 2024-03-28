@@ -130,20 +130,20 @@
       </view>
       <view class="p-chat-group-user p-common-blur">
         <van-cell
-          custom-class="p-common-blur"
+          custom-class="p-common-blur p-common-cell-padding"
           title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
           icon="coupon-o" border="{{ false }}"
           value="{{userBalance.modelCount}} 积分"
         />
         <van-cell
-          custom-class="p-common-blur"
+          custom-class="p-common-blur p-common-cell-padding"
           title="我已使用"
           icon="paid"
           border="{{ false }}"
           value="{{userBalance.useModelToken}} tokens"
         />
         <van-cell
-          custom-class="p-common-blur"
+          custom-class="p-common-blur p-common-cell-padding"
           title="模型费用"
           icon="bill-o"
           border="{{ false }}"
