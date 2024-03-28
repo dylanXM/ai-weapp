@@ -227,7 +227,7 @@ Component({
 
                 if (messages.length === 2 && currentGroup.id) {
                   const message = messages[1].originText || messages[1].text;
-                  const title = message.length > 5 ? message.slice(0, 5) : message;
+                  const title = message.length > 15 ? message.slice(0, 15) : message;
                   _this.updateGroup(title);
                 }
                 shouldContinue = false // 结束动画循环

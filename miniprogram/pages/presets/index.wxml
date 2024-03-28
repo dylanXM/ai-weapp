@@ -1,0 +1,13 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+  </view>
+</view>
+
+<view
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
+>
+  这是模版列表
+</view>

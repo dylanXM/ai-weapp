@@ -1,0 +1,19 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+  </view>
+</view>
+<view
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
+  class="p-apps-container"
+>
+  <view>
+    <van-cell size="large" title="单元格" value="内容" is-link />
+  </view>
+
+  <view class="p-apps-item">
+    <van-cell size="large" title="单元格" value="内容" is-link />
+  </view>
+</view>

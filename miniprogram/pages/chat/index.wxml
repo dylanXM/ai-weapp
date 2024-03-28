@@ -3,21 +3,28 @@
     class="p-navbar"
     style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
-  <van-icon name="wap-nav" bind:click="showPopup" size="24" />
-  <van-cell
-    is-link
-    title="{{model.modelName}}"
-    border="{{ false }}"
-    bind:click="showModelActionSheet"
-  />
-  <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="24" />
+    <van-icon name="wap-nav" bind:click="showPopup" size="24" custom-class="p-common-blur" custom-style="background: transparent;" />
+    <van-cell
+      is-link
+      title="{{model.modelName}}"
+      border="{{ false }}"
+      bind:click="showModelActionSheet"
+      custom-style="margin-top: -5px; background: transparent;"
+      custom-class="p-common-blur"
+    />
+    <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="24" />
   </view>
 </view>
 
 <view
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  class="p-container"
 >
-  <view class="p-chat-container" wx:if="{{groups.length !== 0}}">
+  <view
+    class="p-chat-container"
+    wx:if="{{groups.length !== 0}}"
+    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  >
     <!-- 聊天记录区 -->
     <scroll-view
       bindscroll="onScroll"
@@ -46,6 +53,9 @@
             <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
           </view>
         </view>
+      </view>
+      <view wx:if="{{messages.length === 0}}">
+        这是空白页面
       </view>
     </scroll-view>
     <!-- 搜索区 -->
@@ -95,10 +105,10 @@
   </view>
 
   <van-popup
-    custom-style="height: 100%; width: 75%; overflow: hidden;"
     position="left"
     show="{{ popupVisible }}"
     bind:close="closePopup"
+    custom-class="p-chat-sidesheet"
   >
     <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
       <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
@@ -113,13 +123,32 @@
             is-link
             bind:click="chooseGroup"
             data-text="{{group.id}}"
+            icon="chat-o"
+            title-class="p-common-ellipsis"
           />
         </view>
       </view>
-      <view class="p-chat-group-user">
-        <van-cell title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度" icon="coupon-o" border="{{ false }}" value="{{userBalance.modelCount}} 积分" />
-        <van-cell title="我已使用" icon="paid" border="{{ false }}" value="{{userBalance.useModelToken}} tokens" />
-        <van-cell title="模型费用" icon="bill-o" border="{{ false }}" value="{{userBalance.modelPrice}} 积分 / 对话" />
+      <view class="p-chat-group-user p-common-blur">
+        <van-cell
+          custom-class="p-common-blur"
+          title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
+          icon="coupon-o" border="{{ false }}"
+          value="{{userBalance.modelCount}} 积分"
+        />
+        <van-cell
+          custom-class="p-common-blur"
+          title="我已使用"
+          icon="paid"
+          border="{{ false }}"
+          value="{{userBalance.useModelToken}} tokens"
+        />
+        <van-cell
+          custom-class="p-common-blur"
+          title="模型费用"
+          icon="bill-o"
+          border="{{ false }}"
+          value="{{userBalance.modelPrice}} 积分 / 对话"
+        />
       </view>
       <view class="p-chat-group-add">
         <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建会话</van-button>

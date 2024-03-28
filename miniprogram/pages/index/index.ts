@@ -9,10 +9,11 @@ const app = getApp<IAppOption>();
 Component({
   data: {
     loading: app.globalData.loading,
-    activeNav: 'chat',
+    activeNav: 'apps',
   },
   methods: {
     handleActiveNavChange(event: any){
+      console.log('activeNav', event.detail.key);
       this.setData({ activeNav: event.detail.key });
     },
 

@@ -4,6 +4,18 @@
     style="display: {{activeNav === 'chat' && !loading ? 'block' : 'none'}}; height: 100%;"
   />
 
+  <user
+    style="display: {{activeNav === 'user' ? 'block' : 'none'}}; height: 100%;"
+  />
+
+  <presets
+    style="display: {{activeNav === 'presets' ? 'block' : 'none'}}; height: 100%;"
+  />
+
+  <apps
+    style="display: {{activeNav === 'apps' ? 'block' : 'none'}}; height: 100%;"
+  />
+
   <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" />
 
   <van-dialog id="van-dialog" />

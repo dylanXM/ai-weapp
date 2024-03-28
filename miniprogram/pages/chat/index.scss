@@ -1,8 +1,14 @@
 /* pages/chat/index.wxss */
-.p-chat-container {
-  height: 100%;
+.p-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.p-chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .p-chat-messages {
@@ -28,7 +34,7 @@
   padding: 0 12px;
   display: flex;
   align-items: center;
-  backdrop-filter: blur(20px); /* 应用模糊效果 */
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
@@ -37,7 +43,12 @@
   width: 100%;
   padding: 4px 12px;
   margin: 0 8px 0 0;
-  border: 1px solid #ebedf0;
+  border: 1px solid #f1f1f1;
+  // box-shadow: 
+  //   0 -0.5px 0 0 #ebedf0, /* 上 */
+  //   0 0.5px 0 0 #ebedf0, /* 下 */
+  //   -0.5px 0 0 0 #ebedf0, /* 左 */
+  //   0.5px 0 0 0 #ebedf0; /* 右 */
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -52,8 +63,9 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
-  -webkit-backdrop-filter: blur(20px); /* Safari浏览器的兼容性前缀 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
 
@@ -139,7 +151,7 @@
 }
 
 .p-chat-group-search {
-  border-bottom: 1px solid #ebedf0;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .p-chat-group-list {
@@ -148,13 +160,34 @@
 }
 
 .p-chat-group-user {
-  border-top: 1px solid #ebedf0;
+  border-top: 1px solid #f1f1f1;
   min-height: 120px;
   box-sizing: border-box;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-chat-group-add {
   min-height: 60px;
   padding: 10px 16px;
   box-sizing: border-box;
+}
+
+.p-chat-sidesheet {
+  height: 100%;
+  width: 75%;
+  overflow: hidden;
+}
+
+.p-common-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-common-blur {
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
