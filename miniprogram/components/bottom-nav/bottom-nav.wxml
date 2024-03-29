@@ -1,6 +1,6 @@
 <!--components/bottom-nav/bottom-nav.wxml-->
 <van-tabbar active="{{value}}" bind:change="handleActiveNavChange">
-  <van-tabbar-item name="chat" icon="chat-o">聊天</van-tabbar-item>
+  <van-tabbar-item name="chat" icon="comment-o">聊天</van-tabbar-item>
   <van-tabbar-item name="presets" icon="notes-o">模板</van-tabbar-item>
   <van-tabbar-item name="apps" icon="apps-o">应用</van-tabbar-item>
   <van-tabbar-item name="user" icon="user-o">我的</van-tabbar-item>

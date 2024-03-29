@@ -9,7 +9,7 @@ const app = getApp<IAppOption>();
 Component({
   data: {
     loading: app.globalData.loading,
-    activeNav: 'apps',
+    activeNav: 'chat',
   },
   methods: {
     handleActiveNavChange(event: any){

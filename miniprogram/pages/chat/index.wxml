@@ -151,7 +151,7 @@
         />
       </view>
       <view class="p-chat-group-add">
-        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建会话</van-button>
+        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建对话</van-button>
       </view>
     </view>
   </van-popup>
