@@ -1,13 +1,15 @@
 <view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
   <view
     class="p-navbar"
-    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
+  模版列表
   </view>
 </view>
 
 <view
+  class="p-presets-container"
   style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
 >
-  这是模版列表
+  功能暂未开放，敬请期待
 </view>

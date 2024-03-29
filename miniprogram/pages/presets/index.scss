@@ -3,9 +3,10 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(20px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  background-color: #f1f1f1;
 }
 
 .p-navbar {
@@ -13,4 +14,9 @@
   align-items: center;
   justify-content: center;
   padding: 0 12px 12px;
+  font-weight: 600;
+}
+
+.p-presets-container {
+  background-color: #f1f1f1;
 }

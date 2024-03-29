@@ -1,8 +1,9 @@
 <view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
   <view
     class="p-navbar"
-    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
+  应用列表
   </view>
 </view>
 <view

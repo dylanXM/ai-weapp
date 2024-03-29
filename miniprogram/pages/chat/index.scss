@@ -37,6 +37,8 @@
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  // background-color: #f1f1f1;
+  border-top: #f1f1f1 1px solid;
 }
 
 .p-chat-search-border {
@@ -66,7 +68,8 @@
   z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  background-color: #f1f1f1;
+  border-bottom: #f1f1f1 1px solid;
 }
 
 .p-navbar {
@@ -74,6 +77,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 12px 12px;
+  font-weight: 600;
 }
 
 .p-chat-message-contianer {
