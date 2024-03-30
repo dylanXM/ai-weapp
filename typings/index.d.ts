@@ -27,9 +27,5 @@ export type ListenerCallback = <T extends GlobalDataKey>(value: GlobalData[T]) =
 interface IAppOption {
   towxml: any;
   globalData: GlobalData;
-  listeners: ListenersType;
-  setGlobalData: <T extends GlobalDataKey>(key: T, value: GlobalData[T]) => void;
-  addListener: <T extends GlobalDataKey>(key: T, callback: ListenerCallback) => void;
-  removeListener: <T extends GlobalDataKey>(key: T, callback: ListenerCallback) => void;
   initNavBar: () => void;
 }

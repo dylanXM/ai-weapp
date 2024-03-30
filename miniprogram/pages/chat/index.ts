@@ -2,8 +2,6 @@ import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
 import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
-import { UserData } from 'miniprogram/api/auth/type';
-import { BaseModelData } from 'miniprogram/api/model/type';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
@@ -12,11 +10,14 @@ import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { modelTypeMap } from '../../const/config/index';
+import { store } from '../../store/index';
+import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 
 const app = getApp<IAppOption>();
 
 // pages/chat/index.ts
 Component({
+  behaviors: [storeBindingsBehavior],
 
   /**
    * 组件的属性列表
@@ -35,37 +36,58 @@ Component({
     value: '',
     bottomSafeHeight: 0,
     keyboardHeight: 0,
-    navBar: {
-      navBarHeight: app.globalData.navBar.navBarHeight,
-      menuRight: app.globalData.navBar.menuRight,
-      menuTop: app.globalData.navBar.menuTop,
-      menuHeight: app.globalData.navBar.menuHeight,
-    },
     popupVisible: false,
     loading: false,
-    user: app.globalData.user,
-    model: {
-      ...app.globalData?.model?.modelInfo
-    },
-    modelList: app.globalData.modelList,
     viewId: '',
-    robotAvatar: app.globalData.robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png',
     typingStatusEnd: true,
     scrollTop: 10000,
     modelConfig: {
       visible: false,
       options: [] as any[],
     },
-    AIName: app.globalData.siteName,
     requestTask: null as any,
     groupScroll: {},
-    userBalance: {
-      modelCount: 0,
-      useModelToken: 0,
-      modelPrice: 0,
-      modelType: 1,
-    },
     lastMessageId: '',
+  },
+
+  // @ts-ignore
+  storeBindings: {
+    store,
+    fields: {
+      navBar: 'navBar',
+      modelList: 'modelList',
+      robotAvatar: 'robotAvatar',
+      user: 'user',
+      AIName: 'siteName',
+      model: 'model',
+      userBalance: 'userBalance'
+    },
+    actions: {
+      setState: "setState",
+    },
+  },
+
+  /**
+   * 字段监听
+   */
+  observers: {
+    'user': function (data) {
+      if (isEmptyObj(data)) return;
+      this.chatGroup();
+      // @ts-ignore
+      if (!isEmptyObj(this.data.model)) {
+        // @ts-ignore
+        this.updateUserBalance(data, this.data.model);
+      }
+    },
+    'model': function (data) {
+      if (isEmptyObj(data)) return;
+      // @ts-ignore
+      if (!isEmptyObj(this.data.user)) {
+        // @ts-ignore
+        this.updateUserBalance(this.data.user, data);
+      }
+    }
   },
 
   /**
@@ -182,8 +204,6 @@ Component({
         conversationOptions: null,
         requestOptions: { prompt: value, options: { ...options } },
       });
-      // chatProcrssOnce(params);
-      const timer: any = null;
       let cacheResText = '';
       let data: any = null;
       let isStreamIn = true;
@@ -266,6 +286,7 @@ Component({
             }
           });
           requestTask.onChunkReceived(function (res) {
+            // @ts-ignore
             const decoder = new TextDecoder('utf-8');
             const responseText = decoder.decode(res.data);
             if ([1].includes(model.keyType)) {
@@ -362,11 +383,9 @@ Component({
       this.setData({ modelConfig });
     },
     onSelectModel: function (event: any) {
-      console.log('model', event);
       const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
-      console.log('model', model);
-      this.setData({ model: model as any });
+      this.setState('model', model);
       this.updateUserBalance(this.data.user, model);
     },
     chooseGroup: async function (event: any) {
@@ -415,59 +434,8 @@ Component({
       userBalance[countKey] = user.userBalance[count] || 0;
       // @ts-ignore
       userBalance[useTokenKey] = user.userBalance[useToken] || 0;
-      this.setData({ userBalance: { ...this.data.userBalance, ...userBalance } });
-    },
-    // 监听全局变量
-    subscribeGlobalData: function () {
-      console.log('chat data', this.data);
-      const { user, model, modelList, AIName, robotAvatar } = this.data;
-      // 添加监听器
-      if (isEmptyObj(user)) {
-        app.addListener('user', user => {
-          this.setData({ user: user as UserData });
-          this.chatGroup();
-          if (!isEmptyObj(this.data.model)) {
-            this.updateUserBalance(user, this.data.model);
-          }
-        });
-      } else {
-        const { user, model } = this.data;
-        if (!isEmptyObj(model)) {
-          this.updateUserBalance(user, model);
-        }
-      }
-
-      if (isEmptyObj(model)) {
-        app.addListener('model', (model: any) => {
-          this.setData({ model: model.modelInfo as BaseModelData['modelInfo'] });
-          if (!isEmptyObj(this.data.user)) {
-            this.updateUserBalance(this.data.user, model);
-          }
-        });
-      } else {
-        const { user, model } = this.data;
-        if (!isEmptyObj(user)) {
-          this.updateUserBalance(user, model);
-        }
-      }
-
-      if (isEmptyObj(modelList)) {
-        app.addListener('modelList', (modelList: any) => {
-          this.setData({ modelList });
-        });
-      }
-
-      if (!AIName) {
-        app.addListener('siteName', (siteName: any) => {
-          this.setData({ AIName: siteName });
-        });
-      }
-
-      if (!robotAvatar) {
-        app.addListener('robotAvatar', (robotAvatar: any) => {
-          this.setData({ robotAvatar });
-        });
-      }
+      // @ts-ignore
+      this.setState('userBalance', { ...this.data.userBalance, ...userBalance });
     },
     // 监听键盘高度
     subscribeKeyboard: function () {
@@ -486,9 +454,11 @@ Component({
 
   lifetimes: {
     attached() {
-      this.subscribeGlobalData();
-
       this.subscribeKeyboard();
+
+      setInterval(() => {
+        console.log('user', this.data.user);
+      }, 1000);
     },
     detached() {
       this.setData({ requestTask: null });
