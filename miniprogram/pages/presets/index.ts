@@ -2,6 +2,7 @@ import { IAppOption } from '../../../typings';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
+import { queryPresetsCats, queryPresetsList } from '../../api/category/index';
 
 // 获取应用实例
 const app = getApp<IAppOption>();
@@ -20,6 +21,10 @@ Component({
    */
   data: {
     bottomSafeHeight: 0,
+    presets: {
+      categoryId: '0',
+      categories: [] as any[],
+    }
   },
 
   // @ts-ignore
@@ -29,6 +34,12 @@ Component({
       navBar: 'navBar',
       user: 'user',
     },
+  },
+
+  observers: {
+    presets: function (data) {
+      console.log('presets', data);
+    }
   },
 
   /**
@@ -45,9 +56,24 @@ Component({
         }
       });
     },
+    // 初始数据获取
+    getPresets: async function () {
+      const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
+      const firstCategory = { id: 0, name: 'all', list: presets.rows };
+      const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
+        const list = presets.rows.filter((it: any) => it.catId === cat.id);
+        return { ...cat, list };
+      })];
+      this.setData({ presets: { categoryId: '0', categories: newcategories } });
+      setTimeout(() => {
+        this.setData({ presets: { categoryId: '0', categories: newcategories } });
+      }, 0);
+    }
   },
-
-  attached() {
-    this.subscribeGlobalData();
-  },
+  lifetimes: {
+    attached() {
+      this.subscribeKeyboard();
+      this.getPresets();
+    },
+  }
 })

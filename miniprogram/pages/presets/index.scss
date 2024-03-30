@@ -18,5 +18,52 @@
 }
 
 .p-presets-container {
+  display: flex;
+  flex-direction: column;
   background-color: #f1f1f1;
+}
+
+.p-presets-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+}
+
+.p-presets-search {
+  min-height: 54px;
+}
+
+.p-presets-list {
+  flex: 1;
+  background-color: white;
+}
+
+.p-presets-list-nav {
+  background-color: #f1f1f1;
+}
+
+.p-presets-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #f1f1f1;
+}
+
+.p-presets-item-avatar {
+  margin-right: 12px;
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.p-presets-item-title {
+  font-size: large;
+  font-weight: 600;
+}
+
+.p-presets-item-desc {
+  margin-top: 4px;
 }

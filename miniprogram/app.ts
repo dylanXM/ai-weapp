@@ -38,7 +38,6 @@ App<IAppOption>({
     // 登录
     wx.login({
       success: async res => {
-        console.log(res);
         const session = await getWechatSession({ code: res.code });
         wx.setStorageSync('openId', session.openId);
         wx.setStorageSync('sessionKey', session.sessionKey);

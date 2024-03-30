@@ -13,8 +13,6 @@ export const listenKeyboardHeightChange = ({ safeHieghtCallback, keyboardHeightC
   // 获取底部安全区域高度
   const safeBottom = systemInfo.safeArea ? systemInfo.screenHeight - systemInfo.safeArea.bottom : 0;
 
-  console.log('safeBottom',safeBottom);
-
   if (isIphone) {
       // 设置页面样式，预留出底部安全区域的高度
       safeHieghtCallback(safeBottom);

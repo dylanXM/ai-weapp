@@ -11,5 +11,47 @@
   class="p-presets-container"
   style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
 >
-  功能暂未开放，敬请期待
+  <van-search
+    background="#f1f1f1"
+    value="{{ value }}"
+    placeholder="搜索"
+    clearable
+    custom-class="p-presets-search"
+  />
+  <view class="p-presets-content">
+    <van-tabs
+      animated
+      custom-class="p-presets-list"
+      active="{{ presets.categoryId }}"
+    >
+      <view style="width: 100%; padding: 12px;">
+        <van-tab
+          title="{{ category.name }}"
+          wx:for="{{ presets.categories }}"
+          wx:key="id"
+          wx:for-item="category"
+        >
+          <view
+            wx:for="{{category.list}}"
+            class="p-presets-item"
+            wx:key="id"
+            wx:for-item="item"
+          >
+            <view class="p-presets-item-avatar">
+              <van-image
+                width="10rem"
+                height="10rem"
+                fit="contain"
+                src="{{ item.coverImg }}"
+              />
+            </view>
+            <view>
+              <view class="p-presets-item-title">标题</view>
+              <view class="p-presets-item-desc">正文</view>
+            </view>
+          </view>
+        </van-tab>
+      </view>
+    </van-tabs>
+  </view>
 </view>

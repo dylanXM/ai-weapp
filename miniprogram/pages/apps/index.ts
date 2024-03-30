@@ -42,8 +42,9 @@ Component({
       });
     },
   },
-
-  attached() {
-    this.subscribeGlobalData();
-  },
+  lifetimes: {
+    attached() {
+      this.subscribeKeyboard();
+    },
+  }
 })

@@ -100,7 +100,6 @@ Component({
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
-      console.log('chatgroup', res);
       this.setData({ groups: res, allGroups: res });
       if (!groupId) {
         const firstGroup = res?.[0];
@@ -455,10 +454,6 @@ Component({
   lifetimes: {
     attached() {
       this.subscribeKeyboard();
-
-      setInterval(() => {
-        console.log('user', this.data.user);
-      }, 1000);
     },
     detached() {
       this.setData({ requestTask: null });
