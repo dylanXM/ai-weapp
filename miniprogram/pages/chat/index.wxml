@@ -46,7 +46,7 @@
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
             <van-image round width="22" height="22" src="{{robotAvatar}}" />
-            <view class="p-chat-message-title-name">{{AIName || 'plumAI'}}</view>
+            <view class="p-chat-message-title-name">{{AIName || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />

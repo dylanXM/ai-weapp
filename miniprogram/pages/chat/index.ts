@@ -65,6 +65,7 @@ Component({
       modelPrice: 0,
       modelType: 1,
     },
+    lastMessageId: '',
   },
 
   /**
@@ -131,17 +132,21 @@ Component({
       if (length - 1 < index) {
         return;
       }
+      let messageId = '';
+      if (message.id) {
+        messageId = message.id;
+      }
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
-      this.setData({ messages });
+      this.setData({ messages, lastMessageId: messageId });
       this.scrollToBottm();
     },
     chatProcess: async function() {
       const _this = this;
-      const { value, loading,  currentGroup, messages, model } = _this.data;
+      const { value, loading,  currentGroup, messages, model, lastMessageId } = _this.data;
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
         return;
@@ -160,10 +165,13 @@ Component({
       });
       this.setData({ loading: true, value: '' });
 
-      const options = {
+      const options: Record<string, any> = {
         groupId: currentGroup.id,
         usingNetwork: false,
       };
+      if (lastMessageId) {
+        options.parentMessageId = lastMessageId;
+      }
       // 增加一条chatgpt虚拟信息
       this.addGroupChat({
         dateTime: new Date().toLocaleString(),

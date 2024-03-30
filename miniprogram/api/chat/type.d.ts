@@ -17,6 +17,7 @@ export interface RequestOption {
 }
 
 export interface Message {
+  id?: string;
 	chatId?: number;
 	dateTime: string;
 	text: string;
