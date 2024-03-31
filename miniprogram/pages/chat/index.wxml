@@ -17,13 +17,13 @@
 </view>
 
 <view
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 54)}}px);"
   class="p-container"
 >
   <view
     class="p-chat-container"
     wx:if="{{groups.length !== 0}}"
-    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 54)}}px);"
   >
     <!-- 聊天记录区 -->
     <scroll-view
@@ -31,7 +31,7 @@
       scroll-top="{{scrollTop}}"
       scroll-y
       class="p-chat-messages"
-      style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+      style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 54)}}px);"
     >
       <view wx:for="{{messages}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->

@@ -167,6 +167,7 @@ Component({
     },
     chatProcess: async function() {
       const _this = this;
+      // @ts-ignore
       const { value, loading,  currentGroup, messages, model, lastMessageId } = _this.data;
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
@@ -370,6 +371,7 @@ Component({
       this.setData({ value: event.detail });
     },
     showModelActionSheet: function () {
+      // @ts-ignore
       const { modelConfig, model, modelList } = this.data;
       const options = formatModelOptions(modelList.modelMaps, model);
       modelConfig.visible = true;
@@ -383,8 +385,10 @@ Component({
     },
     onSelectModel: function (event: any) {
       const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
+      // @ts-ignore
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
       this.setState('model', model);
+      // @ts-ignore
       this.updateUserBalance(this.data.user, model);
     },
     chooseGroup: async function (event: any) {

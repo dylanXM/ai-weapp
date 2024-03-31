@@ -13,12 +13,12 @@
 >
   <van-search
     background="#f1f1f1"
-    value="{{ value }}"
     placeholder="搜索"
     clearable
     custom-class="p-presets-search"
+    bind:change="searchCategories"
   />
-  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 108}}px)">
+  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 150}}px)">
     <view
       wx:for="{{presets}}"
       class="p-presets-item"

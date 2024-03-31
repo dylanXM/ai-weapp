@@ -69,6 +69,16 @@ Component({
         icon: getRandom(icons),
       }))
       this.setData({ presets: newPresets, allPresets: newPresets });
+    },
+    // 搜索
+    searchCategories: function (event: any) {
+      const query = event.detail;
+      const { allPresets } = this.data;
+      if (!query) {
+        this.setData({ presets: allPresets, allPresets });        
+      }
+      const newPresets = allPresets.filter((preset: any) => preset.catName.includes(query) || preset.des.includes(query));
+      this.setData({ presets: newPresets });
     }
   },
   lifetimes: {
