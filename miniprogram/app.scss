@@ -7,4 +7,32 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
+
+.h2w__main {
+  margin: 0px !important;
+  padding-top: 0px !important;
+}
+
+view .h2w-light {
+  color: unset;
+  background-color: unset;
+}
+view .h2w {
+  font-weight: unset;
+  font-size: unset;
+  line-height: unset;
+}
+
+view .h2w__p {
+  margin: 0px !important;
+}
+
+.h2w__ul, .h2w__ol {
+  margin-bottom: 0px !important;
+}
+
+.h2w__pre {
+  margin-bottom: 0px !important;
+  border-radius: 5px;
+}

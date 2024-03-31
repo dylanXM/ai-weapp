@@ -1,14 +1,24 @@
 /* pages/chat/index.wxss */
-.p-chat-container {
-  height: 100%;
+.p-container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.p-chat-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .p-chat-messages {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  position: relative;
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
 }
 
 .p-chat-operations {
@@ -19,20 +29,28 @@
 }
 
 .p-chat-search {
+  position: relative;
   height: 54px;
   padding: 0 12px;
   display: flex;
   align-items: center;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  // background-color: #f1f1f1;
+  border-top: #f1f1f1 1px solid;
 }
 
 .p-chat-search-border {
   width: 100%;
   padding: 4px 12px;
   margin: 0 8px 0 0;
-  border: 1px solid #ebedf0;
+  border: 1px solid #f1f1f1;
+  // box-shadow: 
+  //   0 -0.5px 0 0 #ebedf0, /* 上 */
+  //   0 0.5px 0 0 #ebedf0, /* 下 */
+  //   -0.5px 0 0 0 #ebedf0, /* 左 */
+  //   0.5px 0 0 0 #ebedf0; /* 右 */
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -47,14 +65,137 @@
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.1); /* 设置半透明的白色背景 */
+  background-color: #f1f1f1;
+  border-bottom: #f1f1f1 1px solid;
 }
 
 .p-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 12px 12px;
+  font-weight: 600;
+}
+
+.p-chat-message-contianer {
+  margin-top: 12px;
+}
+
+.p-chat-message-robot-contianer {
+  margin-top: 32px;
+}
+
+.p-chat-message-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.p-chat-message-title-name {
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+.p-chat-message-container {
+  margin-left: 30px;
+  align-items: center;
+}
+
+.p-chat-message-robot {
+  margin-left: 30px;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.p-chat-message-to-bottom {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 28px;
+  margin: 0px auto;
+  position: absolute;
+  top: -27px;
+  left: 0;
+  right: 0;
+  transform: rotate(180deg);
+  z-index: 100;
+}
+
+.p-chat-message-loading {
+  margin-left: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: black; /* 小圆球的颜色，这里使用蓝色 */
+  border-radius: 50%; /* 使元素呈现圆形 */
+  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
+
+.p-chat-icon-cancel {
+  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
+
+@keyframes ball-breath {
+  0%, 100% {
+    transform: scale(1); /* 原始大小 */
+    opacity: 1; /* 较高的透明度 */
+  }
+  50% {
+    transform: scale(0.8); /* 扩大到120%的大小 */
+    opacity: 0.7; /* 不透明 */
+  }
+}
+
+.p-chat-group-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.p-chat-group-search {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.p-chat-group-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.p-chat-group-user {
+  border-top: 1px solid #f1f1f1;
+  min-height: 90px;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+}
+
+.p-chat-group-add {
+  min-height: 60px;
+  padding: 10px 16px;
+  box-sizing: border-box;
+}
+
+.p-chat-sidesheet {
+  height: 100%;
+  width: 75%;
+  overflow: hidden;
+}
+
+.p-common-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.p-common-blur {
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+}
+
+.p-common-cell-padding {
+  padding: 10px 16px 0px;
 }

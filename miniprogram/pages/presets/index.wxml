@@ -1,0 +1,40 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+  模版列表
+  </view>
+</view>
+
+<view
+  class="p-presets-container"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 54}}px)"
+>
+  <van-search
+    background="#f1f1f1"
+    value="{{ value }}"
+    placeholder="搜索"
+    clearable
+    custom-class="p-presets-search"
+  />
+  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 108}}px)">
+    <view
+      wx:for="{{presets}}"
+      class="p-presets-item"
+      wx:key="id"
+      wx:for-item="item"
+    >
+      <van-icon
+        class="p-presets-item-avatar"
+        size="40"
+        name="{{ item.icon }}"
+        color="{{ item.color }}"
+      />
+      <view>
+        <view class="p-presets-item-title">{{item.catName}}</view>
+        <view class="p-presets-item-desc">{{item.des}}</view>
+      </view>
+    </view>
+  </view>
+</view>

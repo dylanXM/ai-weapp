@@ -12,7 +12,7 @@ export interface ModelType {
 }
 
 export interface ModelMap {
-	[key: number]: ModelType;
+	[key: number]: ModelType[];
 }
 
 export interface ModelData {
@@ -28,7 +28,7 @@ export interface ModelInfo {
 	maxResponseTokens: number;
 	topN: number;
 	systemMessage: string;
-	deductType: number;
+	deductType: 1 | 2;
 	deduct: number;
 	maxRounds: number;
 	rounds: number;

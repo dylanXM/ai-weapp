@@ -3,6 +3,8 @@
   "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
   "setting": {
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": true,
     "useCompilerPlugins": [
       "typescript",
       "sass"
@@ -14,10 +16,9 @@
     },
     "coverView": false,
     "postcss": false,
-    "minified": false,
+    "minified": true,
     "enhance": true,
     "showShadowRootInWxmlPanel": false,
-    "ignoreUploadUnusedFiles": true,
     "compileHotReLoad": false,
     "skylineRenderEnable": true,
     "packNpmManually": true,
@@ -42,5 +43,5 @@
     "ignore": [],
     "include": []
   },
-  "appid": "wxd759a9a62fe24760"
+  "appid": "wx81c4c212b7f5bfc7"
 }
