@@ -2,7 +2,8 @@ import { IAppOption } from '../../../typings';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import { queryPresetsCats, queryPresetsList } from '../../api/category/index';
+import { queryPresetsList } from '../../api/category/index';
+import { getRandom, colors, icons } from '../../utils/icon';
 
 // 获取应用实例
 const app = getApp<IAppOption>();
@@ -21,10 +22,8 @@ Component({
    */
   data: {
     bottomSafeHeight: 0,
-    presets: {
-      categoryId: '0',
-      categories: [] as any[],
-    }
+    presets: [],
+    allPresets: [],
   },
 
   // @ts-ignore
@@ -58,16 +57,18 @@ Component({
     },
     // 初始数据获取
     getPresets: async function () {
-      const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
-      const firstCategory = { id: 0, name: 'all', list: presets.rows };
-      const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
-        const list = presets.rows.filter((it: any) => it.catId === cat.id);
-        return { ...cat, list };
-      })];
-      this.setData({ presets: { categoryId: '0', categories: newcategories } });
-      setTimeout(() => {
-        this.setData({ presets: { categoryId: '0', categories: newcategories } });
-      }, 0);
+      // const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
+      const presets = await queryPresetsList();
+      // const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
+      //   const list = presets.rows.filter((it: any) => it.catId === cat.id);
+      //   return { ...cat, list };
+      // })];
+      const newPresets = presets.rows.map(item => ({
+        ...item,
+        color: getRandom(colors),
+        icon: getRandom(icons),
+      }))
+      this.setData({ presets: newPresets, allPresets: newPresets });
     }
   },
   lifetimes: {

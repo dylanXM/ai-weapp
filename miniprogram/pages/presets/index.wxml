@@ -9,7 +9,7 @@
 
 <view
   class="p-presets-container"
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 54}}px)"
 >
   <van-search
     background="#f1f1f1"
@@ -18,40 +18,23 @@
     clearable
     custom-class="p-presets-search"
   />
-  <view class="p-presets-content">
-    <van-tabs
-      animated
-      custom-class="p-presets-list"
-      active="{{ presets.categoryId }}"
+  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 108}}px)">
+    <view
+      wx:for="{{presets}}"
+      class="p-presets-item"
+      wx:key="id"
+      wx:for-item="item"
     >
-      <view style="width: 100%; padding: 12px;">
-        <van-tab
-          title="{{ category.name }}"
-          wx:for="{{ presets.categories }}"
-          wx:key="id"
-          wx:for-item="category"
-        >
-          <view
-            wx:for="{{category.list}}"
-            class="p-presets-item"
-            wx:key="id"
-            wx:for-item="item"
-          >
-            <view class="p-presets-item-avatar">
-              <van-image
-                width="10rem"
-                height="10rem"
-                fit="contain"
-                src="{{ item.coverImg }}"
-              />
-            </view>
-            <view>
-              <view class="p-presets-item-title">标题</view>
-              <view class="p-presets-item-desc">正文</view>
-            </view>
-          </view>
-        </van-tab>
+      <van-icon
+        class="p-presets-item-avatar"
+        size="40"
+        name="{{ item.icon }}"
+        color="{{ item.color }}"
+      />
+      <view>
+        <view class="p-presets-item-title">{{item.catName}}</view>
+        <view class="p-presets-item-desc">{{item.des}}</view>
       </view>
-    </van-tabs>
+    </view>
   </view>
 </view>

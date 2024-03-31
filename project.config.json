@@ -3,6 +3,8 @@
   "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
   "setting": {
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": true,
     "useCompilerPlugins": [
       "typescript",
       "sass"
@@ -17,7 +19,6 @@
     "minified": true,
     "enhance": true,
     "showShadowRootInWxmlPanel": false,
-    "ignoreUploadUnusedFiles": true,
     "compileHotReLoad": false,
     "skylineRenderEnable": true,
     "packNpmManually": true,
