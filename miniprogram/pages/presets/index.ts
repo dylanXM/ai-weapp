@@ -35,12 +35,6 @@ Component({
     },
   },
 
-  observers: {
-    presets: function (data) {
-      console.log('presets', data);
-    }
-  },
-
   /**
    * 组件的方法列表
    */
@@ -63,13 +57,26 @@ Component({
       //   const list = presets.rows.filter((it: any) => it.catId === cat.id);
       //   return { ...cat, list };
       // })];
-      const newPresets = presets.rows.map(item => ({
+      const newPresets = presets.rows.map((item: any) => ({
         ...item,
         color: getRandom(colors),
         icon: getRandom(icons),
       }))
       this.setData({ presets: newPresets, allPresets: newPresets });
-    }
+    },
+    searchPresets: function (event: any) {
+      const query = event.detail;
+      const { allPresets } = this.data;
+      if (!query) {
+        this.setData({ presets: allPresets, allPresets });        
+      }
+      const formatedQuery = query.toLowerCase();
+      const newPresets = allPresets.filter((preset: any) => {
+        const { name, des } = preset;
+        return name.toLowerCase().includes(formatedQuery) || des.toLowerCase().includes(formatedQuery);
+      });
+      this.setData({ presets: newPresets });
+    },
   },
   lifetimes: {
     attached() {

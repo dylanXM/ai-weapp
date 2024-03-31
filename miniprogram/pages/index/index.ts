@@ -6,7 +6,7 @@ import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 Component({
   behaviors: [storeBindingsBehavior],
   data: {
-    activeNav: 'presets',
+    activeNav: 'chat',
   },
   // @ts-ignore
   storeBindings: {

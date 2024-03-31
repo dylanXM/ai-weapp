@@ -15,11 +15,11 @@ export const listenKeyboardHeightChange = ({ safeHieghtCallback, keyboardHeightC
 
   if (isIphone) {
       // 设置页面样式，预留出底部安全区域的高度
-      safeHieghtCallback(safeBottom);
+      safeHieghtCallback && safeHieghtCallback(safeBottom);
   }
 
   // 监听键盘高度变化事件
   wx.onKeyboardHeightChange((event: any) => {
-    keyboardHeightCallback(event.height);
+    keyboardHeightCallback && keyboardHeightCallback(event.height);
   });
 }

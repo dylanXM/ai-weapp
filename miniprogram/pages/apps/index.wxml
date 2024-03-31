@@ -11,11 +11,26 @@
   class="p-apps-container"
 >
   <view>
-    <van-cell icon="cluster" size="large" title="思维导图" is-link />
+    <van-cell
+      icon="cluster"
+      size="large"
+      title="思维导图"
+      is-link
+    />
   </view>
 
   <view class="p-apps-item">
-    <van-cell icon="photo-o" size="large" title="DELL画图" is-link />
-    <van-cell icon="photo" size="large" title="midjounery绘图" is-link />
+    <van-cell
+      icon="photo-o"
+      size="large"
+      title="DELL画图"
+      is-link
+    />
+    <van-cell
+      icon="photo"
+      size="large"
+      title="midjounery绘图"
+      is-link
+    />
   </view>
 </view>

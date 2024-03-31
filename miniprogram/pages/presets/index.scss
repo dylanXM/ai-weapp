@@ -39,6 +39,8 @@
   flex: 1;
   background-color: white;
   padding-top: 12px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .p-presets-item {

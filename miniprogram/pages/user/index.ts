@@ -1,4 +1,3 @@
-import { IAppOption } from '../../../typings';
 import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';

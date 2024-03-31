@@ -71,7 +71,7 @@ Component({
    * 字段监听
    */
   observers: {
-    'user': function (data) {
+    user: function (data) {
       if (isEmptyObj(data)) return;
       this.chatGroup();
       // @ts-ignore
@@ -80,14 +80,20 @@ Component({
         this.updateUserBalance(data, this.data.model);
       }
     },
-    'model': function (data) {
+    model: function (data) {
       if (isEmptyObj(data)) return;
       // @ts-ignore
       if (!isEmptyObj(this.data.user)) {
         // @ts-ignore
         this.updateUserBalance(this.data.user, data);
       }
-    }
+    },
+    bottomSafeHeight: function (data) {
+      console.log('bottomSafeHeight', data);
+    },
+    keyboardHeight: function (data) {
+      console.log('keyboardHeight', data);
+    },
   },
 
   /**
@@ -127,7 +133,7 @@ Component({
       if (!query) {
         this.setData({ groups: allGroups, allGroups });        
       }
-      const newGroups = allGroups.filter(group => group.title.includes(query));
+      const newGroups = allGroups.filter(group => group.title.toLowerCase().includes(query.toLowerCase()));
       this.setData({ groups: newGroups });
     },
     queryChatList: async function(groupId: number) {
@@ -148,14 +154,14 @@ Component({
       this.scrollToBottm();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
-      const { messages } = this.data;
+      const { messages, lastMessageId } = this.data;
       const length = messages.length;
       if (length - 1 < index) {
         return;
       }
-      let messageId = '';
-      if (message.id) {
-        messageId = message.id;
+      let messageId = lastMessageId;
+      if (message.conversationOptions.parentMessageId) {
+        messageId = message.conversationOptions.parentMessageId;
       }
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
@@ -167,6 +173,7 @@ Component({
     },
     chatProcess: async function() {
       const _this = this;
+      // @ts-ignore
       const { value, loading,  currentGroup, messages, model, lastMessageId } = _this.data;
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
@@ -370,6 +377,7 @@ Component({
       this.setData({ value: event.detail });
     },
     showModelActionSheet: function () {
+      // @ts-ignore
       const { modelConfig, model, modelList } = this.data;
       const options = formatModelOptions(modelList.modelMaps, model);
       modelConfig.visible = true;
@@ -383,8 +391,10 @@ Component({
     },
     onSelectModel: function (event: any) {
       const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
+      // @ts-ignore
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
       this.setState('model', model);
+      // @ts-ignore
       this.updateUserBalance(this.data.user, model);
     },
     chooseGroup: async function (event: any) {
@@ -444,6 +454,7 @@ Component({
           this.setData({ bottomSafeHeight: safeBottom });
         },
         keyboardHeightCallback: (keyboardHeight: number) => {
+          console.log('keyboardHeight', keyboardHeight);
           this.setData({ keyboardHeight });
           this.scrollToBottm();
         }
@@ -453,7 +464,7 @@ Component({
 
   lifetimes: {
     attached() {
-      this.subscribeKeyboard();
+      this.subscribeKeyboard.bind(this)();
     },
     detached() {
       this.setData({ requestTask: null });

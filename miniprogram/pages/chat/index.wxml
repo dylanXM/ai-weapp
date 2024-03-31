@@ -31,7 +31,8 @@
       scroll-top="{{scrollTop}}"
       scroll-y
       class="p-chat-messages"
-      style="height: calc(100% - 54px - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+      scroll-with-animation
+      enable-passive
     >
       <view wx:for="{{messages}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->
@@ -58,6 +59,7 @@
         
       </view>
     </scroll-view>
+    <!-- <view style="height: 200px; width: 100%;"></view> -->
     <!-- 搜索区 -->
     <view class="p-chat-search">
       <van-icon
