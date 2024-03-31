@@ -6,7 +6,7 @@ export interface ChatGroup {
   userId: number;
   isSticky: boolean;
   title: string;
-  appId?: any;
+  appId?: string;
   isDelete: boolean;
   config: string;
 }

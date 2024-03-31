@@ -47,7 +47,6 @@ Component({
     },
     requestTask: null as any,
     groupScroll: {},
-    lastMessageId: '',
   },
 
   // @ts-ignore
@@ -147,40 +146,42 @@ Component({
       this.scrollToBottm();
     },
     addGroupChat: function(message: Message) {
-      console.log('addGroupChat', this.data);
       const { messages } = this.data;
       messages.push(message);
       this.setData({ messages });
       this.scrollToBottm();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
-      const { messages, lastMessageId } = this.data;
+      const { messages } = this.data;
       const length = messages.length;
       if (length - 1 < index) {
         return;
-      }
-      let messageId = lastMessageId;
-      if (message.conversationOptions.parentMessageId) {
-        messageId = message.conversationOptions.parentMessageId;
       }
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
-      this.setData({ messages, lastMessageId: messageId });
+      this.setData({ messages });
       this.scrollToBottm();
     },
     chatProcess: async function() {
       const _this = this;
       // @ts-ignore
-      const { value, loading,  currentGroup, messages, model, lastMessageId } = _this.data;
+      const { value, loading,  currentGroup, messages, model } = _this.data;
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
         return;
       }
       if (loading) {
         Toast('请等待当前会话结束');
+      }
+      const options: Record<string, any> = {
+        groupId: currentGroup.id,
+        usingNetwork: false,
+      };
+      if (messages.length >= 2 && messages[messages.length - 1].conversationOptions.parentMessageId) {
+        options.parentMessageId = messages[messages.length - 1].conversationOptions.parentMessageId;
       }
       // 增加一条用户虚拟信息
       this.addGroupChat({
@@ -192,14 +193,6 @@ Component({
         requestOptions: { prompt: value, options: null },
       });
       this.setData({ loading: true, value: '' });
-
-      const options: Record<string, any> = {
-        groupId: currentGroup.id,
-        usingNetwork: false,
-      };
-      if (lastMessageId) {
-        options.parentMessageId = lastMessageId;
-      }
       // 增加一条chatgpt虚拟信息
       this.addGroupChat({
         dateTime: new Date().toLocaleString(),
