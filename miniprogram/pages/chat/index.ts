@@ -9,9 +9,10 @@ import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
-import { modelTypeMap } from '../../const/config/index';
+import { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
+import { hasInterceptors } from 'mobx-miniprogram/lib/internal';
 
 const app = getApp<IAppOption>();
 
@@ -45,6 +46,11 @@ Component({
     },
     requestTask: null as any,
     groupScroll: {},
+    groupOperate: {
+      visible: false,
+      groupId: '',
+      actions: groupActions,
+    }
   },
 
   // @ts-ignore
@@ -103,7 +109,7 @@ Component({
    */
   methods: {
     scrollToBottm: function () {
-      const scrollTop = this.data.scrollTop + 100;
+      const scrollTop = this.data.scrollTop + 200;
       this.setData({ scrollTop });
     },
     chatGroup: async function(groupId?: number) {
@@ -123,6 +129,10 @@ Component({
       this.chatGroup(currentGroupId);
     },
     createChatGroup: async function(event: any) {
+      if (this.data.loading) {
+        Toast('请等待当前会话结束');
+        return;
+      }
       const res = await createChat({ appId: event.detail.key });
       const groups = this.data.groups;
       groups.unshift(res);
@@ -180,6 +190,7 @@ Component({
       }
       if (loading) {
         Toast('请等待当前会话结束');
+        return;
       }
       const options: Record<string, any> = {
         groupId: currentGroup.id,
@@ -456,6 +467,14 @@ Component({
       this.triggerEvent("onChange", { key: 'chat' });
       // 新建会话
       this.createChatGroup(appId);
+    },
+    // 点击group的操作
+    showGroupOperate: function (event: any) {
+      const groupId = event.currentTarget.dataset.text;
+      this.setData({ groupOperate: { visible: true, groupId, actions: groupActions } });
+    },
+    closeGroupOperate: function () {
+      this.setData({ groupOperate: { visible: false, groupId: '', actions: groupActions } });
     },
   },
 

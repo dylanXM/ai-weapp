@@ -123,12 +123,19 @@
             custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}};"
             border="{{false}}"
             title="{{group.title}}"
-            is-link
             bind:click="chooseGroup"
             data-text="{{group.id}}"
             icon="chat-o"
             title-class="p-common-ellipsis"
-          />
+          >
+            <van-icon
+              slot="right-icon"
+              name="ellipsis"
+              size="24"
+              data-text="{{group.id}}"
+              catchtap="showGroupOperate"
+            />
+          </van-cell>
         </view>
       </view>
       <view class="p-chat-group-user p-common-blur">
@@ -165,5 +172,16 @@
     actions="{{ modelConfig.options }}"
     bind:close="closeModelActionSheet"
     bind:select="onSelectModel"
+    cancel-text="取消"
+    bind:cancel="closeModelActionSheet"
+  />
+
+  <van-action-sheet
+    show="{{ groupOperate.visible }}"
+    actions="{{ groupOperate.actions }}"
+    bind:close="closeGroupOperate"
+    bind:select="onSelect"
+    cancel-text="取消"
+    bind:cancel="closeGroupOperate"
   />
 </view>

@@ -23,4 +23,8 @@ export const modelTypeMap = {
     countKey: 'modelCount',
     useTokenKey: 'useModelToken',
   }
-}
+};
+
+export const groupActions = [
+  { name: '删除', color: '#ee0a24' },
+];
