@@ -453,6 +453,13 @@ Component({
         }
       });
     },
+    // 新增应用dispatch
+    dispatchAppId: function (appId: string) {
+      // 跳转到chat页面
+      this.triggerEvent("onChange", { key: 'chat' });
+      // 新建会话
+      this.createChatGroup(appId);
+    },
   },
 
   lifetimes: {
