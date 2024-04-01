@@ -20,10 +20,6 @@ const formatNumber = (n: number) => {
 
 export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
   const uint8Array = new Uint8Array(arrayBuffer);
-  let str = '';
-  console.log('unit8Array', uint8Array, );
-  [].forEach.call(uint8Array, (byte) => {
-      str += String.fromCharCode(byte);
-  });
-  return str;
+  let str = decodeURIComponent(escape(String.fromCharCode(...uint8Array)));
+  return str; 
 }
