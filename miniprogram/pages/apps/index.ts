@@ -31,8 +31,5 @@ Component({
   methods: {
   },
   lifetimes: {
-    attached() {
-      this.subscribeKeyboard();
-    },
   }
 })

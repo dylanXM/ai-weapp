@@ -33,7 +33,6 @@ Component({
     allGroups: [] as ChatGroup[],
     messages: {} as Message[],
     value: '',
-    bottomSafeHeight: 0,
     keyboardHeight: 0,
     popupVisible: false,
     loading: false,
@@ -60,6 +59,7 @@ Component({
       model: 'model',
       userBalance: 'userBalance',
       currentGroup: 'currentGroup',
+      bottomSafeHeight: 'bottomSafeHeight',
     },
     actions: {
       setState: "setState",
@@ -280,7 +280,7 @@ Component({
             url: 'https://service.winmume.com/api/chatgpt/chat-process',
             method: 'POST',
             data: {
-              appId: null,
+              appId: currentGroup.appId,
               prompt: `${value}\n`,
               options,
             },
@@ -444,15 +444,6 @@ Component({
       // @ts-ignore
       this.setState('userBalance', { ...this.data.userBalance, ...userBalance });
     },
-    // 监听键盘高度
-    subscribeKeyboard: function () {
-      // 全局注册键盘高度
-      listenSafeHeightChange({
-        safeHieghtCallback: (safeBottom: number) => {
-          this.setData({ bottomSafeHeight: safeBottom });
-        },
-      });
-    },
     handlekeyboardHeightChange: function(event: any) {
       this.setData({ keyboardHeight: event.detail.height });
       this.scrollToBottm();
@@ -468,7 +459,6 @@ Component({
 
   lifetimes: {
     attached() {
-      this.subscribeKeyboard.bind(this)();
     },
     detached() {
       this.setData({ requestTask: null });

@@ -8,6 +8,7 @@ export const store = observable({
   modelList: {},
   loading: true,
   currentGroup: {},
+  bottomSafeHeight: 0,
   navBar: {
     navBarHeight: 0, // 导航栏高度
     menuRight: 0, // 胶囊距右方间距（方保持左、右间距一致）

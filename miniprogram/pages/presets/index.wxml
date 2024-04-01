@@ -24,6 +24,8 @@
       class="p-presets-item"
       wx:key="id"
       wx:for-item="item"
+      bind:tap="handleClickPreset"
+      data-id="{{ item.id }}"
     >
       <van-icon
         class="p-presets-item-avatar"

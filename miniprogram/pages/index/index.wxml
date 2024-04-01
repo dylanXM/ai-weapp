@@ -3,6 +3,7 @@
   <chat
     style="display: {{activeNav === 'chat' && !loading ? 'block' : 'none'}}; height: 100%;"
     bind:onChange="handleActiveNavChange"
+    id="chat-component"
   />
 
   <user
@@ -11,6 +12,7 @@
 
   <presets
     style="display: {{activeNav === 'presets' ? 'block' : 'none'}}; height: 100%;"
+    bind:clickApp="handleToChat"
   />
 
   <apps

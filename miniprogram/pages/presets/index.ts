@@ -66,6 +66,10 @@ Component({
       });
       this.setData({ presets: newPresets });
     },
+    handleClickPreset: function (event: any) {
+      const appId = event.currentTarget.dataset.id;
+      this.triggerEvent("clickApp", { key: appId });
+    }
   },
   lifetimes: {
     attached() {

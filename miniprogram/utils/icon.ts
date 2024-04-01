@@ -5,7 +5,6 @@ export const icons = [
   'fire-o',
   'coupon-o',
   'gem-o',
-  'music-o',
   'award-o',
   'diamond-o',
   'medal-o',

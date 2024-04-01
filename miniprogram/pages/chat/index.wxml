@@ -83,7 +83,7 @@
           bind:confirm="chatProcess"
           disabled="{{ loading }}"
           bind:keyboardheightchange="handlekeyboardHeightChange"
-          type="textarea"
+          autosize
         />
       </view>
       <van-icon

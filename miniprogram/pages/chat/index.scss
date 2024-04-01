@@ -31,7 +31,7 @@
 .p-chat-search {
   position: relative;
   min-height: 54px;
-  padding: 0 12px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
@@ -39,11 +39,12 @@
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
   // background-color: #f1f1f1;
   border-top: #f1f1f1 1px solid;
+  box-sizing: border-box;
 }
 
 .p-chat-search-border {
   width: 100%;
-  padding: 4px 12px;
+  padding: 3px 12px;
   margin: 0 8px 0 0;
   border: 1px solid #f1f1f1;
   // box-shadow: 
