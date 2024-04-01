@@ -7,7 +7,7 @@
   </view>
 </view>
 <view
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight}}px)"
   class="p-apps-container"
 >
   <view>

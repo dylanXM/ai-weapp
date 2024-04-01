@@ -1,4 +1,3 @@
-import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 
@@ -15,7 +14,6 @@ Component({
    * 组件的初始数据
    */
   data: {
-    bottomSafeHeight: 0,
   },
 
   // @ts-ignore
@@ -31,20 +29,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 监听键盘高度
-    subscribeKeyboard: function () {
-      // 全局注册键盘高度
-      listenKeyboardHeightChange({
-        safeHieghtCallback: () => false,
-        keyboardHeightCallback: (keyboardHeight: number) => {
-          this.setData({ keyboardHeight });
-        }
-      });
-    },
   },
   lifetimes: {
     attached() {
-      this.subscribeKeyboard();
     },
   }
 })

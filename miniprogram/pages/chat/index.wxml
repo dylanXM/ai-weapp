@@ -82,6 +82,8 @@
           confirm-hold="{{true}}"
           bind:confirm="chatProcess"
           disabled="{{ loading }}"
+          bind:keyboardheightchange="handlekeyboardHeightChange"
+          type="textarea"
         />
       </view>
       <van-icon

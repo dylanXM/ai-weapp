@@ -1,5 +1,4 @@
 import { IAppOption } from '../../../typings';
-import { listenKeyboardHeightChange } from '../../utils/keyboards';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { queryPresetsList } from '../../api/category/index';
@@ -39,16 +38,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 监听键盘高度
-    subscribeKeyboard: function () {
-      // 全局注册键盘高度
-      listenKeyboardHeightChange({
-        safeHieghtCallback: () => false,
-        keyboardHeightCallback: (keyboardHeight: number) => {
-          this.setData({ keyboardHeight });
-        }
-      });
-    },
     // 初始数据获取
     getPresets: async function () {
       // const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
@@ -80,7 +69,6 @@ Component({
   },
   lifetimes: {
     attached() {
-      this.subscribeKeyboard();
       this.getPresets();
     },
   }

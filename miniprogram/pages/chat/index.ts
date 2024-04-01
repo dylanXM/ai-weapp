@@ -1,5 +1,5 @@
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
-import { listenKeyboardHeightChange } from '../../utils/keyboards';
+import { listenSafeHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
 import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
 // @ts-ignore
@@ -32,7 +32,6 @@ Component({
     groups: [] as ChatGroup[],
     allGroups: [] as ChatGroup[],
     messages: {} as Message[],
-    currentGroup: {} as ChatGroup,
     value: '',
     bottomSafeHeight: 0,
     keyboardHeight: 0,
@@ -59,7 +58,8 @@ Component({
       user: 'user',
       AIName: 'siteName',
       model: 'model',
-      userBalance: 'userBalance'
+      userBalance: 'userBalance',
+      currentGroup: 'currentGroup',
     },
     actions: {
       setState: "setState",
@@ -93,6 +93,9 @@ Component({
     keyboardHeight: function (data) {
       console.log('keyboardHeight', data);
     },
+    currentGroup: function (data) {
+      console.log('currentGroup', data);
+    }
   },
 
   /**
@@ -113,6 +116,7 @@ Component({
       }
     },
     updateGroup: async function(title: string) {
+      // @ts-ignore
       const { currentGroup } = this.data;
       const currentGroupId = currentGroup.id;
       await updateGroup({ groupId: currentGroupId, title });
@@ -142,7 +146,8 @@ Component({
         text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
       }));
       const chooseGroup = this.data.groups.find(group => group.id === groupId)
-      this.setData({ messages, currentGroup: chooseGroup });
+      this.setData({ messages });
+      this.setState('currentGroup', chooseGroup)
       this.scrollToBottm();
     },
     addGroupChat: function(message: Message) {
@@ -442,16 +447,15 @@ Component({
     // 监听键盘高度
     subscribeKeyboard: function () {
       // 全局注册键盘高度
-      listenKeyboardHeightChange({
+      listenSafeHeightChange({
         safeHieghtCallback: (safeBottom: number) => {
           this.setData({ bottomSafeHeight: safeBottom });
         },
-        keyboardHeightCallback: (keyboardHeight: number) => {
-          console.log('keyboardHeight', keyboardHeight);
-          this.setData({ keyboardHeight });
-          this.scrollToBottm();
-        }
       });
+    },
+    handlekeyboardHeightChange: function(event: any) {
+      this.setData({ keyboardHeight: event.detail.height });
+      this.scrollToBottm();
     },
     // 新增应用dispatch
     dispatchAppId: function (appId: string) {

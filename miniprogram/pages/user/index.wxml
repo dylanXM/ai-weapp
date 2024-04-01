@@ -8,7 +8,7 @@
 
 <view
   class="p-user-container"
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight}}px)"
+  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight}}px)"
 >
   <view class="p-user-info-container">
     <view>
