@@ -17,3 +17,13 @@ const formatNumber = (n: number) => {
   const s = n.toString()
   return s[1] ? s : '0' + s
 }
+
+export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
+  const uint8Array = new Uint8Array(arrayBuffer);
+  let str = '';
+  console.log('unit8Array', uint8Array, );
+  [].forEach.call(uint8Array, (byte) => {
+      str += String.fromCharCode(byte);
+  });
+  return str;
+}

@@ -1,5 +1,4 @@
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
-import { listenSafeHeightChange } from '../../utils/keyboards';
 import { IAppOption } from 'typings';
 import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
 // @ts-ignore
@@ -9,6 +8,7 @@ import Toast from '@vant/weapp/toast/toast';
 import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
+import { uint8ArrayToString } from '../../utils/util';
 import { modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
@@ -291,8 +291,10 @@ Component({
           });
           requestTask.onChunkReceived(function (res) {
             // @ts-ignore
-            const decoder = new TextDecoder('utf-8');
-            const responseText = decoder.decode(res.data);
+            // const decoder = new TextDecoder('utf-8');
+            // const responseText = decoder.decode(res.data);
+            const responseText: string = uint8ArrayToString(res.data);
+            // const responeText: string = decodeURIComponent(escape(String.fromCharCode(...[res.data])));
             if ([1].includes(model.keyType)) {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
               let chunk = responseText;
