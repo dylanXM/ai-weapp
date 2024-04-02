@@ -5,6 +5,8 @@ import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/ch
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
 import Toast from '@vant/weapp/toast/toast';
+// @ts-ignore
+import Dialog from '@vant/weapp/dialog/dialog';
 import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
@@ -12,7 +14,6 @@ import { uint8ArrayToString } from '../../utils/util';
 import { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import { hasInterceptors } from 'mobx-miniprogram/lib/internal';
 
 const app = getApp<IAppOption>();
 
@@ -32,7 +33,8 @@ Component({
   data: {
     groups: [] as ChatGroup[],
     allGroups: [] as ChatGroup[],
-    messages: {} as Message[],
+    messageMap: {} as Record<string, Message[]>,
+    currentGroup: {} as ChatGroup,
     value: '',
     keyboardHeight: 0,
     popupVisible: false,
@@ -48,7 +50,7 @@ Component({
     groupScroll: {},
     groupOperate: {
       visible: false,
-      groupId: '',
+      group: {} as ChatGroup,
       actions: groupActions,
     }
   },
@@ -64,7 +66,6 @@ Component({
       AIName: 'siteName',
       model: 'model',
       userBalance: 'userBalance',
-      currentGroup: 'currentGroup',
       bottomSafeHeight: 'bottomSafeHeight',
     },
     actions: {
@@ -150,24 +151,27 @@ Component({
       this.setData({ groups: newGroups });
     },
     queryChatList: async function(groupId: number) {
+      const { messageMap, groups } = this.data;
       const res = await queryChat({ groupId });
       const messages = res.map(message => ({
         ...message,
         text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
       }));
-      const chooseGroup = this.data.groups.find(group => group.id === groupId)
-      this.setData({ messages });
-      this.setState('currentGroup', chooseGroup)
+      const chooseGroup = groups.find(group => group.id === groupId)
+      this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup });
       this.scrollToBottm();
     },
     addGroupChat: function(message: Message) {
-      const { messages } = this.data;
+      // @ts-ignore
+      const { currentGroup, messageMap } = this.data;
+      const messages = messageMap[currentGroup.id];
       messages.push(message);
-      this.setData({ messages });
+      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
       this.scrollToBottm();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
-      const { messages } = this.data;
+      const { currentGroup, messageMap } = this.data;
+      const messages = messageMap[currentGroup.id];
       const length = messages.length;
       if (length - 1 < index) {
         return;
@@ -177,13 +181,14 @@ Component({
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
-      this.setData({ messages });
+      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
       this.scrollToBottm();
     },
     chatProcess: async function() {
       const _this = this;
       // @ts-ignore
-      const { value, loading,  currentGroup, messages, model } = _this.data;
+      const { value, loading,  currentGroup, model, messageMap } = _this.data;
+      const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
         return;
@@ -425,7 +430,8 @@ Component({
       Toast.clear();
     },
     cancelChatProcess: function () {
-      const { loading, requestTask, messages } = this.data;
+      const { loading, requestTask, messageMap, currentGroup } = this.data;
+      const messages = messageMap[currentGroup.id];
       if (!loading || !requestTask) {
         return;
       }
@@ -470,12 +476,31 @@ Component({
     },
     // 点击group的操作
     showGroupOperate: function (event: any) {
-      const groupId = event.currentTarget.dataset.text;
-      this.setData({ groupOperate: { visible: true, groupId, actions: groupActions } });
+      console.log('event', event);
+      const { group } = event.currentTarget.dataset;
+      this.setData({ groupOperate: { visible: true, group, actions: groupActions } });
     },
     closeGroupOperate: function () {
       this.setData({ groupOperate: { visible: false, groupId: '', actions: groupActions } });
     },
+    // 删除对话组
+    delChatGroup: function () {
+      const { groupOperate } = this.data;
+      const { group, visible } = groupOperate;
+      if (!visible) {
+        return;
+      }
+      Dialog.confirm({
+        title: '操作确认',
+        message: `是否删除对话【${group.title}】`,
+      })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        });
+    }
   },
 
   lifetimes: {

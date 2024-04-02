@@ -7,7 +7,6 @@ export const store = observable({
   model: {}, 
   modelList: {},
   loading: true,
-  currentGroup: {},
   bottomSafeHeight: 0,
   navBar: {
     navBarHeight: 0, // 导航栏高度

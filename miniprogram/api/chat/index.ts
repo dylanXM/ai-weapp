@@ -27,6 +27,19 @@ export const updateGroup = async ({ groupId, title }: { groupId: number; title: 
 };
 
 /**
+ * 删除对话组
+ * @param param0 
+ */
+export const delGroup = async ({ groupId }: { groupId: number }) => {
+  const res = await request<ChatGroup[]>({
+    url: `${config.url}/group/del`,
+    method: 'POST',
+    data: { groupId },
+  });
+  return res.data;
+};
+
+/**
  * 创建一个会话
  */
 export const createChat = async ({ appId }: { appId: number }) => {

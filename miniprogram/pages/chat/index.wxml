@@ -34,7 +34,7 @@
       scroll-with-animation
       enable-passive
     >
-      <view wx:for="{{messages}}" wx:key="chatId" wx:for-item="message">
+      <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->
         <view class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
@@ -132,7 +132,7 @@
               slot="right-icon"
               name="ellipsis"
               size="24"
-              data-text="{{group.id}}"
+              data-group="{{group}}"
               catchtap="showGroupOperate"
             />
           </van-cell>
@@ -180,7 +180,7 @@
     show="{{ groupOperate.visible }}"
     actions="{{ groupOperate.actions }}"
     bind:close="closeGroupOperate"
-    bind:select="onSelect"
+    bind:select="delChatGroup"
     cancel-text="取消"
     bind:cancel="closeGroupOperate"
   />
