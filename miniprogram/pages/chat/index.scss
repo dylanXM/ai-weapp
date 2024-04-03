@@ -38,21 +38,17 @@
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
   // background-color: #f1f1f1;
-  border-top: #f1f1f1 1px solid;
+  // border-top: #f1f1f1 1px solid;
   box-sizing: border-box;
 }
 
 .p-chat-search-border {
   width: 100%;
-  padding: 3px 12px;
+  padding: 6px 12px;
   margin: 0 8px 0 0;
   border: 1px solid #f1f1f1;
-  // box-shadow: 
-  //   0 -0.5px 0 0 #ebedf0, /* 上 */
-  //   0 0.5px 0 0 #ebedf0, /* 下 */
-  //   -0.5px 0 0 0 #ebedf0, /* 左 */
-  //   0.5px 0 0 0 #ebedf0; /* 右 */
-  border-radius: 16px;
+  box-shadow: 0px 0px 4px 2px #f1f1f1;
+  border-radius: 12px;
   display: flex;
   align-items: center;
 }

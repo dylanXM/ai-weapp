@@ -1,6 +1,6 @@
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { IAppOption } from 'typings';
-import { createChat, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
+import { createChat, delGroup, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
@@ -484,22 +484,24 @@ Component({
       this.setData({ groupOperate: { visible: false, groupId: '', actions: groupActions } });
     },
     // 删除对话组
-    delChatGroup: function () {
-      const { groupOperate } = this.data;
+    delChatGroup: function (event: any) {
+      const _this = this;
+      const { action } = event.detail;
+      const { groupOperate, currentGroup } = _this.data;
       const { group, visible } = groupOperate;
       if (!visible) {
         return;
       }
-      Dialog.confirm({
-        title: '操作确认',
-        message: `是否删除对话【${group.title}】`,
-      })
-        .then(() => {
-          // on confirm
-        })
-        .catch(() => {
-          // on cancel
+      if (action === 'del') {
+        Dialog.confirm({
+          title: '操作确认',
+          message: `是否删除对话【${group.title}】`,
+        }).then(() => {
+          delGroup({ groupId: group.id }).then(() => {
+            _this.chatGroup(currentGroup.id === group.id ? '' : currentGroup.id);
+          });
         });
+      }
     }
   },
 

@@ -26,5 +26,5 @@ export const modelTypeMap = {
 };
 
 export const groupActions = [
-  { name: '删除', color: '#ee0a24' },
+  { name: '删除', color: '#ee0a24', action: 'del' },
 ];
