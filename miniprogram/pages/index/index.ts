@@ -21,7 +21,6 @@ Component({
   },
   methods: {
     handleActiveNavChange(event: any) {
-      console.log('activeNav', event.detail.key);
       this.setData({ activeNav: event.detail.key });
     },
     // 监听键盘高度
@@ -35,9 +34,7 @@ Component({
     },
     // 调用子组件创建会话方法，并切换到chat组件
     handleToChat: function(event: any) {
-      console.log('appId', event.detail.key);
       const chatComponent = this.selectComponent('#chat-component'); 
-      console.log('child', chatComponent);
       chatComponent.createChatGroup(event);
       this.setData({ activeNav: 'chat' });
     }

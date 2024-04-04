@@ -4,7 +4,9 @@
     style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
     <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="background: transparent;" />
+    <view wx:if="{{ currentApp.id }}">{{currentApp.name}}</view>
     <van-cell
+      wx:if="{{ !currentApp.id }}"
       is-link
       title="{{model.modelName}}"
       border="{{ false }}"
@@ -34,6 +36,7 @@
       scroll-with-animation
       enable-passive
       id="messages-view"
+      wx:if="{{messageMap[currentGroup.id].length !== 0}}"
     >
       <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->
@@ -56,9 +59,27 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{messageMap[currentGroup.id].length === 0}}">
-      </view>
     </scroll-view>
+    <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
+      <view class="p-chat-nomessage-desc">今天有什么可以帮您？</view>
+      <view class="p-chat-nomessage-demo">
+        <view wx:if="{{currentApp.id}}" class="p-chat-nomessage-demo-list">
+          <view
+            wx:for="{{ currentApp.appDemo }}"
+            bind:tap="clickPrompt"
+            wx:key="item"
+            wx:for-item="item"
+            size="small"
+            round
+            type="default"
+            data-text="{{item}}"
+            class="p-chat-nomessage-demo-item"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+    </view>
     <!-- 搜索区 -->
     <view class="p-chat-search">
       <van-icon
@@ -191,7 +212,6 @@
     title="标题"
     show="{{ groupOperate.renameVisible }}"
     show-cancel-button
-    confirm-button-open-type="getUserInfo"
     bind:close="closeRenameGroup"
   >
     <van-field
@@ -200,6 +220,7 @@
       title="修改对话组名称"
       bind:change="groupNewNameChange"
       type="textarea"
+      border="{{ false }}"
     />
   </van-dialog>
 </view>

@@ -54,7 +54,8 @@ Component({
       actions: groupActions,
       renameVisible: false,
       newName: '',
-    }
+    },
+    currentApp: {} as any,
   },
 
   // @ts-ignore
@@ -69,6 +70,7 @@ Component({
       model: 'model',
       userBalance: 'userBalance',
       bottomSafeHeight: 'bottomSafeHeight',
+      allPresets: 'allPresets',
     },
     actions: {
       setState: "setState",
@@ -97,25 +99,38 @@ Component({
       }
     },
     bottomSafeHeight: function (data) {
-      console.log('bottomSafeHeight', data);
     },
     keyboardHeight: function (data) {
-      console.log('keyboardHeight', data);
     },
     currentGroup: function (data) {
       if (!data.id) {
         return;
       }
-      const query = this.createSelectorQuery();
-      query.select('#messages-view').boundingClientRect(function(rect) {
-         //res就是 所有标签为v1的元素的信息 的数组
-        console.log(rect);  
-        wx.pageScrollTo({
-          selector: '#messages-view',
-          scrollTop: rect.bottom,
-          duration: 100 // 滑动速度
-        })
-      }).exec();
+      // @ts-ignore
+      const { allPresets } = this.data;
+      const currentAppId = data.appId;
+      if (!currentAppId || !allPresets?.length) {
+        this.setData({ currentApp: {  } });
+        return;
+      }
+      const currentApp = allPresets.find((item: any) => item.id === currentAppId);
+      const appDemo = currentApp.demoData.split('\n').filter((item: string) => item);
+      this.setData({ currentApp: { ...currentApp, appDemo } });
+      // const query = this.createSelectorQuery();
+      // query.select('#messages-view').boundingClientRect(function(rect) {
+      //    //res就是 所有标签为v1的元素的信息 的数组
+      //   wx.pageScrollTo({
+      //     selector: '#messages-view',
+      //     scrollTop: rect.bottom,
+      //     duration: 100 // 滑动速度
+      //   })
+      // }).exec();
+    },
+    currentApp: function (data) {
+      console.log('currentApp', data);
+    },
+    robotAvatar: function (data) {
+      console.log('robotAvatar', data);
     }
   },
 
@@ -144,8 +159,11 @@ Component({
       this.chatGroup(currentGroupId);
     },
     createChatGroup: async function(event: any) {
-      if (this.data.loading) {
-        Toast('请等待当前会话结束');
+      const appId = event.detail.key;
+      const { allGroups } = this.data;
+      const alreadyHasGroup = allGroups.find(group => group.appId === appId);
+      if (alreadyHasGroup) {
+        Toast('当前应用已经开启了一个对话无需新建了');
         return;
       }
       const res = await createChat({ appId: event.detail.key });
@@ -198,11 +216,11 @@ Component({
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
       this.scrollToBottm();
     },
-    chatProcess: async function() {
+    chatProcess: async function(text?: string) {
       const _this = this;
       // @ts-ignore
-      const { value, loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
-      console.log('userBalance', balance);
+      const { loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
+      const value = text || _this.data.value;
       const { modelCount, modelPrice } = balance;
       if (modelCount < modelPrice) {
         Toast('积分不足，请及时充值');
@@ -335,12 +353,10 @@ Component({
               }
             },
             fail: function (error) {
-              console.log('chat error', error.message);
             },
             timeout: 10000,
           });
           requestTask.onChunkReceived(function (res) {
-            console.log('on chat res', res);
             const responseText: string = uint8ArrayToString(res.data);
             if ([1].includes(model.keyType)) {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
@@ -355,7 +371,6 @@ Component({
                 /* 二次解析 */
                 // const parseData = parseTextToJSON(responseText)
                 // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-                console.log('parse data erro from openai: ');
                 if (chunk.includes('OpenAI timed out waiting for response')) {
                   Toast.fail('会话超时了、告知管理员吧~~~');
                 }
@@ -378,7 +393,6 @@ Component({
                   tem = parseData;
                 }
                 catch (error) {
-                  console.log('Json parse 2 3 type error: ');
                 }
               }
               tem.result = cacheResult;
@@ -482,7 +496,7 @@ Component({
       // if (loading === false) {
       //   this.setData({ scrollTop: e.detail.scrollTop });
       // }
-      console.log(e.detail.scrollTop, this.data.scrollTop);
+      // console.log(e.detail.scrollTop, this.data.scrollTop);
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
@@ -511,7 +525,6 @@ Component({
     },
     // 点击group的操作
     showGroupOperate: function (event: any) {
-      console.log('event', event);
       const { group } = event.currentTarget.dataset;
       this.setData({ groupOperate: { visible: true, group, actions: groupActions, renameVisible: false, newName: '' } });
     },
@@ -544,7 +557,6 @@ Component({
       }
     },
     closeRenameGroup: async function () {
-      console.log('close rename');
       const { groupOperate, currentGroup } = this.data;
       const { newName, group } = groupOperate;
       if (!newName) {
@@ -556,6 +568,11 @@ Component({
     groupNewNameChange: function (event: any) {
       const { groupOperate } = this.data;
       this.setData({ groupOperate: { ...groupOperate, newName: event.detail } });
+    },
+    clickPrompt: function (event: any) {
+      const _this = this;
+      const { text } = event.currentTarget.dataset;
+      _this.chatProcess(text);
     }
   },
 
