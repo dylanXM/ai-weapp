@@ -545,13 +545,13 @@ Component({
     },
     closeRenameGroup: async function () {
       console.log('close rename');
-      const { groupOperate } = this.data;
+      const { groupOperate, currentGroup } = this.data;
       const { newName, group } = groupOperate;
       if (!newName) {
         return;
       }
       await updateGroup({ groupId: group.id, title: newName });
-      this.chatGroup();
+      this.chatGroup(currentGroup.id);
     },
     groupNewNameChange: function (event: any) {
       const { groupOperate } = this.data;
