@@ -39,12 +39,13 @@
       enable-passive
       id="messages-view"
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
+      bindscrolltolower="onScrollToLower"
     >
       <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->
         <view class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
-            <van-image round width="22" height="22" src="{{user.userInfo.avatar}}" />
+            <image class="p-chat-message-avatar" src="{{user.userInfo.avatar}}" />
             <view class="p-chat-message-title-name">You</view>
           </view>
           <view class="p-chat-message-container">{{message.text}}</view>
@@ -52,7 +53,7 @@
 
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
-            <van-image round width="22" height="22" src="{{robotAvatar}}" />
+            <image class="p-chat-message-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png'}}" />
             <view class="p-chat-message-title-name">{{AIName || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
@@ -110,8 +111,8 @@
         name="upgrade"
         size="28"
         class="p-chat-message-to-bottom"
-        bind:click="scrollToBottom"
-        wx:if="{{ groupScroll[currentGroup.id].toBottom }}"
+        bindtap="scrollToBottom"
+        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length }}"
       />
       <view class="p-chat-search-border">
         <van-field

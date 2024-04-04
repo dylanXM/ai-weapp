@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { IAppOption } from 'typings';
 import { createChat, delGroup, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
@@ -56,6 +57,7 @@ Component({
       newName: '',
     },
     currentApp: {} as any,
+    isScrollToLower: true,
   },
 
   // @ts-ignore
@@ -103,34 +105,22 @@ Component({
     keyboardHeight: function (data) {
     },
     currentGroup: function (data) {
+      const _this = this;
+      const { allPresets } = _this.data;
       if (!data.id) {
         return;
       }
-      // @ts-ignore
-      const { allPresets } = this.data;
       const currentAppId = data.appId;
       if (!currentAppId || !allPresets?.length) {
-        this.setData({ currentApp: {  } });
+        _this.setData({ currentApp: {  } });
         return;
       }
       const currentApp = allPresets.find((item: any) => item.id === currentAppId);
       const appDemo = currentApp.demoData.split('\n').filter((item: string) => item);
-      this.setData({ currentApp: { ...currentApp, appDemo } });
-      // const query = this.createSelectorQuery();
-      // query.select('#messages-view').boundingClientRect(function(rect) {
-      //    //res就是 所有标签为v1的元素的信息 的数组
-      //   wx.pageScrollTo({
-      //     selector: '#messages-view',
-      //     scrollTop: rect.bottom,
-      //     duration: 100 // 滑动速度
-      //   })
-      // }).exec();
+      _this.setData({ currentApp: { ...currentApp, appDemo } });
     },
-    currentApp: function (data) {
-      console.log('currentApp', data);
-    },
-    robotAvatar: function (data) {
-      console.log('robotAvatar', data);
+    messageMap: function (data) {
+      console.log('messageMap', data);
     }
   },
 
@@ -138,7 +128,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    scrollToBottm: function () {
+    scrollToBottom: function () {
       const scrollTop = this.data.scrollTop + 200;
       this.setData({ scrollTop });
     },
@@ -193,7 +183,7 @@ Component({
       }));
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup });
-      this.scrollToBottm();
+      this.scrollToBottom();
     },
     addGroupChat: function(message: Message) {
       // @ts-ignore
@@ -201,7 +191,7 @@ Component({
       const messages = messageMap[currentGroup.id];
       messages.push(message);
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      this.scrollToBottm();
+      this.scrollToBottom();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
       const { currentGroup, messageMap } = this.data;
@@ -216,18 +206,13 @@ Component({
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      this.scrollToBottm();
+      this.scrollToBottom();
     },
     chatProcess: async function(text?: string) {
       const _this = this;
       // @ts-ignore
       const { loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
       const value = text || _this.data.value;
-      const { modelCount, modelPrice } = balance;
-      if (modelCount < modelPrice) {
-        Toast('积分不足，请及时充值');
-        return;
-      }
       const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
@@ -235,6 +220,11 @@ Component({
       }
       if (loading) {
         Toast('请等待当前会话结束');
+        return;
+      }
+      const { modelCount, modelPrice } = balance;
+      if (modelCount < modelPrice) {
+        Toast('积分不足，请及时充值');
         return;
       }
       const options: Record<string, any> = {
@@ -494,12 +484,11 @@ Component({
       });
     },
     // 消息区滚动事件
-    onScroll: function(e: any) {
-      // const { loading } = this.data;
-      // if (loading === false) {
-      //   this.setData({ scrollTop: e.detail.scrollTop });
-      // }
-      // console.log(e.detail.scrollTop, this.data.scrollTop);
+    onScroll: function(event: any) {
+      this.setData({ isScrollToLower: false });
+    },
+    onScrollToLower: function (event: any) {
+      this.setData({ isScrollToLower: true });
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
@@ -517,7 +506,7 @@ Component({
     },
     handlekeyboardHeightChange: function(event: any) {
       this.setData({ keyboardHeight: event.detail.height });
-      this.scrollToBottm();
+      this.scrollToBottom();
     },
     // 新增应用dispatch
     dispatchAppId: function (appId: string) {
@@ -582,11 +571,6 @@ Component({
       const { text } = event.currentTarget.dataset;
       wx.setClipboardData({ data: text });
     },
-    // 
-    regenerateGptResult: function (event: any) {
-      const { text } = event.currentTarget.dataset;
-      this.chatProcess(text);
-    }
   },
 
   lifetimes: {
