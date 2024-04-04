@@ -31,8 +31,5 @@ Component({
   },
 
   lifetimes: {
-    created() {
-      this.setData({ menuList: app.globalData.menuList });
-    }
   }
 })

@@ -164,6 +164,7 @@ Component({
       const alreadyHasGroup = allGroups.find(group => group.appId === appId);
       if (alreadyHasGroup) {
         Toast('当前应用已经开启了一个对话无需新建了');
+        this.setData({ currentGroup: alreadyHasGroup });
         return;
       }
       const res = await createChat({ appId: event.detail.key });
@@ -188,6 +189,7 @@ Component({
       const messages = res.map(message => ({
         ...message,
         text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
+        originText: message.text,
       }));
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup });
@@ -347,6 +349,7 @@ Component({
                 _this.updateGroupChat(messages.length - 1, {
                   loading: false,
                   text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+                  error: true,
                   conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
                   requestOptions: { prompt: value, options: { ...options } },
                 });
@@ -570,9 +573,19 @@ Component({
       this.setData({ groupOperate: { ...groupOperate, newName: event.detail } });
     },
     clickPrompt: function (event: any) {
-      const _this = this;
       const { text } = event.currentTarget.dataset;
-      _this.chatProcess(text);
+      this.chatProcess(text);
+    },
+    // 复制gpt回答的内容
+    copyGptResult: function (event: any) {
+      console.log('event', event);
+      const { text } = event.currentTarget.dataset;
+      wx.setClipboardData({ data: text });
+    },
+    // 
+    regenerateGptResult: function (event: any) {
+      const { text } = event.currentTarget.dataset;
+      this.chatProcess(text);
     }
   },
 

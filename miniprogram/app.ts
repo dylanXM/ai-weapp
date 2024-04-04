@@ -1,5 +1,4 @@
 import { IAppOption } from '../typings';
-import { UserData } from './api/auth/type';
 import {
   getWechatSession,
   queryFront,
@@ -8,15 +7,13 @@ import {
   queryModelList,
   queryBaseModel,
 } from './api/index';
-import { BaseModelData, ModelData } from './api/model/type';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import { UserInfo } from './api/auth/type';
 
 // app.ts
 App<IAppOption>({
   towxml: require('./towxml/index'),
-  globalData: {
-  },
   onLaunch() {
     // @ts-ignore
     this.storeBindings = createStoreBindings(this, {

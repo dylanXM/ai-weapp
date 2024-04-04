@@ -18,8 +18,10 @@
   </view>
 </view>
 
+<view style="height: {{navBar.navBarHeight}}px;"></view>
+
 <view
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
   class="p-container"
 >
   <view
@@ -56,6 +58,28 @@
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
             <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
+          </view>
+          <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate">
+            <van-button
+              custom-class="p-common-no-border"
+              icon="label"
+              type="default"
+              size="small"
+              data-text="{{message.originText}}"
+              bind:click="copyGptResult"
+            >
+              复制
+            </van-button>
+            <van-button
+              custom-class="p-common-no-border"
+              icon="replay"
+              type="default"
+              size="small"
+              data-text="{{message.requestOptions.prompt}}"
+              bind:click="clickPrompt"
+            >
+              重新回答
+            </van-button>
           </view>
         </view>
       </view>
@@ -150,12 +174,14 @@
             icon="chat-o"
             title-class="p-common-ellipsis"
           >
-            <van-icon
+            <van-button
               slot="right-icon"
-              name="ellipsis"
-              size="24"
+              custom-class="p-common-no-border"
+              icon="ellipsis"
+              type="default"
               data-group="{{group}}"
               catchtap="showGroupOperate"
+              custom-style="background: transparent; padding: 0; height: 26px; width: 26px; font-size: 20px;"
             />
           </van-cell>
         </view>
