@@ -50,6 +50,7 @@
 
     <view class="p-user-item">
       <van-cell size="large" icon="envelop-o" title="绑定邮箱" is-link />
+      <van-cell size="large" icon="user-o" title="管理员" is-link />
     </view>
   </view>
 </view>

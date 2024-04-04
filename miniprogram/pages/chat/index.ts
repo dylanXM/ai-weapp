@@ -52,6 +52,8 @@ Component({
       visible: false,
       group: {} as ChatGroup,
       actions: groupActions,
+      renameVisible: false,
+      newName: '',
     }
   },
 
@@ -101,7 +103,19 @@ Component({
       console.log('keyboardHeight', data);
     },
     currentGroup: function (data) {
-      console.log('currentGroup', data);
+      if (!data.id) {
+        return;
+      }
+      const query = this.createSelectorQuery();
+      query.select('#messages-view').boundingClientRect(function(rect) {
+         //res就是 所有标签为v1的元素的信息 的数组
+        console.log(rect);  
+        wx.pageScrollTo({
+          selector: '#messages-view',
+          scrollTop: rect.bottom,
+          duration: 100 // 滑动速度
+        })
+      }).exec();
     }
   },
 
@@ -187,7 +201,13 @@ Component({
     chatProcess: async function() {
       const _this = this;
       // @ts-ignore
-      const { value, loading,  currentGroup, model, messageMap } = _this.data;
+      const { value, loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
+      console.log('userBalance', balance);
+      const { modelCount, modelPrice } = balance;
+      if (modelCount < modelPrice) {
+        Toast('积分不足，请及时充值');
+        return;
+      }
       const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
@@ -236,7 +256,7 @@ Component({
           let shouldContinue = true;
           let currentText = '';
           async function update() {
-            if (shouldContinue) {
+            if (shouldContinue) {balance
               if (cacheResText && cacheResText[i]) {
                 _this.setData({ typingStatusEnd: false });
 
@@ -303,14 +323,25 @@ Component({
             enableChunked: true,
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
-            }
+            },
+            success: function (res) {
+              if (res.statusCode !== 200) {
+                _this.updateGroupChat(messages.length - 1, {
+                  loading: false,
+                  text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+                  conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+                  requestOptions: { prompt: value, options: { ...options } },
+                });
+              }
+            },
+            fail: function (error) {
+              console.log('chat error', error.message);
+            },
+            timeout: 10000,
           });
           requestTask.onChunkReceived(function (res) {
-            // @ts-ignore
-            // const decoder = new TextDecoder('utf-8');
-            // const responseText = decoder.decode(res.data);
+            console.log('on chat res', res);
             const responseText: string = uint8ArrayToString(res.data);
-            // const responeText: string = decodeURIComponent(escape(String.fromCharCode(...[res.data])));
             if ([1].includes(model.keyType)) {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
               let chunk = responseText;
@@ -447,7 +478,11 @@ Component({
     },
     // 消息区滚动事件
     onScroll: function(e: any) {
-      // console.log(e.detail.scrollTop, this.data.scrollTop);
+      // const { loading } = this.data;
+      // if (loading === false) {
+      //   this.setData({ scrollTop: e.detail.scrollTop });
+      // }
+      console.log(e.detail.scrollTop, this.data.scrollTop);
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
@@ -478,13 +513,14 @@ Component({
     showGroupOperate: function (event: any) {
       console.log('event', event);
       const { group } = event.currentTarget.dataset;
-      this.setData({ groupOperate: { visible: true, group, actions: groupActions } });
+      this.setData({ groupOperate: { visible: true, group, actions: groupActions, renameVisible: false, newName: '' } });
     },
     closeGroupOperate: function () {
-      this.setData({ groupOperate: { visible: false, groupId: '', actions: groupActions } });
+      const { groupOperate } = this.data;
+      this.setData({ groupOperate: { ...groupOperate ,visible: false } });
     },
-    // 删除对话组
-    delChatGroup: function (event: any) {
+    // 操作对话组
+    operateChatGroup: function (event: any) {
       const _this = this;
       const { action } = event.detail;
       const { groupOperate, currentGroup } = _this.data;
@@ -502,6 +538,24 @@ Component({
           });
         });
       }
+
+      if (action === 'rename') {
+        this.setData({ groupOperate: { ...groupOperate, renameVisible: true } })
+      }
+    },
+    closeRenameGroup: async function () {
+      console.log('close rename');
+      const { groupOperate } = this.data;
+      const { newName, group } = groupOperate;
+      if (!newName) {
+        return;
+      }
+      await updateGroup({ groupId: group.id, title: newName });
+      this.chatGroup();
+    },
+    groupNewNameChange: function (event: any) {
+      const { groupOperate } = this.data;
+      this.setData({ groupOperate: { ...groupOperate, newName: event.detail } });
     }
   },
 

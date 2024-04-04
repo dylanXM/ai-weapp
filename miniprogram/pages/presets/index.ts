@@ -22,7 +22,6 @@ Component({
   data: {
     bottomSafeHeight: 0,
     presets: [],
-    allPresets: [],
   },
 
   // @ts-ignore
@@ -31,6 +30,10 @@ Component({
     fields: {
       navBar: 'navBar',
       user: 'user',
+      allPresets: 'allPresets'
+    },
+    actions: {
+      setState: "setState",
     },
   },
 
@@ -52,12 +55,15 @@ Component({
         icon: getRandom(icons),
       }))
       this.setData({ presets: newPresets, allPresets: newPresets });
+      this.setState('allPresets', newPresets);
     },
     searchPresets: function (event: any) {
       const query = event.detail;
+      // @ts-ignore
       const { allPresets } = this.data;
       if (!query) {
-        this.setData({ presets: allPresets, allPresets });        
+        this.setData({ presets: allPresets });
+        this.setState('allPresets', allPresets);    
       }
       const formatedQuery = query.toLowerCase();
       const newPresets = allPresets.filter((preset: any) => {

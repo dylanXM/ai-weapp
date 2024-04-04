@@ -22,6 +22,7 @@ export const store = observable({
     modelPrice: 0,
     modelType: 1,
   },
+  allPresets: [],
 
   // 计算属性, 暂时不需要
   // get sum() {

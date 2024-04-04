@@ -3,7 +3,7 @@
     class="p-navbar"
     style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
-    <van-icon name="wap-nav" bind:click="showPopup" size="24" custom-class="p-common-blur" custom-style="background: transparent;" />
+    <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="background: transparent;" />
     <van-cell
       is-link
       title="{{model.modelName}}"
@@ -12,7 +12,7 @@
       custom-style="background: transparent;"
       custom-class="p-common-blur"
     />
-    <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="24" />
+    <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="28" />
   </view>
 </view>
 
@@ -33,6 +33,7 @@
       class="p-chat-messages"
       scroll-with-animation
       enable-passive
+      id="messages-view"
     >
       <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message">
         <!-- 用户信息 -->
@@ -55,8 +56,7 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{messages.length === 0}}">
-         离开家撒谎电力科技阿莎
+      <view wx:if="{{messageMap[currentGroup.id].length === 0}}">
       </view>
     </scroll-view>
     <!-- 搜索区 -->
@@ -72,7 +72,6 @@
         <van-field
           placeholder="请输入你的问题或需求"
           border="{{ false }}"
-          clearable
           custom-style="padding: 0px;"
           value="{{ value }}"
           class="p-chat-search-input"
@@ -182,8 +181,26 @@
     show="{{ groupOperate.visible }}"
     actions="{{ groupOperate.actions }}"
     bind:close="closeGroupOperate"
-    bind:select="delChatGroup"
+    bind:select="operateChatGroup"
     cancel-text="取消"
     bind:cancel="closeGroupOperate"
   />
+
+  <van-dialog
+    use-slot
+    title="标题"
+    show="{{ groupOperate.renameVisible }}"
+    show-cancel-button
+    confirm-button-open-type="getUserInfo"
+    bind:close="closeRenameGroup"
+  >
+    <image src="https://img.yzcdn.cn/1.jpg" />
+    <van-field
+      value="{{ groupOperate.newName }}"
+      placeholder="请输入新的对话组名称"
+      title="修改对话组名称"
+      bind:change="groupNewNameChange"
+      type="textarea"
+    />
+  </van-dialog>
 </view>
