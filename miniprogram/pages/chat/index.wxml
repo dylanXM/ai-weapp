@@ -194,7 +194,6 @@
     confirm-button-open-type="getUserInfo"
     bind:close="closeRenameGroup"
   >
-    <image src="https://img.yzcdn.cn/1.jpg" />
     <van-field
       value="{{ groupOperate.newName }}"
       placeholder="请输入新的对话组名称"
