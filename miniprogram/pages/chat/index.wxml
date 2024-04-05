@@ -41,9 +41,9 @@
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
       bindscrolltolower="onScrollToLower"
     >
-      <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message">
+      <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message" wx:for-index="idx">
         <!-- 用户信息 -->
-        <view class="p-chat-message-contianer" wx:if="{{message.inversion}}">
+        <view style="padding-top: {{ idx === 0 ? 18 : 0 }}px;" class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
             <image class="p-chat-message-avatar" src="{{user.userInfo.avatar}}" />
             <view class="p-chat-message-title-name">You</view>
@@ -107,13 +107,13 @@
     </view>
     <!-- 搜索区 -->
     <view class="p-chat-search">
-      <van-icon
+      <!-- <van-icon
         name="upgrade"
         size="28"
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length }}"
-      />
+      /> -->
       <view class="p-chat-search-border">
         <van-field
           placeholder="请输入你的问题或需求"

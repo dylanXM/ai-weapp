@@ -131,7 +131,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      const scrollTop = this.data.scrollTop + 200;
+      const scrollTop = this.data.scrollTop + 1000;
       this.setData({ scrollTop, isScrollToLower: true });
     },
     chatGroup: async function(groupId?: number) {
@@ -485,17 +485,17 @@ Component({
       });
     },
     // 消息区滚动事件
-    onScroll: function (event: any){
-      console.log('onScroll this', event);
-      this.setData({ isScrollToLower: false });
-    },
-    onScrollToLower: function (event: any) {
-      console.log('onScrollToLower event', event);
-      const _this = this;
-      setTimeout(() => {
-        _this.setData({ isScrollToLower: true });
-      }, 100);
-    },
+    // onScroll: function (event: any){
+    //   console.log('onScroll this', event);
+    //   this.setData({ isScrollToLower: false });
+    // },
+    // onScrollToLower: function (event: any) {
+    //   console.log('onScrollToLower event', event);
+    //   const _this = this;
+    //   setTimeout(() => {
+    //     _this.setData({ isScrollToLower: true });
+    //   }, 100);
+    // },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
       const userBalance: any = {};
