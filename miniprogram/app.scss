@@ -28,11 +28,16 @@ view .h2w__p {
   margin: 0px !important;
 }
 
-.h2w__ul, .h2w__ol {
-  margin-bottom: 0px !important;
+.h2w__h1, .h2w__h2 {
+  margin-bottom: -16px !important;
 }
 
 .h2w__pre {
   margin-bottom: 0px !important;
   border-radius: 5px;
+}
+
+.h2w__ol {
+  margin-top: -24px !important;
+  margin-bottom: -16px !important;
 }

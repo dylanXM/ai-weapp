@@ -12,6 +12,7 @@ import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
+import { debounce } from '../../utils/debounce';
 import { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
@@ -106,6 +107,7 @@ Component({
     },
     currentGroup: function (data) {
       const _this = this;
+      this.setData({ isScrollToLower: true });
       const { allPresets } = _this.data;
       if (!data.id) {
         return;
@@ -130,7 +132,7 @@ Component({
   methods: {
     scrollToBottom: function () {
       const scrollTop = this.data.scrollTop + 200;
-      this.setData({ scrollTop });
+      this.setData({ scrollTop, isScrollToLower: true });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -212,7 +214,7 @@ Component({
       const _this = this;
       // @ts-ignore
       const { loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
-      const value = text || _this.data.value;
+      const value = typeof text === 'string' && text ? text : _this.data.value;
       const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
         Toast('请输入你的问题或需求');
@@ -347,7 +349,6 @@ Component({
             },
             fail: function (error) {
             },
-            timeout: 10000,
           });
           requestTask.onChunkReceived(function (res) {
             const responseText: string = uint8ArrayToString(res.data);
@@ -484,11 +485,16 @@ Component({
       });
     },
     // 消息区滚动事件
-    onScroll: function(event: any) {
+    onScroll: function (event: any){
+      console.log('onScroll this', event);
       this.setData({ isScrollToLower: false });
     },
     onScrollToLower: function (event: any) {
-      this.setData({ isScrollToLower: true });
+      console.log('onScrollToLower event', event);
+      const _this = this;
+      setTimeout(() => {
+        _this.setData({ isScrollToLower: true });
+      }, 100);
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
@@ -518,7 +524,8 @@ Component({
     // 点击group的操作
     showGroupOperate: function (event: any) {
       const { group } = event.currentTarget.dataset;
-      this.setData({ groupOperate: { visible: true, group, actions: groupActions, renameVisible: false, newName: '' } });
+      const actions = group.appId ? groupActions.filter(g => g.action !== 'rename') : groupActions;
+      this.setData({ groupOperate: { visible: true, group, actions, renameVisible: false, newName: '' } });
     },
     closeGroupOperate: function () {
       const { groupOperate } = this.data;
