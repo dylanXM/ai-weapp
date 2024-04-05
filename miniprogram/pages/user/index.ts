@@ -22,7 +22,14 @@ Component({
     fields: {
       navBar: 'navBar',
       user: 'user',
+      userBalance: 'userBalance',
     },
+  },
+
+  observers: {
+    user: function (data) {
+      console.log('data', data);
+    }
   },
 
   /**

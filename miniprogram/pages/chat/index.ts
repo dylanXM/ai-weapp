@@ -152,7 +152,11 @@ Component({
     },
     createChatGroup: async function(event: any) {
       const appId = event.detail.key;
-      const { allGroups } = this.data;
+      const { allGroups, loading } = this.data;
+      if (loading) {
+        Toast('请等待当前会话结束');
+        return;
+      }
       const alreadyHasGroup = allGroups.find(group => group.appId === appId);
       if (alreadyHasGroup) {
         Toast('当前应用已经开启了一个对话无需新建了');
@@ -306,7 +310,7 @@ Component({
                 _this.setData({ loading: false });
                 _this.updateUserBalance({ userBalance }, model);
 
-                if (messages.length === 2 && currentGroup.id) {
+                if (messages.length === 2 && !currentGroup.appId) {
                   const message = messages[1].originText || messages[1].text;
                   const title = message.length > 15 ? message.slice(0, 15) : message;
                   _this.updateGroup(title);
@@ -455,6 +459,11 @@ Component({
       this.updateUserBalance(this.data.user, model);
     },
     chooseGroup: async function (event: any) {
+      const { loading } = this.data;
+      if (loading) {
+        Toast('请等待当前会话结束');
+        return;
+      }
       Toast.loading({
         duration: 0,
         forbidClick: true,

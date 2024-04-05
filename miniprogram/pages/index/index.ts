@@ -3,6 +3,7 @@ import Dialog from '@vant/weapp/dialog/dialog';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { listenSafeHeightChange } from '../../utils/keyboards';
+import { getUserInfo } from '../../api/index';
 
 Component({
   behaviors: [storeBindingsBehavior],
@@ -17,6 +18,16 @@ Component({
     },
     actions: {
       setState: "setState",
+    },
+  },
+  observers: {
+    activeNav: function (data) {
+      const _this = this;
+      if (data === 'user') {
+        getUserInfo().then(user => {
+          _this.setState('user', user);
+        });
+      }
     },
   },
   methods: {
