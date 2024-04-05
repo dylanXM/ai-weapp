@@ -86,7 +86,10 @@
       </view>
     </scroll-view>
     <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
-      <view class="p-chat-nomessage-desc">今天有什么可以帮您？</view>
+      <view class="p-chat-nomessage-desc">
+        <image class="p-chat-empty-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png'}}" />
+        <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
+      </view>
       <view class="p-chat-nomessage-demo">
         <view wx:if="{{currentApp.id}}" class="p-chat-nomessage-demo-list">
           <view

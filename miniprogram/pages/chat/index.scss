@@ -20,7 +20,7 @@
   overflow-x: hidden;
   position: relative;
   width: 100%;
-  padding: 0 12px;
+  // padding: 0 12px;
   box-sizing: border-box;
   background-color: transparent;
 }
@@ -31,12 +31,38 @@
   border-radius: 11px;
 }
 
+.p-chat-empty-avatar {
+  height: 44px;
+  width: 44px;
+  margin-bottom: 24px;
+  border-radius: 11px;
+}
+
+.p-chat-empty-desc {
+  width: 30px;
+  animation: infinite-blink 3s infinite;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes infinite-blink {
+  0% {
+    width: 30px;
+  }
+  100% {
+    width: 170px;
+  }
+}
+
 .p-chat-operations {
   height: 30px;
   display: flex;
   align-items: center;
   margin: 8px 8px 0;
 }
+
+
 
 .p-chat-search {
   position: relative;
@@ -88,10 +114,12 @@
 
 .p-chat-message-contianer {
   padding-bottom: 18px;
+  margin: 0 18px;
 }
 
 .p-chat-message-robot-contianer {
   padding-bottom: 18px;
+  margin: 0 18px;
 }
 
 .p-chat-message-title {
@@ -117,7 +145,7 @@
 }
 
 .p-chat-robot-operate {
-  margin-left: 22px;
+  margin-left: 20px;
 }
 
 .p-chat-message-to-bottom {
@@ -222,6 +250,7 @@
 .p-chat-nomessage-desc {
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }

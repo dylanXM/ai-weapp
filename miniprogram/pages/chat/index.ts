@@ -268,7 +268,7 @@ Component({
           let shouldContinue = true;
           let currentText = '';
           async function update() {
-            if (shouldContinue) {balance
+            if (shouldContinue) {
               if (cacheResText && cacheResText[i]) {
                 _this.setData({ typingStatusEnd: false });
 
@@ -314,7 +314,7 @@ Component({
                 shouldContinue = false // 结束动画循环
               }
               /* 有多余的再请求下一帧 */
-              if (cacheResText.length && cacheResText.length > currentText.length) {
+              if (cacheResText?.length && cacheResText?.length > currentText?.length) {
                 requestAnimationFrame(update);
               } else {
                 setTimeout(() => {
@@ -345,9 +345,11 @@ Component({
                   conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
                   requestOptions: { prompt: value, options: { ...options } },
                 });
+                _this.setData({ loading: false });
               }
             },
             fail: function (error) {
+              console.log('error', error);
             },
           });
           requestTask.onChunkReceived(function (res) {
@@ -474,7 +476,7 @@ Component({
       this.setData({ loading: false });
       this.updateGroupChat(messages.length - 1, {
         loading: false,
-        text: '',
+        text: '（用户手动取消）',
         conversationOptions: {},
         requestOptions: { prompt: '', options: {} },
       });

@@ -1,4 +1,7 @@
 export const formatAiText = (text: string) => {
+  if (text === null) {
+    return '无回复内容';
+  }
   if (!text) {
     return '';
   }
