@@ -453,11 +453,6 @@ Component({
       this.updateUserBalance(this.data.user, model);
     },
     chooseGroup: async function (event: any) {
-      const { loading } = this.data;
-      if (loading) {
-        Toast('请等待当前会话结束');
-        return;
-      }
       Toast.loading({
         duration: 0,
         forbidClick: true,
