@@ -561,7 +561,7 @@ Component({
         this.setData({ groupOperate: { ...groupOperate, renameVisible: true } })
       }
     },
-    closeRenameGroup: async function () {
+    confirmRenameGroup: async function () {
       const { groupOperate, currentGroup } = this.data;
       const { newName, group } = groupOperate;
       if (!newName) {

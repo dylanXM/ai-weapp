@@ -1,5 +1,7 @@
+// @ts-nocheck
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
+import Toast from '@vant/weapp/toast/toast';
 
 Component({
   behaviors: [storeBindingsBehavior],
@@ -29,6 +31,20 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 点击思维导图
+    clickMinMapping: function() {
+      Toast('功能正在开发中，敬请期待');
+    },
+
+    // 点击DELL画图
+    clickDelle: function() {
+      Toast('功能正在开发中，敬请期待');
+    },
+
+    // 点击MJ画图
+    clickMJ: function() {
+      Toast('功能正在开发中，敬请期待');
+    }
   },
   lifetimes: {
   }

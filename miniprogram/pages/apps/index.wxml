@@ -16,6 +16,7 @@
       size="large"
       title="思维导图"
       is-link
+      bind:tap="clickMinMapping"
     />
   </view>
 
@@ -25,12 +26,16 @@
       size="large"
       title="DELL画图"
       is-link
+      bind:tap="clickDelle"
     />
     <van-cell
       icon="photo"
       size="large"
       title="midjounery绘图"
       is-link
+      bind:tap="clickMJ"
     />
   </view>
 </view>
+
+<van-toast id="van-toast" />

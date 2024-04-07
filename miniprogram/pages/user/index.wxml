@@ -32,13 +32,14 @@
   </view>
 
   <view class="p-user-operate-container" style="height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 200}}px)">
-    <view class="p-user-item">
+    <!-- <view class="p-user-item">
       <van-cell size="large" icon="shop-o" title="商城" is-link />
       <van-cell size="large" icon="bill-o" title="推广赚钱" is-link />
       <van-cell size="large" icon="balance-list-o" title="购买记录" is-link />
-    </view>
+    </view> -->
 
     <view class="p-user-item">
+      <van-cell size="large" icon="shop-o" title="商城" is-link />
       <van-cell size="large" icon="gift-o" title="签到" is-link />
       <van-cell size="large" icon="refund-o" title="卡密兑换" is-link />
     </view>
@@ -49,8 +50,8 @@
     </view>
 
     <view class="p-user-item">
-      <van-cell size="large" icon="envelop-o" title="绑定邮箱" is-link />
-      <van-cell size="large" icon="user-o" title="管理员" is-link />
+      <van-cell size="large" icon="envelop-o" title="关联邮箱" is-link />
+      <van-cell size="large" icon="user-o" title="管理员" is-link bind:tap="clickWXAdmin" />
     </view>
   </view>
 </view>

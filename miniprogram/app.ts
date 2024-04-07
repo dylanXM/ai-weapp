@@ -9,7 +9,6 @@ import {
 } from './api/index';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
-import { UserInfo } from './api/auth/type';
 
 // app.ts
 App<IAppOption>({

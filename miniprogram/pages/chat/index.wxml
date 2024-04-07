@@ -239,10 +239,10 @@
 
   <van-dialog
     use-slot
-    title="标题"
+    title="修改对话组名称"
     show="{{ groupOperate.renameVisible }}"
     show-cancel-button
-    bind:close="closeRenameGroup"
+    bind:confirm="confirmRenameGroup"
   >
     <van-field
       value="{{ groupOperate.newName }}"

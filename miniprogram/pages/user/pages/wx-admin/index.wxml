@@ -1,0 +1,14 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+    <van-icon name="arrow-left" bind:tap="onBack" />
+    长按添加管理员微信
+    <van-icon name="arrow-left" style="visibility: hidden;" />
+  </view>
+</view>
+
+<view style="margin-top: {{navBar.navBarHeight}}px;">
+  <image src="./images/wx_admin.jpg" show-menu-by-longpress class="p-wxadmin-image" />
+</view>
