@@ -3,9 +3,9 @@
     class="p-navbar"
     style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
-    <van-icon name="arrow-left" bind:tap="onBack" />
+    <van-icon name="arrow-left" bind:tap="onBack" size="20" />
     长按添加管理员微信
-    <van-icon name="arrow-left" style="visibility: hidden;" />
+    <van-icon name="arrow-left" style="visibility: hidden;" size="24" />
   </view>
 </view>
 
