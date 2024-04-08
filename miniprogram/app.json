@@ -1,9 +1,16 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/pages/wx-admin/index"
+    "pages/user/pages/wx-admin/index",
+    "pages/user/pages/wx-official/index",
+    "pages/user/pages/ai-web/index",
+    "pages/user/pages/shop/index",
+    "pages/user/pages/connect-email/index",
+    "pages/user/pages/kami/index",
+    "pages/user/pages/sign-on/index"
   ],
   "window": {
+    "navigationBarBackgroundColor": "#f1f1f1",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },

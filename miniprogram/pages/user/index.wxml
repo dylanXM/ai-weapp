@@ -39,19 +39,19 @@
     </view> -->
 
     <view class="p-user-item">
-      <van-cell size="large" icon="shop-o" title="商城" is-link />
+      <van-cell size="large" icon="shop-o" title="商城" is-link bind:tap="clickShop" />
       <van-cell size="large" icon="gift-o" title="签到" is-link />
-      <van-cell size="large" icon="refund-o" title="卡密兑换" is-link />
+      <van-cell size="large" icon="refund-o" title="卡密兑换" is-link bind:tap="clickKami" />
     </view>
 
     <view class="p-user-item">
-      <van-cell size="large" icon="miniprogram-o" title="微信公众号" is-link />
-      <van-cell size="large" icon="link-o" title="网页版" is-link />
-    </view>
-
-    <view class="p-user-item">
-      <van-cell size="large" icon="envelop-o" title="关联邮箱" is-link />
+      <van-cell size="large" icon="miniprogram-o" title="微信公众号" is-link bind:tap="clickWXofficial" />
       <van-cell size="large" icon="user-o" title="管理员" is-link bind:tap="clickWXAdmin" />
+      <van-cell size="large" icon="link-o" title="网页版" is-link bind:tap="clickAIWeb" />
+    </view>
+
+    <view class="p-user-item">
+      <van-cell size="large" icon="envelop-o" title="关联邮箱" is-link bind:tap="clickConnectEmail" />
     </view>
   </view>
 </view>

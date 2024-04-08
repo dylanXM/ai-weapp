@@ -6,7 +6,7 @@
   z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(20px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  background-color: #f1f1f1;
 }
 
 .p-navbar {
@@ -17,14 +17,13 @@
   font-weight: 600;
 }
 
-.p-wxadmin-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
+.p-coemail-container {
+  height: 100%;
+  background-color: #f1f1f1;
 }
 
-.p-wxadmin-image {
-  margin-top: 60px;
-  width: 240px;
-  height: 240px;
+.p-coemail-btn {
+  width: calc(100% - 50px) !important;
+  margin: 48px 24px;
+  border-radius: 8px !important;
 }

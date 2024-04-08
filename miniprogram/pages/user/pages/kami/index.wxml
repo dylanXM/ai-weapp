@@ -1,0 +1,23 @@
+<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
+  <view
+    class="p-navbar"
+    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
+  >
+    <van-icon name="arrow-left" bind:tap="onBack" size="20" />
+    激活卡密
+    <van-icon name="arrow-left" style="visibility: hidden;" size="24" />
+  </view>
+</view>
+
+<view style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight}}px)" class="p-kami-container">
+  
+  <van-field
+    value="{{ username }}"
+    clearable
+    placeholder="请输入卡密"
+    size="large"
+    border="{{ false }}"
+  />
+
+  <van-button custom-class="p-kami-btn" block hairline type="info">激活卡密</van-button>
+</view>
