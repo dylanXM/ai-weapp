@@ -88,7 +88,7 @@ Component({
   },
   lifetimes: {
     attached() {
-      this.clickSignOn();
+      // this.clickSignOn();
     },
   }
 })
