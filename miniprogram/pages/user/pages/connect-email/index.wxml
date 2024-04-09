@@ -25,5 +25,5 @@
     size="large"
   />
 
-  <van-button custom-class="p-coemail-btn" block hairline type="info">关联邮箱</van-button>
+  <van-button custom-class="p-coemail-btn" block hairline type="primary">关联邮箱</van-button>
 </view>

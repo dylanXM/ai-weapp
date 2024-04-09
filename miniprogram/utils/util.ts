@@ -23,3 +23,26 @@ export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
   let str = decodeURIComponent(escape(String.fromCharCode(...uint8Array)));
   return str; 
 }
+
+export function getFirstDayOfMonthTimestamp() {
+  const today = new Date();
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  return firstDayOfMonth.getTime();
+}
+
+export function getLastDayOfMonthTimestamp() {
+  const today = new Date();
+  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  const lastDayOfMonth = new Date(nextMonth - 1);
+  return lastDayOfMonth.getTime();
+}
+
+export function getTimeStampFromString(dateString: string) {
+  // 使用给定的时间字符串创建一个Date对象
+  const date = new Date(dateString);
+  // 重置时间为00:00:00
+  date.setHours(0, 0, 0, 0);
+  // 返回时间戳
+  return date.getTime();
+}
+

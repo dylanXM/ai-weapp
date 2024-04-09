@@ -31,7 +31,6 @@
   >
     <!-- 聊天记录区 -->
     <scroll-view
-      bindscroll="onScroll"
       scroll-top="{{scrollTop}}"
       scroll-y
       class="p-chat-messages"
@@ -165,7 +164,7 @@
   >
     <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
       <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
-        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" />
+        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup"  />
       </view>
       <view class="p-chat-group-list">
         <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">

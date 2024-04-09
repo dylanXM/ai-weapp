@@ -40,3 +40,39 @@ export const getUserInfo = async (): Promise<UserData> => {
   });
   return res.data;
 }
+
+/**
+ * 获取签到列表
+ */
+export const getSignList = async () => {
+  const res = await request<any>({
+    url: `${config.url}/signin/signinLog`,
+    method: 'GET',
+    data: {},
+  });
+  return res.data;
+};
+
+/**
+ * 签到
+ */
+export const signOn = async () => {
+  const res = await request<any>({
+    url: `${config.url}/signin/sign`,
+    method: 'POST',
+    data: {},
+  });
+  return res.data;
+};
+
+/**
+ * 激活卡密
+ */
+export const useKami = async ({ code }: { code: string }) => {
+  const res = await request<any>({
+    url: `${config.url}/crami/useCrami`,
+    method: 'POST',
+    data: { code },
+  });
+  return res.data;
+}

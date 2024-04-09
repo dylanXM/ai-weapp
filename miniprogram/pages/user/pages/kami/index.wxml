@@ -12,12 +12,25 @@
 <view style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight}}px)" class="p-kami-container">
   
   <van-field
-    value="{{ username }}"
+    value="{{ kami }}"
     clearable
     placeholder="请输入卡密"
     size="large"
     border="{{ false }}"
+    bind:change="handleKamiChange"
   />
 
-  <van-button custom-class="p-kami-btn" block hairline type="info">激活卡密</van-button>
+  <van-button
+    loading="{{ loading }}"
+    custom-class="p-kami-btn"
+    block
+    hairline
+    type="primary"
+    bind:tap="usekami"
+    loading-text="激活卡密"
+  >
+    激活卡密
+  </van-button>
 </view>
+
+<van-toast id="van-toast" />

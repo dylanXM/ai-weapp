@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { IAppOption } from '../typings';
 import {
   getWechatSession,
@@ -6,6 +7,7 @@ import {
   getUserInfo,
   queryModelList,
   queryBaseModel,
+  getSignList,
 } from './api/index';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
@@ -42,7 +44,10 @@ App<IAppOption>({
     // @ts-ignore
     queryBaseModel().then(res => this.setState('model', res.modelInfo));
     // @ts-ignore
-    queryModelList().then(res => this.setState('modelList', res))
+    queryModelList().then(res => this.setState('modelList', res));
+
+    // 获取签到数据
+    getSignList().then(res => this.setState('signList', res));
   },
 
   initNavBar() {

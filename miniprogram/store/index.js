@@ -23,6 +23,7 @@ export const store = observable({
     modelType: 1,
   },
   allPresets: [],
+  signList: [],
 
   // 计算属性, 暂时不需要
   // get sum() {

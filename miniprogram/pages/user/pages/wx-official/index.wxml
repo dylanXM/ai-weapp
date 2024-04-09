@@ -4,11 +4,18 @@
     style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
     <van-icon name="arrow-left" bind:tap="onBack" size="20" />
-    长按关注公众号
+    关注公众号
     <van-icon name="arrow-left" style="visibility: hidden;" size="24" />
   </view>
 </view>
 
 <view style="margin-top: {{navBar.navBarHeight}}px;" class="p-wxofficial-container">
   <image src="./images/wx_official.jpg" show-menu-by-longpress class="p-wxofficial-image" />
+
+  <view class="p-wxofficial-text">
+    长按识别二维码关注我们
+  </view>
+  <view class="p-wxofficial-text">
+    可体验网页版SweetAI并访问线上商店
+  </view>
 </view>

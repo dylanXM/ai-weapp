@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import Toast from '@vant/weapp/toast/toast';
+import { useKami } from '../../../../api/index';
 
 Page({
 
@@ -8,8 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    email: '',
-    password: '',
+    kami: '',
+    loading: false,
   },
 
   /**
@@ -24,52 +26,30 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 监听卡密变化
    */
-  onReady() {
-
+  handleKamiChange(event: any) {
+    this.setData({ kami: event.detail });
   },
 
   /**
-   * 生命周期函数--监听页面显示
+   * 使用卡密
    */
-  onShow() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  usekami: async function() {
+    try {
+      const { kami } = this.data;
+      if (!kami) {
+        Toast('请输入卡密！');
+        return;
+      }
+      this.setData({ loading: true });
+      await useKami({ code: kami });
+      Toast('卡密兑换成功！');
+    } catch (err) {
+      Toast(err?.message || '接口出错了，请重试');
+    } finally {
+      this.setData({ loading: false });
+    }
   },
 
   /**

@@ -122,7 +122,7 @@ Component({
       _this.setData({ currentApp: { ...currentApp, appDemo } });
     },
     messageMap: function (data) {
-      console.log('messageMap', data);
+      // console.log('messageMap', data);
     }
   },
 

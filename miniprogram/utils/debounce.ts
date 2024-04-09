@@ -4,11 +4,10 @@ export const debounce = (fn: Function, delay: number = 300) => {
   return (...args: any) => {
     if (timer) {
       clearTimeout(timer);
+      timer = null;
     }
 
     timer = setTimeout(() => {
-      clearTimeout(timer as number);
-      timer = null;
       fn.apply(_this, args);
     }, delay);
   }

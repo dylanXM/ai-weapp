@@ -18,12 +18,22 @@ const request = async <T>(params: IParams): Promise<IRes<T>> => {
     header.Authorization = `Bearer ${wx.getStorageSync('token')}`;
   }
   return new Promise((resolve, reject) => {
-    wx.request({
-      ...params,
-      header,
-      success: res => resolve(res?.data as unknown as IRes<T>),
-      fail: error => reject(error), 
-    });
+    try {
+      wx.request({
+        ...params,
+        header,
+        success: res => {
+          if (res.statusCode === 200) {
+            resolve(res?.data as unknown as IRes<T>)
+          } else {
+            reject(res.data);
+          }
+        },
+        fail: err => reject(err), 
+      });
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 
