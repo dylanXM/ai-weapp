@@ -18,10 +18,8 @@
   </view>
 </view>
 
-<view style="height: {{navBar.navBarHeight}}px;"></view>
-
 <view
-  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px); margin-top: {{navBar.navBarHeight}}px;"
   class="p-container"
 >
   <view
@@ -38,7 +36,6 @@
       enable-passive
       id="messages-view"
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
-      bindscrolltolower="onScrollToLower"
     >
       <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message" wx:for-index="idx">
         <!-- 用户信息 -->

@@ -7,7 +7,10 @@
     "pages/user/pages/shop/index",
     "pages/user/pages/connect-email/index",
     "pages/user/pages/kami/index",
-    "pages/user/pages/sign-on/index"
+    "pages/user/pages/sign-on/index",
+    "pages/apps/pages/mind-map/index",
+    "pages/apps/pages/dell-e/index",
+    "pages/apps/pages/mid-journey/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

@@ -86,6 +86,8 @@ Component({
   observers: {
     user: function (data) {
       if (isEmptyObj(data)) return;
+      const { model, currentGroup } = this.data;
+      if (currentGroup.id) return;
       this.chatGroup();
       // @ts-ignore
       if (!isEmptyObj(this.data.model)) {
@@ -212,7 +214,9 @@ Component({
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      this.scrollToBottom();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 300);
     },
     chatProcess: async function(text?: string) {
       const _this = this;
@@ -229,10 +233,6 @@ Component({
         return;
       }
       const { modelCount, modelPrice } = balance;
-      if (modelCount < modelPrice) {
-        Toast('积分不足，请及时充值');
-        return;
-      }
       const options: Record<string, any> = {
         groupId: currentGroup.id,
         usingNetwork: false,
@@ -336,12 +336,13 @@ Component({
               prompt: `${value}\n`,
               options,
             },
-            enableChunked: true,
+            enableChunked: modelCount >= modelPrice,
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
             },
             success: function (res) {
               if (res.statusCode !== 200) {
+                Toast(res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员');
                 _this.updateGroupChat(messages.length - 1, {
                   loading: false,
                   text: '遇到错误了，请检查积分是否充足或联系系统管理员',

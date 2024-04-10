@@ -133,11 +133,13 @@
 }
 
 .p-chat-message-container {
+  padding-top: 4px;
   margin-left: 30px;
   align-items: center;
 }
 
 .p-chat-message-robot {
+  padding-top: 4px;
   margin-left: 30px;
   word-break: break-all;
   white-space: pre-line;
@@ -179,11 +181,9 @@
 @keyframes ball-breath {
   0%, 100% {
     transform: scale(1); /* 原始大小 */
-    opacity: 1; /* 较高的透明度 */
   }
   50% {
     transform: scale(0.8); /* 扩大到120%的大小 */
-    opacity: 0.7; /* 不透明 */
   }
 }
 
@@ -283,5 +283,6 @@
 .p-common-no-border {
   border: none;
   background: transparent;
+  color: #888888;
 }
 
