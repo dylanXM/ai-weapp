@@ -50,7 +50,7 @@ Component({
   },
   lifetimes: {
     attached: function() {
-      this.clickMindMap();
+      // this.clickMindMap();
     }
   }
 })

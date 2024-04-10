@@ -41,5 +41,8 @@
 
 .p-mindmap-operate-group {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+}
+.p-mindmap-operate-btn {
+  flex: 1;
 }
