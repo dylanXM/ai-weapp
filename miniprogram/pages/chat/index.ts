@@ -126,7 +126,7 @@ Component({
       this.scrollToBottom();
     },
     messageMap: function (data) {
-      console.log('messageMap', data);
+      // console.log('messageMap', data);
     },
   },
 
@@ -368,6 +368,9 @@ Component({
           });
           requestTask.onChunkReceived(function (res) {
             const responseText: string = uint8ArrayToString(res.data);
+            if (!responseText) {
+              return;
+            }
             if ([1].includes(model.keyType)) {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
               let chunk = responseText;

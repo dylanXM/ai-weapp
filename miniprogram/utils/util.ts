@@ -19,9 +19,19 @@ const formatNumber = (n: number) => {
 }
 
 export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
-  const uint8Array = new Uint8Array(arrayBuffer);
-  let str = decodeURIComponent(escape(String.fromCharCode(...uint8Array)));
-  return str; 
+  try {
+    const uint8Array = new Uint8Array(arrayBuffer);
+    const byteArray = Array.from(uint8Array);
+    let str = String.fromCharCode.apply(null, byteArray);
+    str = escape(str);
+    console.log('escape', str);
+    str = decodeURIComponent(str);
+    console.log('decodeURIComponent', str);
+    return str; 
+  } catch (err) {
+    console.error(err);
+    return '';
+  }
 }
 
 export function getFirstDayOfMonthTimestamp() {
