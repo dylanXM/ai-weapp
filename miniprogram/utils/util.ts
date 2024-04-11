@@ -1,3 +1,5 @@
+import encoding from './encoding/encoding.js';
+
 export const formatTime = (date: Date) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -21,12 +23,16 @@ const formatNumber = (n: number) => {
 export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
   try {
     const uint8Array = new Uint8Array(arrayBuffer);
-    const byteArray = Array.from(uint8Array);
-    let str = String.fromCharCode.apply(null, byteArray);
-    str = escape(str);
-    console.log('escape', str);
-    str = decodeURIComponent(str);
-    console.log('decodeURIComponent', str);
+    // const byteArray = Array.from(uint8Array);
+    // let str = String.fromCharCode.apply(null, byteArray);
+    // str = escape(str);
+    // console.log('escape', str);
+    // str = decodeURIComponent(str);
+    // console.log('decodeURIComponent', str);
+    const decoder = new encoding.TextDecoder('utf-8');
+    console.log('decoder', decoder);
+    const str = decoder.decode(uint8Array);
+    console.log('str', str);
     return str; 
   } catch (err) {
     console.error(err);
