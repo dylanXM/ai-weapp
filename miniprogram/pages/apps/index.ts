@@ -33,9 +33,10 @@ Component({
   methods: {
     // 点击思维导图
     clickMindMap: function() {
-      wx.navigateTo({
-        url: '../apps/pages/mind-map/index',
-      });
+      Toast('功能正在开发中，敬请期待');
+      // wx.navigateTo({
+      //   url: '../apps/pages/mind-map/index',
+      // });
     },
 
     // 点击DELL画图
