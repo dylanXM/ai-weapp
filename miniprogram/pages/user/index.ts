@@ -2,7 +2,7 @@ import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { getFirstDayOfMonthTimestamp, getLastDayOfMonthTimestamp } from '../../utils/util';
 import { getSignMap } from '../../utils/sign';
-import { signOn, getSignList } from '../../api/index';
+import { signOn, getSignList, getUserInfo } from '../../api/index';
 import Toast from '@vant/weapp/toast/toast';
 
 let _this: any = null;
@@ -120,6 +120,8 @@ Component({
         await signOn();
         // 更新
         getSignList().then(res => this.setState('signList', res));
+        getUserInfo().then(user => this.setState('user', user));
+        Toast('签到成功！积分奖励已发放～');
         // 关闭
         this.closeSignOn();
       } catch (err) {

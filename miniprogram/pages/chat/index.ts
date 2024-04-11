@@ -59,6 +59,7 @@ Component({
     },
     currentApp: {} as any,
     isScrollToLower: true,
+    toView: '',
   },
 
   // @ts-ignore
@@ -87,13 +88,13 @@ Component({
     user: function (data) {
       if (isEmptyObj(data)) return;
       const { model, currentGroup } = this.data;
-      if (currentGroup.id) return;
-      this.chatGroup();
       // @ts-ignore
       if (!isEmptyObj(this.data.model)) {
         // @ts-ignore
         this.updateUserBalance(data, this.data.model);
       }
+      if (currentGroup.id) return;
+      this.chatGroup();
     },
     model: function (data) {
       if (isEmptyObj(data)) return;
@@ -116,16 +117,17 @@ Component({
       }
       const currentAppId = data.appId;
       if (!currentAppId || !allPresets?.length) {
-        _this.setData({ currentApp: {  } });
+        _this.setData({ currentApp: {} });
         return;
       }
       const currentApp = allPresets.find((item: any) => item.id === currentAppId);
       const appDemo = currentApp.demoData.split('\n').filter((item: string) => item);
       _this.setData({ currentApp: { ...currentApp, appDemo } });
+      this.scrollToBottom();
     },
     messageMap: function (data) {
-      // console.log('messageMap', data);
-    }
+      console.log('messageMap', data);
+    },
   },
 
   /**
@@ -133,8 +135,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      const scrollTop = this.data.scrollTop + 1000;
-      this.setData({ scrollTop, isScrollToLower: true });
+      this.setData({ toView: 'id_bottom_container' });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -205,18 +206,24 @@ Component({
       const { currentGroup, messageMap } = this.data;
       const messages = messageMap[currentGroup.id];
       const length = messages.length;
-      if (length - 1 < index) {
-        return;
-      }
+      // if (length - 1 < index) {
+      //   return;
+      // }
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      setTimeout(() => {
+      debounce(() => {
         this.scrollToBottom();
-      }, 300);
+      }, 300)();
+      if (!message.loading) {
+        setTimeout(() => {
+          // debugger;
+          this.scrollToBottom();
+        }, 500);
+      }
     },
     chatProcess: async function(text?: string) {
       const _this = this;
@@ -248,6 +255,7 @@ Component({
         error: false,
         conversationOptions: null,
         requestOptions: { prompt: value, options: null },
+        chatId: Date.now(),
       });
       this.setData({ loading: true, value: '' });
       // 增加一条chatgpt虚拟信息
@@ -259,6 +267,7 @@ Component({
         error: false,
         conversationOptions: null,
         requestOptions: { prompt: value, options: { ...options } },
+        chatId: Date.now(),
       });
       let cacheResText = '';
       let data: any = null;
@@ -478,31 +487,38 @@ Component({
     cancelChatProcess: function () {
       const { loading, requestTask, messageMap, currentGroup } = this.data;
       const messages = messageMap[currentGroup.id];
-      if (!loading || !requestTask) {
+      if (!loading) {
         return;
       }
-      requestTask.offChunkReceived();
-      requestTask.abort();
+      if (requestTask) {
+        requestTask.offChunkReceived();
+        requestTask.abort();
+      }
       this.setData({ loading: false });
+
+      const lastMessage = messages[messages.length - 1]
       this.updateGroupChat(messages.length - 1, {
+        ...lastMessage,
         loading: false,
         text: '（用户手动取消）',
-        conversationOptions: {},
-        requestOptions: { prompt: '', options: {} },
       });
     },
     // 消息区滚动事件
-    // onScroll: function (event: any){
-    //   console.log('onScroll this', event);
-    //   this.setData({ isScrollToLower: false });
-    // },
-    // onScrollToLower: function (event: any) {
-    //   console.log('onScrollToLower event', event);
-    //   const _this = this;
-    //   setTimeout(() => {
-    //     _this.setData({ isScrollToLower: true });
-    //   }, 100);
-    // },
+    onScroll: function (event: any){
+      console.log('onScroll this', event);
+      const { navBar, bottomSafeHeight } = this.data;
+      const { detail: { scrollHeight, scrollTop } } = event;
+      console.log('onScroll this', scrollHeight, scrollTop, scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight);
+      // if (scrollHeight - scrollTop > )
+      this.setData({ isScrollToLower: false });
+    },
+    onScrollToLower: function (event: any) {
+      console.log('onScrollToLower event', event);
+      const _this = this;
+      setTimeout(() => {
+        _this.setData({ isScrollToLower: true });
+      }, 100);
+    },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
       const userBalance: any = {};
@@ -589,6 +605,18 @@ Component({
 
   lifetimes: {
     attached() {
+      this._observer = wx.createIntersectionObserver()
+      this._observer
+        //.relativeTo('.scroll-view')
+        .relativeToViewport() //指定页面显示区域作为参照区域之一
+        .observe('#id_bottom_container', (res) => { //在参照区域里监听目标节点是否显示
+          console.log(res);
+          if(res.intersectionRatio > 0){
+            console.log('.ball进入了可视区域')
+          }else{
+            console.log('.ball离开了可视区域')
+          }
+      });
     },
     detached() {
       this.setData({ requestTask: null });

@@ -5,6 +5,7 @@ export function throttle(func: (...args: any[]) => void, delay: number = 300) {
   return function(...args: any[]) {
     const now = Date.now();
     if (now - prev > delay) {
+      console.log('throttle', func);
       func.apply(_this, args);
       prev = now;
     }

@@ -29,15 +29,20 @@
   >
     <!-- 聊天记录区 -->
     <scroll-view
-      scroll-top="{{scrollTop}}"
       scroll-y
       class="p-chat-messages"
       scroll-with-animation
       enable-passive
       id="messages-view"
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
+      scroll-into-view="{{toView}}"
     >
-      <view wx:for="{{messageMap[currentGroup.id]}}" wx:key="chatId" wx:for-item="message" wx:for-index="idx">
+      <view
+        wx:for="{{messageMap[currentGroup.id]}}"
+        wx:key="chatId"
+        wx:for-item="message"
+        wx:for-index="idx"
+      >
         <!-- 用户信息 -->
         <view style="padding-top: {{ idx === 0 ? 18 : 0 }}px;" class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
@@ -55,8 +60,9 @@
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
             <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
+            <!-- <view class="p-chat-message-loading" /> -->
           </view>
-          <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate">
+          <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
             <van-button
               custom-class="p-common-no-border"
               icon="label"
@@ -80,6 +86,7 @@
           </view>
         </view>
       </view>
+      <view id="id_bottom_container" style="width: 100%; height: 12px"></view>
     </scroll-view>
     <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
       <view class="p-chat-nomessage-desc">
