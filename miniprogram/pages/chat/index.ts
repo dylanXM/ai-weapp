@@ -12,7 +12,7 @@ import { formatModelOptions, getChooseModel } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
-import { debounce } from '../../utils/debounce';
+import { throttle } from '../../utils/throttle';
 import { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
@@ -60,6 +60,7 @@ Component({
     currentApp: {} as any,
     isScrollToLower: true,
     toView: '',
+    deviceScrollMinis: -100,
   },
 
   // @ts-ignore
@@ -215,14 +216,10 @@ Component({
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      debounce(() => {
-        this.scrollToBottom();
-      }, 300)();
       if (!message.loading) {
-        setTimeout(() => {
-          // debugger;
-          this.scrollToBottom();
-        }, 500);
+        setTimeout(this.scrollToBottom.bind(this), 400);
+      } else {
+        this.scrollToBottom();
       }
     },
     chatProcess: async function(text?: string) {
@@ -507,20 +504,18 @@ Component({
       });
     },
     // 消息区滚动事件
-    onScroll: function (event: any){
-      console.log('onScroll this', event);
-      const { navBar, bottomSafeHeight } = this.data;
+    onScroll: function(event: any) {
+      const { navBar, bottomSafeHeight, deviceScrollMinis } = this.data;
       const { detail: { scrollHeight, scrollTop } } = event;
-      console.log('onScroll this', scrollHeight, scrollTop, scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight);
-      // if (scrollHeight - scrollTop > )
-      this.setData({ isScrollToLower: false });
+      const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight + 40;
+      if (deviceScrollMinis === -100) {
+        this.setData({ deviceScrollMinis: scrollMinis });
+      } else {
+        this.setData({ isScrollToLower: scrollMinis <= deviceScrollMinis });
+      }
     },
     onScrollToLower: function (event: any) {
-      console.log('onScrollToLower event', event);
-      const _this = this;
-      setTimeout(() => {
-        _this.setData({ isScrollToLower: true });
-      }, 100);
+      this.setData({ isScrollToLower: true });
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
@@ -608,18 +603,7 @@ Component({
 
   lifetimes: {
     attached() {
-      this._observer = wx.createIntersectionObserver()
-      this._observer
-        //.relativeTo('.scroll-view')
-        .relativeToViewport() //指定页面显示区域作为参照区域之一
-        .observe('#id_bottom_container', (res) => { //在参照区域里监听目标节点是否显示
-          console.log(res);
-          if(res.intersectionRatio > 0){
-            console.log('.ball进入了可视区域')
-          }else{
-            console.log('.ball离开了可视区域')
-          }
-      });
+  
     },
     detached() {
       this.setData({ requestTask: null });

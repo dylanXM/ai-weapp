@@ -40,7 +40,7 @@
 
 .p-chat-empty-desc {
   width: 30px;
-  animation: infinite-blink 3s infinite;
+  animation: infinite-blink 2s infinite;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -157,11 +157,12 @@
   border-radius: 26px;
   margin: 0px auto;
   position: absolute;
-  top: -32px;
+  top: -44px;
   left: 0;
   right: 0;
   transform: rotate(180deg);
   z-index: 100;
+  box-shadow: 0px 0px 4px 2px #f1f1f1;
 }
 
 .p-chat-message-loading {

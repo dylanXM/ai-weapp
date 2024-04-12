@@ -36,6 +36,10 @@
       id="messages-view"
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
       scroll-into-view="{{toView}}"
+      lower-threshold="120"
+      bindscroll="onScroll"
+      bindscrolltolower="onScrollToLower"
+      refresher-default-style="none"
     >
       <view
         wx:for="{{messageMap[currentGroup.id]}}"
@@ -54,7 +58,7 @@
 
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
-            <image class="p-chat-message-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png'}}" />
+            <image class="p-chat-message-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/1111712880633_.pic.png'}}" />
             <view class="p-chat-message-title-name">{{AIName || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
@@ -65,7 +69,7 @@
           <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
             <van-button
               custom-class="p-common-no-border"
-              icon="label"
+              icon="label-o"
               type="default"
               size="small"
               data-text="{{message.originText}}"
@@ -86,11 +90,11 @@
           </view>
         </view>
       </view>
-      <view id="id_bottom_container" style="width: 100%; height: 12px"></view>
+      <view id="id_bottom_container" style="width: 100%; height: {{ loading ? 40 : 12 }}px"></view>
     </scroll-view>
     <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
       <view class="p-chat-nomessage-desc">
-        <image class="p-chat-empty-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/chatgpt.png'}}" />
+        <image class="p-chat-empty-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/1111712880633_.pic.png'}}" />
         <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
       </view>
       <view class="p-chat-nomessage-demo">
@@ -113,13 +117,14 @@
     </view>
     <!-- 搜索区 -->
     <view class="p-chat-search">
-      <!-- <van-icon
+      <van-icon
         name="upgrade"
-        size="28"
+        size="34"
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
-        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length }}"
-      /> -->
+        color="#4d4d4d"
+        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
+      />
       <view class="p-chat-search-border">
         <van-field
           placeholder="请输入你的问题或需求"
@@ -140,14 +145,14 @@
         <van-icon
           wx:if="{{!loading}}"
           name="upgrade"
-          size="28"
+          size="34"
           bind:click="chatProcess"
           color="#4d4d4d"
         />
         <van-icon
           wx:if="{{loading}}"
           name="stop-circle-o"
-          size="28"
+          size="34"
           color="red"
           bind:click="cancelChatProcess"
           class="p-chat-icon-cancel"
