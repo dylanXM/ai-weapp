@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import Toast from '@vant/weapp/toast/toast';
 import { useKami } from '../../../../api/index';
+import { getUserInfo } from '../../../../api/index';
 
 Page({
 
@@ -44,6 +44,7 @@ Page({
       }
       this.setData({ loading: true });
       await useKami({ code: kami });
+      getUserInfo().then(user => this.setState('user', user));
       Toast('卡密兑换成功！');
     } catch (err) {
       Toast(err?.message || '接口出错了，请重试');

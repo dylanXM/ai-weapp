@@ -141,6 +141,7 @@
           bind:keyboardheightchange="handlekeyboardHeightChange"
           autosize
           type="textarea"
+          size="large"
         />
         <van-icon
           wx:if="{{!loading}}"
@@ -148,6 +149,7 @@
           size="34"
           bind:click="chatProcess"
           color="#4d4d4d"
+          class="p-chat-search-icon"
         />
         <van-icon
           wx:if="{{loading}}"
@@ -155,7 +157,7 @@
           size="34"
           color="red"
           bind:click="cancelChatProcess"
-          class="p-chat-icon-cancel"
+          class="p-chat-icon-cancel p-chat-search-icon"
         />
       </view>
     </view>

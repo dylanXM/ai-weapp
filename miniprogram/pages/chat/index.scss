@@ -62,8 +62,6 @@
   margin: 8px 8px 0;
 }
 
-
-
 .p-chat-search {
   position: relative;
   // min-height: 54px;
@@ -80,16 +78,29 @@
 
 .p-chat-search-border {
   width: 100%;
-  padding: 6px 12px;
+  padding: 1px 12px;
   border: 1px solid #f1f1f1;
-  box-shadow: 0px 0px 4px 2px #f1f1f1;
+  box-shadow: 0px 0px 4px 2px #cccccc;
   border-radius: 12px;
   display: flex;
-  align-items: center;
 }
 
 .p-chat-search-input {
   flex: 1;
+
+  textarea {
+    padding: 6px 0;
+    min-height: 18px !important;
+    line-height: 18px !important;
+    font-size: 18px;
+    box-sizing: content-box;
+  }
+}
+
+.p-chat-search-icon {
+  display: flex;
+  align-items: flex-end;
+  padding: 4px 0;
 }
 
 .p-navbar-container {
@@ -101,7 +112,6 @@
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(241, 241, 241, 0.5);
-  border-bottom: #f1f1f1 1px solid;
 }
 
 .p-navbar {

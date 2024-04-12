@@ -15,7 +15,8 @@
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "disableScroll": true
   },
   "rendererOptions": {
     "skyline": {
