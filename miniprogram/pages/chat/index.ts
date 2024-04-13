@@ -217,9 +217,6 @@ Component({
       const { currentGroup, messageMap } = this.data;
       const messages = messageMap[currentGroup.id];
       const length = messages.length;
-      // if (length - 1 < index) {
-      //   return;
-      // }
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
@@ -517,15 +514,12 @@ Component({
     onScroll: function(event: any) {
       const { navBar, bottomSafeHeight, deviceScrollMinis } = this.data;
       const { detail: { scrollHeight, scrollTop } } = event;
-      const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight + 40;
+      const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight;
       if (deviceScrollMinis === -100) {
         this.setData({ deviceScrollMinis: scrollMinis });
       } else {
-        this.setData({ isScrollToLower: scrollMinis <= deviceScrollMinis });
+        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - 60 <= 0 });
       }
-    },
-    onScrollToLower: function (event: any) {
-      this.setData({ isScrollToLower: true });
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {

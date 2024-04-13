@@ -176,7 +176,7 @@
   right: 0;
   transform: rotate(180deg);
   z-index: 100;
-  box-shadow: 0px 0px 4px 2px #f1f1f1;
+  box-shadow: 0px 0px 6px 4px #f1f1f1;
 }
 
 .p-chat-message-loading {
@@ -293,7 +293,6 @@
   font-size: 12px;
   color: #323232;
   border-radius: 4px;
-  border: 1px solid #ebedf0;
   max-width: 180px;
   overflow: hidden;
   white-space: nowrap;

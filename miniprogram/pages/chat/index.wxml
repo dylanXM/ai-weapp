@@ -54,7 +54,6 @@
       scroll-into-view="{{toView}}"
       lower-threshold="120"
       bindscroll="onScroll"
-      bindscrolltolower="onScrollToLower"
       refresher-default-style="none"
     >
       <view
@@ -139,7 +138,7 @@
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
         color="#4d4d4d"
-        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
+        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length > 2 && !loading }}"
       />
       <view class="p-chat-search-border">
         <van-field
