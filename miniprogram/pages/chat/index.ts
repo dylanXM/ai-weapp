@@ -146,7 +146,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container' });
+      this.setData({ toView: 'id_bottom_container', isScrollToLower: true });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -515,6 +515,7 @@ Component({
       const { navBar, bottomSafeHeight, deviceScrollMinis } = this.data;
       const { detail: { scrollHeight, scrollTop } } = event;
       const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight;
+      // console.log('onScroll', scrollMinis, deviceScrollMinis, scrollMinis - deviceScrollMinis - 60);
       if (deviceScrollMinis === -100) {
         this.setData({ deviceScrollMinis: scrollMinis });
       } else {
@@ -536,7 +537,7 @@ Component({
       this.setState('userBalance', { ...this.data.userBalance, ...userBalance });
     },
     handlekeyboardHeightChange: function(event: any) {
-      this.setData({ keyboardHeight: event.detail.height });
+      this.setData({ keyboardHeight: event.detail.height, deviceScrollMinis: -100 });
       this.scrollToBottom();
     },
     // 新增应用dispatch
