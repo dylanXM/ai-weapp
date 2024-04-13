@@ -10,16 +10,7 @@
       custom-class="p-common-blur"
       custom-style="background: transparent; width: 50px;"
     />
-    <!-- <van-button
-      hairline
-      icon="records-o"
-      border="{{false}}"
-      bind:click="showPopup"
-      custom-style="background: transparent;"
-    >
-      目录
-    </van-button> -->
-    <view wx:if="{{ currentApp.id }}">{{currentApp.name}}</view>
+    <view wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
     <van-cell
       wx:if="{{ !currentApp.id }}"
       is-link
@@ -28,8 +19,8 @@
       bind:click="showModelActionSheet"
       custom-style="background: transparent;"
       custom-class="p-common-blur"
+      title-class="p-common-ellipsis"
     />
-    <!-- <van-button icon="records-o" custom-style="visibility: hidden" border="{{false}}" bind:click="showPopup">目录</van-button> -->
     <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="visibility: hidden; width: 50px;" />
   </view>
 </view>
@@ -79,7 +70,6 @@
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
             <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
-            <!-- <view class="p-chat-message-loading" /> -->
           </view>
           <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
             <van-button

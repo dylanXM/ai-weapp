@@ -8,7 +8,7 @@ import { requestAnimationFrame } from '@vant/weapp/common/utils';
 import Toast from '@vant/weapp/toast/toast';
 // @ts-ignore
 import Dialog from '@vant/weapp/dialog/dialog';
-import { formatModelOptions, getChooseModel } from '../../utils/model';
+import { formatModelOptions, getChooseModel, getChooseModelInfo } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
@@ -111,20 +111,23 @@ Component({
     keyboardHeight: function (data) {
     },
     currentGroup: function (data) {
-      const _this = this;
+      console.log('currentGroup', data);
       this.setData({ isScrollToLower: true });
-      const { allPresets } = _this.data;
+      const { allPresets } = this.data;
       if (!data.id) {
         return;
       }
-      const currentAppId = data.appId;
+      const { appId: currentAppId, config } = data;
+      const { modelInfo } = JSON.parse(config);
       if (!currentAppId || !allPresets?.length) {
-        _this.setData({ currentApp: {} });
+        this.setData({ currentApp: {} });
+        this.setState('model', modelInfo);
         return;
-      }
+      } 
       const currentApp = allPresets.find((item: any) => item.id === currentAppId);
       const appDemo = currentApp.demoData.split('\n').filter((item: string) => item);
-      _this.setData({ currentApp: { ...currentApp, appDemo } });
+      this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
+      this.setState('model', modelInfo);
       this.scrollToBottom();
     },
     messageMap: function (data) {
@@ -138,6 +141,12 @@ Component({
     },
     robotAvatar: function (data) {
       console.log('robotAvatar', data);
+    },
+    modelList: function(data) {
+      console.log('modelList', data);
+    },
+    model: function(data) {
+      console.log('model', data);
     }
   },
 
@@ -474,6 +483,13 @@ Component({
       this.setState('model', model);
       // @ts-ignore
       this.updateUserBalance(this.data.user, model);
+      const { currentGroup } = this.data;
+      if (!currentGroup.appId) {
+        const modelTypeInfo = getChooseModelInfo(this.data.modelList.modelTypeList, model.keyType);
+        updateGroup({ groupId: currentGroup.id, modelConfig: JSON.stringify({ modelInfo: model, modelTypeInfo }) }).then(() => {
+          this.chatGroup(currentGroup.id);
+        });
+      }
     },
     chooseGroup: async function (event: any) {
       const { loading } = this.data;

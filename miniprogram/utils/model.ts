@@ -1,10 +1,18 @@
-import { ModelData } from "miniprogram/api/model/type";
+import { ModelData, ModelOption } from "miniprogram/api/model/type";
 
 interface ChooseModel {
   model: string;
   modelName: string;
   keyType: number;
 }
+
+const defaultConfig = {
+  maxModelTokens: 4096,
+  maxResponseTokens: 2000,
+  systemMessage: '',
+  topN:0.8,
+  rounds:8
+};
 
 export const formatModelOptions = (modelMaps: ModelData['modelMaps'], chooseModel: ChooseModel) => {
   const options: any[] = [];
@@ -38,9 +46,20 @@ export const getChooseModel = (
       const { modelName, model } = _model;
       const isCurrentModel = model === chooseModel.model && modelName === chooseModel.modelName;
       if (isCurrentModel) {
-        newModel = { ..._model, keyType: Number(key) };
+        newModel = { ...defaultConfig, ..._model, keyType: Number(key) };
       }
     });
   });
   return newModel;
 };
+
+export const getChooseModelInfo = (
+  modelTypeList: ModelData['modelTypeList'],
+  keyType: string,
+): ModelOption => {
+  const modelOption = modelTypeList.find(model => model.val === keyType);
+  if (!modelOption) {
+    return {} as ModelOption;
+  }
+  return modelOption;
+}

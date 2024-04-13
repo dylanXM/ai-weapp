@@ -305,3 +305,9 @@
   color: #888888;
 }
 
+.p-common-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
