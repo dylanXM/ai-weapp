@@ -13,7 +13,7 @@ import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
 import { throttle } from '../../utils/throttle';
-import { groupActions, modelTypeMap } from '../../const/config/index';
+import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 
@@ -61,6 +61,7 @@ Component({
     isScrollToLower: true,
     toView: '',
     deviceScrollMinis: -100,
+    appImg: config.appImg,
   },
 
   // @ts-ignore
@@ -129,6 +130,15 @@ Component({
     messageMap: function (data) {
       // console.log('messageMap', data);
     },
+    currentApp: function (data) {
+      console.log('currentApp', data);
+      if (data.coverImg) {
+        this.setData({ coverImg: data.coverImg });
+      }
+    },
+    robotAvatar: function (data) {
+      console.log('robotAvatar', data);
+    }
   },
 
   /**

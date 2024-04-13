@@ -3,7 +3,22 @@
     class="p-navbar"
     style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
-    <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="background: transparent;" />
+    <van-icon
+      name="wap-nav"
+      bind:click="showPopup"
+      size="28"
+      custom-class="p-common-blur"
+      custom-style="background: transparent; width: 50px;"
+    />
+    <!-- <van-button
+      hairline
+      icon="records-o"
+      border="{{false}}"
+      bind:click="showPopup"
+      custom-style="background: transparent;"
+    >
+      目录
+    </van-button> -->
     <view wx:if="{{ currentApp.id }}">{{currentApp.name}}</view>
     <van-cell
       wx:if="{{ !currentApp.id }}"
@@ -14,7 +29,8 @@
       custom-style="background: transparent;"
       custom-class="p-common-blur"
     />
-    <van-icon custom-style="visibility: hidden" name="list-switch" bind:click="showPopup" size="28" />
+    <!-- <van-button icon="records-o" custom-style="visibility: hidden" border="{{false}}" bind:click="showPopup">目录</van-button> -->
+    <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="visibility: hidden; width: 50px;" />
   </view>
 </view>
 
@@ -51,15 +67,15 @@
         <view style="padding-top: {{ idx === 0 ? 18 : 0 }}px;" class="p-chat-message-contianer" wx:if="{{message.inversion}}">
           <view class="p-chat-message-title">
             <image class="p-chat-message-avatar" src="{{user.userInfo.avatar}}" />
-            <view class="p-chat-message-title-name">You</view>
+            <view class="p-chat-message-title-name">您</view>
           </view>
           <view class="p-chat-message-container">{{message.text}}</view>
         </view>
 
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
-            <image class="p-chat-message-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/1111712880633_.pic.png'}}" />
-            <view class="p-chat-message-title-name">{{AIName || 'sweetAI'}}</view>
+            <image class="p-chat-message-avatar" src="{{currentApp.coverImg || appImg}}" />
+            <view class="p-chat-message-title-name">{{ currentApp.name || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
@@ -94,7 +110,7 @@
     </scroll-view>
     <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
       <view class="p-chat-nomessage-desc">
-        <image class="p-chat-empty-avatar" src="{{robotAvatar || 'https://shop.winmume.com/uploads/images/1111712880633_.pic.png'}}" />
+        <image class="p-chat-empty-avatar" src="{{currentApp.coverImg || appImg}}" />
         <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
       </view>
       <view class="p-chat-nomessage-demo">

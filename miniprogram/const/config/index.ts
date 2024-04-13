@@ -8,7 +8,7 @@ export default {
     scrollTop: initScrollHeight,
     toBottom: false,
   },
-  appImg: 'https://mp.weixin.qq.com/wxopen/basicprofile?action=get_headimg&token=566327976&t=1712204421778'
+  appImg: 'https://shop.winmume.com/uploads/images/1111712880633_.pic.png',
 };
 
 export const modelTypeMap = {
