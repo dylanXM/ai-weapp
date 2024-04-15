@@ -9,6 +9,7 @@
       size="28"
       custom-class="p-common-blur"
       custom-style="background: transparent; width: 50px;"
+      color="#4d4d4d"
     />
     <view data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
     <van-cell
@@ -230,7 +231,7 @@
         />
       </view>
       <view class="p-chat-group-add">
-        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="primary">新建对话</van-button>
+        <van-button custom-style="height: 34px;" bind:click="createChatGroup" round hairline block icon="add-o" type="primary">新建对话</van-button>
       </view>
     </view>
   </van-popup>

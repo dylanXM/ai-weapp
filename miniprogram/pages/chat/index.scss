@@ -229,7 +229,7 @@
 
 .p-chat-group-add {
   min-height: 60px;
-  padding: 10px 16px;
+  padding: 20px 16px;
   box-sizing: border-box;
 }
 
@@ -309,5 +309,9 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+button[style="color: #07c160"] > view {
+  color: #07c160 !important;
 }
 

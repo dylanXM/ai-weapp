@@ -69,6 +69,7 @@
     title="签到"
     confirm-text="签到"
     color="#07c160"
+    class="p-user-calendar"
   />
 </view>
 
