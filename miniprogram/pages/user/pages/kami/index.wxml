@@ -4,7 +4,7 @@
     style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
     <van-icon name="arrow-left" bind:tap="onBack" size="20" />
-    激活卡密
+    积分兑换
     <van-icon name="arrow-left" style="visibility: hidden;" size="24" />
   </view>
 </view>
@@ -14,7 +14,7 @@
   <van-field
     value="{{ kami }}"
     clearable
-    placeholder="请输入卡密"
+    placeholder="请输入兑换码"
     size="large"
     border="{{ false }}"
     bind:change="handleKamiChange"
@@ -27,9 +27,9 @@
     hairline
     type="primary"
     bind:tap="usekami"
-    loading-text="激活卡密"
+    loading-text="激活兑换码"
   >
-    激活卡密
+    激活兑换码
   </van-button>
 </view>
 

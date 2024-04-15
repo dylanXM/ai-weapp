@@ -41,7 +41,7 @@
     <view class="p-user-item">
       <!-- <van-cell size="large" icon="shop-o" title="商城" is-link bind:tap="clickShop" /> -->
       <van-cell size="large" icon="gift-o" title="签到" is-link bind:tap="clickSignOn" />
-      <van-cell size="large" icon="refund-o" title="卡密兑换" is-link bind:tap="clickKami" />
+      <van-cell size="large" icon="refund-o" title="积分兑换" is-link bind:tap="clickKami" />
     </view>
 
     <view class="p-user-item">

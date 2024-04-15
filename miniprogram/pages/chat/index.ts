@@ -223,7 +223,10 @@ Component({
       this.scrollToBottom();
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
-      const { currentGroup, messageMap } = this.data;
+      const { currentGroup, messageMap, loading } = this.data;
+      if (!loading) {
+        return;
+      }
       const messages = messageMap[currentGroup.id];
       const length = messages.length;
       if (message.text && typeof message.text === 'string') {
@@ -257,7 +260,7 @@ Component({
         groupId: currentGroup.id,
         usingNetwork: false,
       };
-      if (messages.length >= 2 && messages[messages.length - 1].conversationOptions.parentMessageId) {
+      if (messages.length >= 2 && messages[messages.length - 1]?.conversationOptions?.parentMessageId) {
         options.parentMessageId = messages[messages.length - 1].conversationOptions.parentMessageId;
       }
       // 增加一条用户虚拟信息
@@ -463,9 +466,14 @@ Component({
     handleValueChange: function(event: any) {
       this.setData({ value: event.detail });
     },
-    showModelActionSheet: function () {
+    showModelActionSheet: function (event: any) {    
       // @ts-ignore
-      const { modelConfig, model, modelList } = this.data;
+      const { modelConfig, model, modelList, messageMap, currentGroup } = this.data;
+      const messages = messageMap[currentGroup.id];
+      if (messages?.length) {
+        this.showGroupOperate(event);
+        return;
+      }
       const options = formatModelOptions(modelList.modelMaps, model);
       modelConfig.visible = true;
       modelConfig.options = options;
@@ -517,14 +525,14 @@ Component({
         requestTask.offChunkReceived();
         requestTask.abort();
       }
-      this.setData({ loading: false });
-
-      const lastMessage = messages[messages.length - 1]
+      const lastMessage = messages[messages.length - 1];
+      const lastText = lastMessage.originText;
       this.updateGroupChat(messages.length - 1, {
         ...lastMessage,
         loading: false,
-        text: '（用户手动取消）',
+        text: `${lastText}（用户手动取消）`,
       });
+      this.setData({ loading: false });
     },
     // 消息区滚动事件
     onScroll: function(event: any) {
@@ -616,7 +624,6 @@ Component({
     },
     // 复制gpt回答的内容
     copyGptResult: function (event: any) {
-      console.log('event', event);
       const { text } = event.currentTarget.dataset;
       wx.setClipboardData({ data: text });
     },

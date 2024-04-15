@@ -4,13 +4,13 @@
     style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
   >
     <van-icon
-      name="wap-nav"
+      name="newspaper"
       bind:click="showPopup"
       size="28"
       custom-class="p-common-blur"
       custom-style="background: transparent; width: 50px;"
     />
-    <view wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
+    <view data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
     <van-cell
       wx:if="{{ !currentApp.id }}"
       is-link
@@ -20,8 +20,10 @@
       custom-style="background: transparent;"
       custom-class="p-common-blur"
       title-class="p-common-ellipsis"
+      title-style="font-size: 16px;"
+      data-group="{{currentGroup}}"
     />
-    <van-icon name="wap-nav" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="visibility: hidden; width: 50px;" />
+    <van-icon name="newspaper" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="visibility: hidden; width: 50px;" />
   </view>
 </view>
 
@@ -123,8 +125,8 @@
     <!-- 搜索区 -->
     <view class="p-chat-search">
       <van-icon
-        name="upgrade"
-        size="34"
+        name="down"
+        size="16"
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
         color="#4d4d4d"
@@ -180,7 +182,7 @@
   >
     <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
       <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
-        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup"  />
+        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" />
       </view>
       <view class="p-chat-group-list">
         <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
@@ -228,7 +230,7 @@
         />
       </view>
       <view class="p-chat-group-add">
-        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="default">新建对话</van-button>
+        <van-button bind:click="createChatGroup" round hairline block icon="add-o" type="primary">新建对话</van-button>
       </view>
     </view>
   </van-popup>
@@ -266,6 +268,7 @@
       bind:change="groupNewNameChange"
       type="textarea"
       border="{{ false }}"
+      size="large"
     />
   </van-dialog>
 </view>
