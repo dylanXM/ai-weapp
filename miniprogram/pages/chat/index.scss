@@ -177,6 +177,19 @@
   // transform: rotate(180deg);
   z-index: 100;
   box-shadow: 0px 0px 6px 4px #f1f1f1;
+  animation-fill-mode: forwards;
+  animation: transfer 0.1s;
+}
+
+@keyframes transfer {
+  0% {
+    top: -32px;
+    transform: scale(50%);
+  }
+  100% {
+    top: -44px;
+    transform: scale(100%);
+  }
 }
 
 .p-chat-message-loading {
