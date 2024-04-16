@@ -184,6 +184,7 @@ Component({
       if (alreadyHasGroup) {
         Toast('当前应用已经开启了一个对话无需新建了');
         this.setData({ currentGroup: alreadyHasGroup });
+        this.queryChatList(alreadyHasGroup.id);
         return;
       }
       const res = await createChat({ appId: event.detail.key });
