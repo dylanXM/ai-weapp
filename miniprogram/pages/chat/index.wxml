@@ -131,7 +131,7 @@
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
         color="#4d4d4d"
-        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length > 2 && !loading }}"
+        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
       />
       <view class="p-chat-search-border">
         <van-field
