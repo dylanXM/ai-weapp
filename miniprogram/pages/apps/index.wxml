@@ -30,6 +30,16 @@
       bind:tap="clickMJ"
     />
   </view>
+
+  <view class="p-apps-item">
+    <van-cell
+      icon="service-o"
+      size="large"
+      title="语音交互"
+      is-link
+      bind:tap="clicVoice"
+    />
+  </view>
 </view>
 
 <van-toast id="van-toast" />

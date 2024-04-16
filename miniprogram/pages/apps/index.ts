@@ -47,6 +47,11 @@ Component({
     // 点击MJ画图
     clickMJ: function() {
       Toast('功能正在开发中，敬请期待');
+    },
+
+    // 点击语音交互
+    clicVoice: function() {
+      Toast('功能正在开发中，敬请期待');
     }
   },
   lifetimes: {
