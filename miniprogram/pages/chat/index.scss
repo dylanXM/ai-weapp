@@ -104,26 +104,15 @@
 }
 
 .p-navbar-container {
-  display: block;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(241, 241, 241, 0.5);
 }
 
-.p-navbar {
+.p-navbar-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 12px 12px;
-  font-weight: 600;
-}
-
-.p-nav-capsule {
-  
+  justify-content: center;
 }
 
 .p-chat-message-contianer {

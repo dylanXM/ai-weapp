@@ -1,15 +1,8 @@
-<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
-  <view
-    class="p-navbar"
-    style="padding-top: {{navBar.menuTop}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
-  >
-    <van-icon name="arrow-left" bind:tap="onBack" size="20" />
-    关注公众号
-    <van-icon name="arrow-left" style="visibility: hidden;" size="24" />
-  </view>
-</view>
+<van-nav-bar title="关注公众号" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
 
-<view style="margin-top: {{navBar.navBarHeight}}px;" class="p-wxofficial-container">
+<view class="p-wxofficial-container">
   <image src="./images/wx_official.jpg" show-menu-by-longpress class="p-wxofficial-image" />
 
   <view class="p-wxofficial-text">

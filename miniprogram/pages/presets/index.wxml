@@ -1,15 +1,9 @@
-<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
-  <view
-    class="p-navbar"
-    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
-  >
-  模版列表
-  </view>
-</view>
+<van-nav-bar title="模板" border="{{none}}" custom-style="background-color: #f1f1f1;">
+</van-nav-bar>
 
 <view
   class="p-presets-container"
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 54}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 54}}px)"
 >
   <van-search
     background="#f1f1f1"

@@ -1,35 +1,25 @@
-<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
-  <view
-    class="p-navbar"
-    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
-  >
+<van-nav-bar border="{{false}}" custom-class="p-navbar-container">
+  <van-icon
+    name="newspaper"
+    bind:click="showPopup"
+    color="#4d4d4d"
+    slot="left"
+    size="24"
+  />
+  <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
+  <view slot="title" wx:if="{{ !currentApp.id }}" bind:tap="showModelActionSheet" data-group="{{currentGroup}}" class="p-navbar-title">
+    <view>{{model.modelName}}</view>
     <van-icon
-      name="newspaper"
-      bind:click="showPopup"
-      size="28"
-      custom-class="p-common-blur"
-      custom-style="background: transparent; width: 50px;"
-      color="#4d4d4d"
+      name="arrow"
+      color="#aaaaaa"
+      slot="left"
+      size="16"
     />
-    <view data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
-    <van-cell
-      wx:if="{{ !currentApp.id }}"
-      is-link
-      title="{{model.modelName}}"
-      border="{{ false }}"
-      bind:click="showModelActionSheet"
-      custom-style="background: transparent;"
-      custom-class="p-common-blur"
-      title-class="p-common-ellipsis"
-      title-style="font-size: 16px;"
-      data-group="{{currentGroup}}"
-    />
-    <van-icon name="newspaper" bind:click="showPopup" size="28" custom-class="p-common-blur" custom-style="visibility: hidden; width: 50px;" />
   </view>
-</view>
+</van-nav-bar>
 
 <view
-  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px); margin-top: {{navBar.navBarHeight}}px;"
+  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
   class="p-container"
 >
   <view
@@ -196,14 +186,13 @@
             icon="chat-o"
             title-class="p-common-ellipsis"
           >
-            <van-button
+            <van-icon
               slot="right-icon"
-              custom-class="p-common-no-border"
-              icon="ellipsis"
+              name="ellipsis"
               type="default"
               data-group="{{group}}"
               catchtap="showGroupOperate"
-              custom-style="background: transparent; padding: 0; height: 26px; width: 26px; font-size: 20px;"
+              size="26"
             />
           </van-cell>
         </view>

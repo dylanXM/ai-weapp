@@ -1,13 +1,7 @@
-<view class="p-navbar-container" style="height: {{navBar.navBarHeight}}px;">
-  <view
-    class="p-navbar"
-    style="padding-top: {{navBar.menuTop - 4}}px; height: {{navBar.navBarHeight - navBar.menuTop}}px"
-  >
-  应用列表
-  </view>
-</view>
+<van-nav-bar title="应用列表" border="{{none}}" custom-style="background-color: #f1f1f1;" />
+
 <view
-  style="margin-top: {{navBar.navBarHeight}}px; height: calc(100vh - {{navBar.navBarHeight}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight}}px)"
   class="p-apps-container"
 >
   <view>

@@ -1,7 +1,7 @@
 import { IAppOption } from '../../../typings';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import { queryPresetsList } from '../../api/category/index';
+import { queryPresetsCats, queryPresetsList } from '../../api/category/index';
 import { getRandom, colors, icons } from '../../utils/icon';
 
 // 获取应用实例
@@ -22,6 +22,11 @@ Component({
   data: {
     bottomSafeHeight: 0,
     presets: [],
+    option1: [
+      { text: '全部商品', value: 0 },
+      { text: '新款商品', value: 1 },
+      { text: '活动商品', value: 2 },
+    ],
   },
 
   // @ts-ignore
@@ -43,8 +48,9 @@ Component({
   methods: {
     // 初始数据获取
     getPresets: async function () {
-      // const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
-      const presets = await queryPresetsList();
+      const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
+      console.log('categories', categories, presets);
+      // const presets = await queryPresetsList();
       // const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
       //   const list = presets.rows.filter((it: any) => it.catId === cat.id);
       //   return { ...cat, list };
