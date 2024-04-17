@@ -1,12 +1,20 @@
 <van-nav-bar border="{{false}}" custom-class="p-navbar-container">
   <van-icon
-    name="newspaper"
+    name="wap-nav"
     bind:click="showPopup"
     color="#4d4d4d"
     slot="left"
     size="24"
   />
-  <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-common-ellipsis">{{currentApp.name}}</view>
+  <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-navbar-title">
+    <view>{{currentApp.name}}</view>
+    <van-icon
+      name="arrow"
+      color="#aaaaaa"
+      slot="left"
+      size="16"
+    />
+  </view>
   <view slot="title" wx:if="{{ !currentApp.id }}" bind:tap="showModelActionSheet" data-group="{{currentGroup}}" class="p-navbar-title">
     <view>{{model.modelName}}</view>
     <van-icon

@@ -22,11 +22,6 @@ Component({
   data: {
     bottomSafeHeight: 0,
     presets: [],
-    option1: [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 },
-    ],
   },
 
   // @ts-ignore
@@ -50,15 +45,19 @@ Component({
     getPresets: async function () {
       const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
       console.log('categories', categories, presets);
+      const firstCategory = {
+        id: 0,
+        name: 'ALL',
+        list: presets.rows,
+      };
       // const presets = await queryPresetsList();
-      // const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
-      //   const list = presets.rows.filter((it: any) => it.catId === cat.id);
-      //   return { ...cat, list };
-      // })];
+      const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
+        const list = presets.rows.filter((it: any) => it.catId === cat.id);
+        return { ...cat, list };
+      })];
+      console.log('newcategories', newcategories);
       const newPresets = presets.rows.map((item: any) => ({
         ...item,
-        color: getRandom(colors),
-        icon: getRandom(icons),
       }))
       this.setData({ presets: newPresets, allPresets: newPresets });
       this.setState('allPresets', newPresets);

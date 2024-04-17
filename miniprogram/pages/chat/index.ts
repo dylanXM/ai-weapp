@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { IAppOption } from 'typings';
-import { createChat, delGroup, queryChat, queryChatGroup, updateGroup } from '../../api/chat/index';
+import { createChat, delGroup, queryChat, queryChatGroup, updateGroup, clearGroup } from '../../api/chat/index';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
@@ -575,7 +575,10 @@ Component({
     // 点击group的操作
     showGroupOperate: function (event: any) {
       const { group } = event.currentTarget.dataset;
-      const actions = group.appId ? groupActions.filter(g => g.action !== 'rename') : groupActions;
+      const { messageMap } = this.data;
+      let actions = group.appId ? groupActions.filter(g => g.action !== 'rename') : groupActions;
+      const messageList = messageMap[group.id];
+      actions = messageList?.length ? actions : actions.filter(g => g.action !== 'clear');
       this.setData({ groupOperate: { visible: true, group, actions, renameVisible: false, newName: '' } });
     },
     closeGroupOperate: function () {
@@ -604,6 +607,17 @@ Component({
 
       if (action === 'rename') {
         this.setData({ groupOperate: { ...groupOperate, renameVisible: true } })
+      }
+
+      if (action === 'clear') {
+        Dialog.confirm({
+          title: '操作确认',
+          message: `是否清除【${group.title}】中的会话`,
+        }).then(() => {
+          clearGroup({ groupId: group.id }).then(() => {
+            _this.queryChatList(group.id);
+          });
+        });
       }
     },
     confirmRenameGroup: async function () {

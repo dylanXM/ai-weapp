@@ -50,6 +50,19 @@ export const delGroup = async ({ groupId }: { groupId: number }) => {
 };
 
 /**
+ * 清空对话组聊天信息
+ * @param param0 
+ */
+export const clearGroup = async ({ groupId }: { groupId: number }) => {
+  const res = await request<ChatGroup[]>({
+    url: `${config.url}/chatlog/delByGroupId`,
+    method: 'POST',
+    data: { groupId },
+  });
+  return res.data;
+};
+
+/**
  * 创建一个会话
  */
 export const createChat = async ({ appId }: { appId: number }) => {
