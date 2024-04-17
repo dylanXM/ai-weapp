@@ -44,7 +44,7 @@ Component({
     // 初始数据获取
     getPresets: async function () {
       const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
-      console.log('categories', categories, presets);
+      // console.log('categories', categories, presets);
       const firstCategory = {
         id: 0,
         name: 'ALL',
@@ -55,7 +55,7 @@ Component({
         const list = presets.rows.filter((it: any) => it.catId === cat.id);
         return { ...cat, list };
       })];
-      console.log('newcategories', newcategories);
+      // console.log('newcategories', newcategories);
       const newPresets = presets.rows.map((item: any) => ({
         ...item,
       }))

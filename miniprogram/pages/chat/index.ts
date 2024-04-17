@@ -111,7 +111,6 @@ Component({
     keyboardHeight: function (data) {
     },
     currentGroup: function (data) {
-      console.log('currentGroup', data);
       this.setData({ isScrollToLower: true });
       const { allPresets } = this.data;
       if (!data.id) {
@@ -125,7 +124,7 @@ Component({
         return;
       } 
       const currentApp = allPresets.find((item: any) => item.id === currentAppId);
-      const appDemo = currentApp.demoData.split('\n').filter((item: string) => item);
+      const appDemo = currentApp?.demoData?.split('\n').filter((item: string) => item) || [];
       this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
       this.setState('model', modelInfo);
       this.scrollToBottom();
@@ -134,19 +133,18 @@ Component({
       // console.log('messageMap', data);
     },
     currentApp: function (data) {
-      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
     },
     robotAvatar: function (data) {
-      console.log('robotAvatar', data);
+      // console.log('robotAvatar', data);
     },
     modelList: function(data) {
-      console.log('modelList', data);
+      // console.log('modelList', data);
     },
     model: function(data) {
-      console.log('model', data);
+      // console.log('model', data);
     }
   },
 
@@ -182,7 +180,6 @@ Component({
       }
       const alreadyHasGroup = allGroups.find(group => group.appId === appId);
       if (alreadyHasGroup) {
-        Toast('当前应用已经开启了一个对话无需新建了');
         this.setData({ currentGroup: alreadyHasGroup });
         this.queryChatList(alreadyHasGroup.id);
         return;
@@ -531,7 +528,7 @@ Component({
       this.updateGroupChat(messages.length - 1, {
         ...lastMessage,
         loading: false,
-        text: `${lastText}（用户手动取消）`,
+        text: `${lastText || ''}（用户手动取消）`,
       });
       this.setData({ loading: false });
     },
