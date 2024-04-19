@@ -8,7 +8,7 @@ import { getUserInfo } from '../../api/index';
 Component({
   behaviors: [storeBindingsBehavior],
   data: {
-    activeNav: 'presets',
+    activeNav: 'chat',
   },
   // @ts-ignore
   storeBindings: {
