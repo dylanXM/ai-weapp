@@ -1,4 +1,4 @@
-<van-nav-bar title="应用列表" border="{{none}}" />
+<van-nav-bar title="个人中心" border="{{none}}" />
 
 <view
   class="p-user-container"

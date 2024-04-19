@@ -24,3 +24,15 @@ export const queryPresetsList = async (): Promise<any> => {
   });
   return res.data;
 };
+
+/**
+ * 获取我的模版列表
+ */
+export const queryMyPresetsList = async (): Promise<any> => {
+  const res = await request<any[]>({
+    url: `${config.url}/app/mineApps`,
+    method: 'GET',
+    data: {},
+  });
+  return res.data;
+}

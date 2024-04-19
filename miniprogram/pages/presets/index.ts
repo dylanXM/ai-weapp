@@ -1,8 +1,7 @@
 import { IAppOption } from '../../../typings';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import { queryPresetsCats, queryPresetsList } from '../../api/category/index';
-import { getRandom, colors, icons } from '../../utils/icon';
+import { queryPresetsCats, queryPresetsList, queryMyPresetsList } from '../../api/category/index';
 
 // 获取应用实例
 const app = getApp<IAppOption>();
@@ -22,6 +21,12 @@ Component({
   data: {
     bottomSafeHeight: 0,
     presets: [],
+    activeKey: 'list' as 'list' | 'mineApps',
+    myPresets: {
+      list: [],
+      all: [],
+    },
+    query: '',
   },
 
   // @ts-ignore
@@ -35,6 +40,16 @@ Component({
     actions: {
       setState: "setState",
     },
+  },
+
+  observers: {
+    activeKey: function(data) {
+      if (data === 'mineApps') {
+        this.getMyPresets().then(() => this.searchPresets());
+      } else {
+        this.searchPresets();
+      }
+    }
   },
 
   /**
@@ -62,16 +77,24 @@ Component({
       this.setData({ presets: newPresets, allPresets: newPresets });
       this.setState('allPresets', newPresets);
     },
-    searchPresets: function (event: any) {
-      const query = event.detail;
+    getMyPresets: async function() {
+      const presets = await queryMyPresetsList();
+      const newPresets = presets.rows.map((item: any) => ({
+        ...item,
+      }));
+      this.setData({ myPresets: { list: newPresets, all: newPresets }, presets: newPresets });
+    },
+    searchPresets: function () {
+      const { activeKey, query } = this.data;
       // @ts-ignore
-      const { allPresets } = this.data;
+      const { allPresets, myPresets } = this.data;
+      const searchPresets = activeKey === 'list' ? allPresets : myPresets.all;
       if (!query) {
-        this.setData({ presets: allPresets });
+        this.setData({ presets: searchPresets });
         this.setState('allPresets', allPresets);    
       }
-      const formatedQuery = query.toLowerCase();
-      const newPresets = allPresets.filter((preset: any) => {
+      const formatedQuery = query.toLowerCase().trim();
+      const newPresets = searchPresets.filter((preset: any) => {
         const { name, des } = preset;
         return name.toLowerCase().includes(formatedQuery) || des.toLowerCase().includes(formatedQuery);
       });
@@ -80,6 +103,16 @@ Component({
     handleClickPreset: function (event: any) {
       const appId = event.currentTarget.dataset.id;
       this.triggerEvent("clickApp", { key: appId });
+    },
+    handleClickActiveTab: function(event: any) {
+      this.setData({ activeKey: event.currentTarget.dataset.tab });
+    },
+    handleQueryChange: function(event: any) {
+      const query = event.detail;
+      this.setData({ query: query });
+    },
+    handleClickAddPresets: function() {
+      wx.showToast({ title: '功能开发中～', icon: 'none', duration: 2000 });
     }
   },
   lifetimes: {
