@@ -1,22 +1,18 @@
 {
   "component": true,
   "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
-    "van-divider": "@vant/weapp/divider/index",
-    "van-icon": "@vant/weapp/icon/index",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-icon": "tdesign-miniprogram/icon/icon",
     "empty": "/pages/chat/conponents/empty/index",
-    "van-field": "@vant/weapp/field/index",
-    "van-popup": "@vant/weapp/popup/index",
-    "van-search": "@vant/weapp/search/index",
-    "van-image": "@vant/weapp/image/index",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-search": "tdesign-miniprogram/search/search",
     "towxml": "/towxml/towxml",
-    "van-cell": "@vant/weapp/cell/index",
-    "van-cell-group": "@vant/weapp/cell-group/index",
-    "van-action-sheet": "@vant/weapp/action-sheet/index",
-    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
-    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
-    "van-transition": "@vant/weapp/transition/index",
-    "van-dialog": "@vant/weapp/dialog/index",
-    "van-nav-bar": "@vant/weapp/nav-bar/index"
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-action-sheet": "tdesign-miniprogram/action-sheet/action-sheet",
+    "t-dialog": "tdesign-miniprogram/dialog/dialog",
+    "t-navbar": "tdesign-miniprogram/navbar/navbar",
+    "t-overlay": "tdesign-miniprogram/overlay/overlay"
   }
 }

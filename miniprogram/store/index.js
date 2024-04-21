@@ -24,6 +24,7 @@ export const store = observable({
   },
   allPresets: [],
   signList: [],
+  allCategories: [],
 
   // 计算属性, 暂时不需要
   // get sum() {

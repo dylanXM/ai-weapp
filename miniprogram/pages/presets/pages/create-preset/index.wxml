@@ -1,0 +1,18 @@
+<t-navbar left-arrow title="新建预设" bind:go-back="onBack" style="--td-navbar-bg-color: #f1f1f1;" />
+
+<view>
+  <t-cell class="mb-16" title="应用分类" arrow hover note="{{cityText}}" bind:click="onCityPicker" />
+  <t-cell class="mb-16" title="应用名称" arrow hover note="{{cityText}}" bind:click="onCityPicker" />
+  <t-textarea autosize="{{true}}" label="预设指令" t-class="external-class" placeholder="请输入文字" disableDefaultPadding="{{true}}" />
+  <t-textarea autosize="{{true}}" label="应用描述" t-class="external-class" placeholder="请输入文字" disableDefaultPadding="{{true}}" />
+  <t-textarea autosize="{{true}}" label="示例内容" t-class="external-class" placeholder="请输入文字" disableDefaultPadding="{{true}}" />
+  <t-upload
+    disabled
+    mediaType="{{['image']}}"
+    max="{{1}}"
+    files="{{fileList}}"
+    bind:add="handleAdd"
+    bind:remove="handleRemove"
+  >
+  </t-upload>
+</view>

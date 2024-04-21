@@ -1,4 +1,4 @@
-<van-nav-bar title="个人中心" border="{{none}}" />
+<t-navbar />
 
 <view
   class="p-user-container"
@@ -6,13 +6,13 @@
 >
   <view class="p-user-info-container">
     <view>
-      <van-image
+      <t-image
         width="50px"
         height="50px"
         fit="cover"
-        radius="4"
+        shape="round"
         src="{{user.userInfo.avatar}}"
-        class="p-user-info-avatar"
+        t-class="p-user-info-avatar"
       />
     </view>
     <view>
@@ -26,45 +26,33 @@
   </view>
 
   <view class="p-user-operate-container" style="height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 200}}px)">
-    <!-- <view class="p-user-item">
-      <van-cell size="large" icon="shop-o" title="商城" is-link />
-      <van-cell size="large" icon="bill-o" title="推广赚钱" is-link />
-      <van-cell size="large" icon="balance-list-o" title="购买记录" is-link />
-    </view> -->
 
     <view class="p-user-item">
-      <!-- <van-cell size="large" icon="shop-o" title="商城" is-link bind:tap="clickShop" /> -->
-      <van-cell size="large" icon="gift-o" title="签到" is-link bind:tap="clickSignOn" />
-      <van-cell size="large" icon="refund-o" title="积分兑换" is-link bind:tap="clickKami" />
+      <t-cell size="large" leftIcon="assignment-checked" title="签到" arrow bind:tap="clickSignOn" />
+      <t-cell size="large" leftIcon="gift" title="积分兑换" arrow bind:tap="clickKami" />
     </view>
 
     <view class="p-user-item">
-      <van-cell size="large" icon="miniprogram-o" title="微信公众号" is-link bind:tap="clickWXofficial" />
-      <van-cell size="large" icon="user-o" title="管理员" is-link bind:tap="clickWXAdmin" />
-      <!-- <van-cell size="large" icon="link-o" title="网页版" is-link bind:tap="clickAIWeb" /> -->
+      <t-cell size="large" leftIcon="logo-wechat-stroke" title="微信公众号" arrow bind:tap="clickWXofficial" />
+      <t-cell size="large" leftIcon="assignment-user" title="管理员" arrow bind:tap="clickWXAdmin" />
     </view>
-
-    <!-- <view class="p-user-item">
-      <van-cell size="large" icon="envelop-o" title="关联邮箱" is-link bind:tap="clickConnectEmail" />
-    </view> -->
   </view>
 </view>
 
 <view wx:if="{{ calendar.visible }}">
-  <van-calendar
-    show="{{ calendar.visible }}"
+  <t-calendar
+    visible="{{ calendar.visible }}"
     min-date="{{ calendar.minDay }}"
     max-date="{{ calendar.maxDay }}"
     bind:close="closeSignOn"
     bind:confirm="confirmSignOn"
-    formatter="{{ formatter }}"
-    readonly
-    round
+    format="{{ formatter }}"
+    usePopup
     title="签到"
-    confirm-text="签到"
-    color="#07c160"
-    class="p-user-calendar"
+    confirm-btn="签到"
+    t-class="p-user-calendar"
+    value="{{ calendar.today }}"
+    type="single"
+    default-value="{{ calendar.today }}"
   />
 </view>
-
-<van-toast id="van-toast" />

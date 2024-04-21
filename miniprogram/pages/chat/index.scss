@@ -87,13 +87,18 @@
 
 .p-chat-search-input {
   flex: 1;
+  padding: 8px 0;
+  min-height: 20px !important;
+  // line-height: 18px !important;
+  font-size: 20px;
+  box-sizing: content-box;
 
   textarea {
-    padding: 6px 0;
-    min-height: 18px !important;
-    line-height: 18px !important;
-    font-size: 18px;
-    box-sizing: content-box;
+    font-size: 20px;
+    // line-height: 18px;
+    vertical-align: middle;
+    // display: flex;
+    // align-items: center;
   }
 }
 
@@ -107,9 +112,11 @@
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(241, 241, 241, 0.5);
+  --td-navbar-bg-color: rgba(241, 241, 241, 0.5);
 }
 
 .p-navbar-title {
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,6 +175,9 @@
   box-shadow: 0px 0px 6px 4px #f1f1f1;
   animation-fill-mode: forwards;
   animation: transfer 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes transfer {
@@ -212,12 +222,23 @@
 }
 
 .p-chat-group-search {
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 6px;
   border-bottom: 1px solid #f1f1f1;
 }
 
 .p-chat-group-list {
   flex: 1;
   overflow-y: auto;
+
+  .t-cell__title {
+    max-width: 80%;
+  }
+
+  view[class="t-cell__title"] {
+    max-width: 80%;
+  }
 }
 
 .p-chat-group-user {
@@ -237,11 +258,12 @@
 
 .p-chat-sidesheet {
   height: 100%;
-  width: 75%;
+  width: 75vw;
   overflow: hidden;
 }
 
 .p-common-ellipsis {
+  width: 65vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -292,7 +314,7 @@
   margin-left: 12px;
   background-color: #f1f1f1;
   // box-shadow: 0px 0px 6px 4px #eeeeee;
-  font-size: 12px;
+  font-size: 14px;
   color: #323232;
   border-radius: 4px;
   max-width: 180px;
@@ -307,13 +329,20 @@
   color: #888888;
 }
 
-.p-common-ellipsis {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 button[style="color: #07c160"] > view {
   color: #07c160 !important;
 }
+
+view[class="t-action-sheet class t-class"] {
+  background-color: red;
+}
+
+#choose-model-action-sheet {
+  z-index: 31500 !important;
+}
+
+view[data-type="overlay"] {
+  z-index: 31500 !important;
+}
+
 

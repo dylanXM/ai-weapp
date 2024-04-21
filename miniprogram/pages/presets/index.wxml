@@ -1,6 +1,6 @@
-<van-nav-bar border="{{none}}" custom-style="background-color: #f1f1f1;">
-  <van-icon
-    name="add-o"
+<t-navbar style="--td-navbar-bg-color: #f1f1f1;">
+  <t-icon
+    name="add-circle"
     bind:click="handleClickAddPresets"
     color="#4d4d4d"
     slot="left"
@@ -22,36 +22,39 @@
       官方
     </view>
   </view>
-</van-nav-bar>
+</t-navbar>
 
 <view
   class="p-presets-container"
   style="height: calc(100vh - {{navBar.navBarHeight + bottomSafeHeight + 54}}px)"
 >
-  <van-search
+  <t-search
     background="#f1f1f1"
     placeholder="搜索"
     clearable
-    custom-class="p-presets-search"
+    t-class="p-presets-search"
     value="{{ query }}"
     bind:change="handleQueryChange"
     bind:confirm="searchPresets"
     bind:blur="searchPresets"
+    bind:clear="searchPresets"
+    t-class-input-container="p-presets-search-input"
   />
   <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + 148}}px)">
     <view
       wx:for="{{presets}}"
-      class="p-presets-item"
       wx:key="id"
       wx:for-item="item"
       bind:tap="handleClickPreset"
       data-id="{{ item.id }}"
     >
-      <van-image custom-class="p-presets-item-avatar" width="40" height="40" src="{{item.coverImg}}" />
-      <view>
-        <view class="p-presets-item-title">{{item.name}}</view>
-        <view class="p-presets-item-desc">{{item.des}}</view>
-      </view>
+      <t-cell
+        title="{{item.name}}"
+        description="{{item.des}}"
+        align="top"
+        image="{{item.coverImg}}"
+        hover
+      />
     </view>
   </view>
 </view>

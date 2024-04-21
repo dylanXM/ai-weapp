@@ -1,39 +1,23 @@
-<van-nav-bar border="{{false}}" custom-class="p-navbar-container">
-  <van-icon
-    name="wap-nav"
-    bind:click="showPopup"
-    color="#4d4d4d"
-    slot="left"
-    size="24"
-  />
+<t-navbar bordered="{{false}}" t-class="p-navbar-container" animation>
+  <t-icon color="#4d4d4d" slot="left" name="view-list" size="24" bind:click="togglePopup" />
   <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-navbar-title">
     <view>{{currentApp.name}}</view>
-    <van-icon
-      name="arrow"
-      color="#aaaaaa"
-      slot="left"
-      size="16"
-    />
+    <t-icon color="#aaaaaa" name="chevron-right" size="20" />
   </view>
   <view slot="title" wx:if="{{ !currentApp.id }}" bind:tap="showModelActionSheet" data-group="{{currentGroup}}" class="p-navbar-title">
     <view>{{model.modelName}}</view>
-    <van-icon
-      name="arrow"
-      color="#aaaaaa"
-      slot="left"
-      size="16"
-    />
+    <t-icon color="#aaaaaa" name="chevron-right" size="20" />
   </view>
-</van-nav-bar>
+</t-navbar>
 
 <view
-  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 60)}}px);"
   class="p-container"
 >
   <view
     class="p-chat-container"
     wx:if="{{groups.length !== 0}}"
-    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 60)}}px);"
   >
     <!-- 聊天记录区 -->
     <scroll-view
@@ -73,26 +57,8 @@
             <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
           </view>
           <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
-            <van-button
-              custom-class="p-common-no-border"
-              icon="label-o"
-              type="default"
-              size="small"
-              data-text="{{message.originText}}"
-              bind:click="copyGptResult"
-            >
-              复制
-            </van-button>
-            <van-button
-              custom-class="p-common-no-border"
-              icon="replay"
-              type="default"
-              size="small"
-              data-text="{{message.requestOptions.prompt}}"
-              bind:click="clickPrompt"
-            >
-              重新回答
-            </van-button>
+            <t-button data-text="{{message.originText}}" bind:tap="copyGptResult" variant="text" t-class="p-common-no-border" icon="copy" content="复制" size="small"></t-button>
+            <t-button data-text="{{message.requestOptions.prompt}}" bind:tap="clickPrompt" variant="text" t-class="p-common-no-border" icon="refresh" content="重新回答" size="small"></t-button>
           </view>
         </view>
       </view>
@@ -123,46 +89,40 @@
     </view>
     <!-- 搜索区 -->
     <view class="p-chat-search">
-      <van-icon
-        name="down"
-        size="16"
-        class="p-chat-message-to-bottom"
-        bindtap="scrollToBottom"
+      <t-icon
         color="#4d4d4d"
+        name="arrow-down"
+        size="20"
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
+        t-class="p-chat-message-to-bottom"
+        bindtap="scrollToBottom"
       />
       <view class="p-chat-search-border">
-        <van-field
-          placeholder="请输入你的问题或需求"
-          border="{{ false }}"
-          custom-style="padding: 0px;"
-          value="{{ value }}"
-          class="p-chat-search-input"
-          adjust-position="{{false}}"
+        <t-textarea
           bind:change="handleValueChange"
-          confirm-type="send"
-          confirm-hold="{{true}}"
-          bind:confirm="chatProcess"
-          disabled="{{ loading }}"
-          bind:keyboardheightchange="handlekeyboardHeightChange"
+          value="{{ value }}"
+          t-class="p-chat-search-input"
+          placeholder="请输入你的问题或需求"
+          disableDefaultPadding="{{true}}"
+          adjust-position="{{false}}"
           autosize
-          type="textarea"
-          size="large"
+          placeholderStyle="font-size: 22px;"
+          bind:keyboardheightchange="handlekeyboardHeightChange"
         />
-        <van-icon
+        <t-icon
+          name="explore"
           wx:if="{{!loading}}"
-          name="upgrade"
           size="34"
           bind:click="chatProcess"
           color="#4d4d4d"
           class="p-chat-search-icon"
         />
-        <van-icon
+        <t-icon
+          name="stop-circle"
           wx:if="{{loading}}"
-          name="stop-circle-o"
           size="34"
+          bind:click="chatProcess"
           color="red"
-          bind:click="cancelChatProcess"
           class="p-chat-icon-cancel p-chat-search-icon"
         />
       </view>
@@ -173,100 +133,78 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <van-popup
-    position="left"
-    show="{{ popupVisible }}"
+  <t-popup
+    placement="left"
+    visible="{{ popupVisible }}"
     bind:close="closePopup"
-    custom-class="p-chat-sidesheet"
+    t-class-content="p-chat-sidesheet"
+    bind:visible-change="onPopupVisibleChange"
+    overlay-props="{{ popupOverlay }}"
+    zIndex="{{ 10500 }}"
   >
     <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
-      <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
-        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" />
+      <view style="padding-top: {{navBar.menuTop - 6}}px;" class="p-chat-group-search">
+        <!-- <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" /> -->
+        <t-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" />
       </view>
       <view class="p-chat-group-list">
         <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
-          <van-cell
-            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}};"
-            border="{{false}}"
+          <t-cell
+            style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}}; padding: 10px 12px;"
+            bordered="{{false}}"
             title="{{group.title}}"
             bind:click="chooseGroup"
             data-text="{{group.id}}"
-            icon="chat-o"
-            title-class="p-common-ellipsis"
+            t-class-title="p-common-ellipsis"
+            data-group="{{group}}"
+            bindlongpress="showGroupOperate"
           >
-            <van-icon
-              slot="right-icon"
-              name="ellipsis"
-              type="default"
-              data-group="{{group}}"
-              catchtap="showGroupOperate"
-              size="26"
-            />
-          </van-cell>
+          </t-cell>
         </view>
       </view>
       <view class="p-chat-group-user p-common-blur">
-        <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
+        <t-cell
+          t-class="p-common-blur p-common-cell-padding"
           title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
-          icon="coupon-o" border="{{ false }}"
-          value="{{userBalance.modelCount}} 积分"
+          icon="coupon-o"
+          bordered="{{ false }}"
+          note="{{userBalance.modelCount}} 积分"
         />
-        <!-- <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
-          title="我已使用"
-          icon="paid"
-          border="{{ false }}"
-          value="{{userBalance.useModelToken}} tokens"
-        /> -->
-        <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
+        <t-cell
+          t-class="p-common-blur p-common-cell-padding"
           title="模型费用"
           icon="bill-o"
-          border="{{ false }}"
-          value="{{userBalance.modelPrice}} 积分 / 对话"
+          bordered="{{ false }}"
+          note="{{userBalance.modelPrice}} 积分 / 对话"
         />
       </view>
       <view class="p-chat-group-add">
-        <van-button custom-style="height: 34px;" bind:click="createChatGroup" round hairline block icon="add-o" type="primary">新建对话</van-button>
+        <t-button theme="primary" block icon="add" bind:tap="createChatGroup" content="新建对话"></t-button>
       </view>
     </view>
-  </van-popup>
-
-  <van-action-sheet
-    title="选择模型"
-    show="{{ modelConfig.visible }}"
-    actions="{{ modelConfig.options }}"
-    bind:close="closeModelActionSheet"
-    bind:select="onSelectModel"
-    cancel-text="取消"
-    bind:cancel="closeModelActionSheet"
-  />
-
-  <van-action-sheet
-    show="{{ groupOperate.visible }}"
-    actions="{{ groupOperate.actions }}"
-    bind:close="closeGroupOperate"
-    bind:select="operateChatGroup"
-    cancel-text="取消"
-    bind:cancel="closeGroupOperate"
-  />
-
-  <van-dialog
-    use-slot
-    title="修改对话组名称"
-    show="{{ groupOperate.renameVisible }}"
-    show-cancel-button
-    bind:confirm="confirmRenameGroup"
-  >
-    <van-field
-      value="{{ groupOperate.newName }}"
-      placeholder="请输入新的对话组名称"
-      title="修改对话组名称"
-      bind:change="groupNewNameChange"
-      type="textarea"
-      border="{{ false }}"
-      size="large"
-    />
-  </van-dialog>
+  </t-popup>
 </view>
+
+<t-action-sheet data-type="overlay" show-overlay id="choose-model-action-sheet" bind:selected="onSelectModel" />
+
+<t-action-sheet data-type="overlay" show-overlay id="group-operate-action-sheet" bind:selected="operateChatGroup" />
+
+<t-dialog
+  visible="{{groupOperate.renameVisible}}"
+  title="修改对话组名称"
+  confirm-btn="确定"
+  cancel-btn="取消"
+  bind:confirm="confirmRenameGroup"
+  bind:close="closeRenameGroup"
+  show-overlay
+>
+  <t-input
+    value="{{ groupOperate.newName }}"
+    borderless
+    clearable
+    slot="content"
+    placeholder="请输入新的对话组名称"
+    placeholder-class="placeholder"
+    bind:change="groupNewNameChange"
+  />
+</t-dialog>

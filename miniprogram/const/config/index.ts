@@ -27,7 +27,7 @@ export const modelTypeMap = {
 };
 
 export const groupActions = [
-  { name: '删除', color: '#ee0a24', action: 'del' },
-  { name: '重命名', action: 'rename' },
-  { name: '清空聊天消息', action: 'clear' },
+  { name: '删除', color: '#ee0a24', action: 'del', label: '删除' },
+  { name: '重命名', action: 'rename', label: '重命名' },
+  { name: '清空聊天消息', action: 'clear', label: '清空聊天消息' },
 ];

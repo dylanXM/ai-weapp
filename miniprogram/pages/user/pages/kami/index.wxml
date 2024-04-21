@@ -1,29 +1,26 @@
-<van-nav-bar title="积分兑换" border="{{none}}" custom-style="background: #f1f1f1;">
-  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
-</van-nav-bar>
+<t-navbar left-arrow title="积分兑换" bind:go-back="onBack" style="--td-navbar-bg-color: #f1f1f1;" />
 
 <view style="height: calc(100vh - {{navBar.navBarHeight}}px)" class="p-kami-container">
   
-  <van-field
+  <t-input
     value="{{ kami }}"
     clearable
     placeholder="请输入兑换码"
-    size="large"
-    border="{{ false }}"
+    bordered="{{ false }}"
     bind:change="handleKamiChange"
   />
 
-  <van-button
+  <t-button
     loading="{{ loading }}"
-    custom-class="p-kami-btn"
+    t-class="p-kami-btn"
     block
     hairline
-    type="primary"
     bind:tap="usekami"
     loading-text="激活兑换码"
+    theme="primary"
   >
     激活兑换码
-  </van-button>
+  </t-button>
 </view>
 
 <van-toast id="van-toast" />

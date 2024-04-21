@@ -1,21 +1,16 @@
-// @ts-nocheck
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
 import { IAppOption } from 'typings';
 import { createChat, delGroup, queryChat, queryChatGroup, updateGroup, clearGroup } from '../../api/chat/index';
-// @ts-ignore
-import { requestAnimationFrame } from '@vant/weapp/common/utils';
-// @ts-ignore
-import Toast from '@vant/weapp/toast/toast';
-// @ts-ignore
-import Dialog from '@vant/weapp/dialog/dialog';
+import requestAnimationFrame from '../../utils/requestAnimationFrame';
+import Dialog from 'tdesign-miniprogram/dialog/index';
 import { formatModelOptions, getChooseModel, getChooseModelInfo } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
 import { uint8ArrayToString } from '../../utils/util';
-import { throttle } from '../../utils/throttle';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
+import ActionSheet, { ActionSheetTheme } from 'tdesign-miniprogram/action-sheet/index';
 
 const app = getApp<IAppOption>();
 
@@ -40,6 +35,9 @@ Component({
     value: '',
     keyboardHeight: 0,
     popupVisible: false,
+    popupOverlay: {
+      zIndex: 10000,
+    },
     loading: false,
     viewId: '',
     typingStatusEnd: true,
@@ -106,10 +104,6 @@ Component({
         this.updateUserBalance(this.data.user, data);
       }
     },
-    bottomSafeHeight: function (data) {
-    },
-    keyboardHeight: function (data) {
-    },
     currentGroup: function (data) {
       this.setData({ isScrollToLower: true });
       const { allPresets } = this.data;
@@ -129,23 +123,11 @@ Component({
       this.setState('model', modelInfo);
       this.scrollToBottom();
     },
-    messageMap: function (data) {
-      // console.log('messageMap', data);
-    },
     currentApp: function (data) {
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
     },
-    robotAvatar: function (data) {
-      // console.log('robotAvatar', data);
-    },
-    modelList: function(data) {
-      // console.log('modelList', data);
-    },
-    model: function(data) {
-      // console.log('model', data);
-    }
   },
 
   /**
@@ -175,7 +157,7 @@ Component({
       const appId = event.detail.key;
       const { allGroups, loading } = this.data;
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
       const alreadyHasGroup = allGroups.find(group => group.appId === appId);
@@ -192,7 +174,7 @@ Component({
       this.closePopup();
     },
     searchChatGroup: function (event: any) {
-      const query = event.detail;
+      const query = event.detail.value;
       const { allGroups } = this.data;
       if (!query) {
         this.setData({ groups: allGroups, allGroups });        
@@ -208,6 +190,7 @@ Component({
         text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
         originText: message.text,
       }));
+      console.log('messages', messages);
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup });
       this.scrollToBottom();
@@ -246,11 +229,11 @@ Component({
       const value = typeof text === 'string' && text ? text : _this.data.value;
       const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
-        Toast('请输入你的问题或需求');
+        wx.showToast({ title: '请输入你的问题或需求', icon: 'none' });
         return;
       }
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
       const { modelCount, modelPrice } = balance;
@@ -365,7 +348,7 @@ Component({
             },
             success: function (res) {
               if (res.statusCode !== 200) {
-                Toast(res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员');
+                wx.showToast({ title: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', icon: 'none' });
                 _this.updateGroupChat(messages.length - 1, {
                   loading: false,
                   text: '遇到错误了，请检查积分是否充足或联系系统管理员',
@@ -399,7 +382,7 @@ Component({
                 // const parseData = parseTextToJSON(responseText)
                 // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
                 if (chunk.includes('OpenAI timed out waiting for response')) {
-                  Toast.fail('会话超时了、告知管理员吧~~~');
+                  wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
                 }
               }
             }
@@ -455,14 +438,17 @@ Component({
 
       }
     },
-    showPopup: function() {
-      this.setData({ popupVisible: true });
+    togglePopup: function() {
+      this.setData({ popupVisible: !this.data.popupVisible });
     },
     closePopup: function() {
       this.setData({ popupVisible: false });
     },
+    onPopupVisibleChange: function(event: any) {
+      this.setData({ popupVisible: event.detail.visible });
+    },
     handleValueChange: function(event: any) {
-      this.setData({ value: event.detail });
+      this.setData({ value: event.detail.value });
     },
     showModelActionSheet: function (event: any) {    
       // @ts-ignore
@@ -475,6 +461,13 @@ Component({
       const options = formatModelOptions(modelList.modelMaps, model);
       modelConfig.visible = true;
       modelConfig.options = options;
+      ActionSheet.show({
+        theme: ActionSheetTheme.List,
+        description: '选择模型',
+        selector: '#choose-model-action-sheet',
+        context: this,
+        items: options,
+      });
       this.setData({ modelConfig });
     },
     closeModelActionSheet: function () {
@@ -483,7 +476,7 @@ Component({
       this.setData({ modelConfig });
     },
     onSelectModel: function (event: any) {
-      const chooseModel = { model: event.detail.model, modelName: event.detail.modelName };
+      const chooseModel = { model: event.detail.selected.model, modelName: event.detail.selected.modelName };
       // @ts-ignore
       const model = getChooseModel(this.data.modelList.modelMaps, chooseModel);
       this.setState('model', model);
@@ -500,18 +493,14 @@ Component({
     chooseGroup: async function (event: any) {
       const { loading } = this.data;
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
-      Toast.loading({
-        duration: 0,
-        forbidClick: true,
-        message: '会话加载中...',
-      });
+      wx.showToast({ title: '会话加载中', icon: 'loading' });
       const groupId = event.target.dataset.text;
       await this.queryChatList(groupId);
       this.closePopup();
-      Toast.clear();
+      wx.hideToast();
     },
     cancelChatProcess: function () {
       const { loading, requestTask, messageMap, currentGroup } = this.data;
@@ -541,7 +530,7 @@ Component({
       if (deviceScrollMinis === -100) {
         this.setData({ deviceScrollMinis: scrollMinis });
       } else {
-        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - 60 <= 0 });
+        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - 80 <= 0 });
       }
     },
     // 更新userBalance
@@ -559,6 +548,7 @@ Component({
       this.setState('userBalance', { ...this.data.userBalance, ...userBalance });
     },
     handlekeyboardHeightChange: function(event: any) {
+      console.log('handlekeyboardHeightChange', event);
       this.setData({ keyboardHeight: event.detail.height, deviceScrollMinis: -100 });
       this.scrollToBottom();
     },
@@ -576,6 +566,13 @@ Component({
       let actions = group.appId ? groupActions.filter(g => g.action !== 'rename') : groupActions;
       const messageList = messageMap[group.id];
       actions = messageList?.length ? actions : actions.filter(g => g.action !== 'clear');
+      ActionSheet.show({
+        theme: ActionSheetTheme.List,
+        // description: '选择模型',
+        selector: '#group-operate-action-sheet',
+        context: this,
+        items: actions,
+      });
       this.setData({ groupOperate: { visible: true, group, actions, renameVisible: false, newName: '' } });
     },
     closeGroupOperate: function () {
@@ -585,7 +582,7 @@ Component({
     // 操作对话组
     operateChatGroup: function (event: any) {
       const _this = this;
-      const { action } = event.detail;
+      const { action } = event.detail.selected;
       const { groupOperate, currentGroup } = _this.data;
       const { group, visible } = groupOperate;
       if (!visible) {
@@ -594,7 +591,9 @@ Component({
       if (action === 'del') {
         Dialog.confirm({
           title: '操作确认',
-          message: `是否删除对话【${group.title}】`,
+          content: `是否删除对话【${group.title}】`,
+          confirmBtn: '确定',
+          cancelBtn: '取消',
         }).then(() => {
           delGroup({ groupId: group.id }).then(() => {
             _this.chatGroup(currentGroup.id === group.id ? '' : currentGroup.id);
@@ -603,13 +602,15 @@ Component({
       }
 
       if (action === 'rename') {
-        this.setData({ groupOperate: { ...groupOperate, renameVisible: true } })
+        this.setData({ groupOperate: { ...groupOperate, renameVisible: true } });
       }
 
       if (action === 'clear') {
         Dialog.confirm({
           title: '操作确认',
-          message: `是否清除【${group.title}】中的会话`,
+          content: `是否清除【${group.title}】中的会话`,
+          confirmBtn: '确定',
+          cancelBtn: '取消',
         }).then(() => {
           clearGroup({ groupId: group.id }).then(() => {
             _this.queryChatList(group.id);
@@ -625,10 +626,15 @@ Component({
       }
       await updateGroup({ groupId: group.id, title: newName });
       this.chatGroup(currentGroup.id);
+      this.closeRenameGroup();
+    },
+    closeRenameGroup: async function() {
+      const { groupOperate } = this.data;
+      this.setData({ groupOperate: { ...groupOperate, renameVisible: false } });
     },
     groupNewNameChange: function (event: any) {
       const { groupOperate } = this.data;
-      this.setData({ groupOperate: { ...groupOperate, newName: event.detail } });
+      this.setData({ groupOperate: { ...groupOperate, newName: event.detail.value } });
     },
     clickPrompt: function (event: any) {
       const { text } = event.currentTarget.dataset;

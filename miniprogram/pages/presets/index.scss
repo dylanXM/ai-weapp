@@ -14,12 +14,16 @@
 
 .p-presets-search {
   min-height: 54px;
+  padding: 4px 12px;
+}
+
+.p-presets-search-input {
+  background: white !important;
 }
 
 .p-presets-list {
   flex: 1;
   background-color: white;
-  padding-top: 12px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -62,6 +66,7 @@
 
 .p-presets-nav-item {
   margin: 0 6px;
+  width: 40px;
   color: #4d4d4d;
   font-size: 14px;
 }

@@ -1,7 +1,8 @@
 {
   "component": true,
   "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-icon": "tdesign-miniprogram/icon/icon",
     "van-icon": "@vant/weapp/icon/index"
   }
 }

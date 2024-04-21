@@ -21,6 +21,7 @@
 
   <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" />
 
-  <van-dialog id="van-dialog" />
+  <t-dialog id="t-dialog" />
+
   <van-toast id="van-toast" />
 </view>

@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import Toast from '@vant/weapp/toast/toast';
 
 Component({
   behaviors: [storeBindingsBehavior],
@@ -33,7 +32,7 @@ Component({
   methods: {
     // 点击思维导图
     clickMindMap: function() {
-      Toast('功能正在开发中，敬请期待');
+      wx.showToast({ title: '功能正在开发中，敬请期待', icon: 'none' });
       // wx.navigateTo({
       //   url: '../apps/pages/mind-map/index',
       // });
@@ -41,17 +40,17 @@ Component({
 
     // 点击DELL画图
     clickDelle: function() {
-      Toast('功能正在开发中，敬请期待');
+      wx.showToast({ title: '功能正在开发中，敬请期待', icon: 'none' });
     },
 
     // 点击MJ画图
     clickMJ: function() {
-      Toast('功能正在开发中，敬请期待');
+      wx.showToast({ title: '功能正在开发中，敬请期待', icon: 'none' });
     },
 
     // 点击语音交互
     clicVoice: function() {
-      Toast('功能正在开发中，敬请期待');
+      wx.showToast({ title: '功能正在开发中，敬请期待', icon: 'none' });
     }
   },
   lifetimes: {

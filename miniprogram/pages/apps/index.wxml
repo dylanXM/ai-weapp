@@ -1,12 +1,12 @@
-<van-nav-bar title="应用列表" border="{{none}}" custom-style="background-color: #f1f1f1;" />
+<t-navbar left-arrow="{{ false }}" title="应用列表" style="--td-navbar-bg-color: #f1f1f1;" />
 
 <view
   style="height: calc(100vh - {{navBar.navBarHeight}}px)"
   class="p-apps-container"
 >
   <view>
-    <van-cell
-      icon="cluster"
+    <t-cell
+      leftIcon="letters-x"
       size="large"
       title="思维导图"
       is-link
@@ -15,15 +15,15 @@
   </view>
 
   <view class="p-apps-item">
-    <van-cell
-      icon="photo-o"
+    <t-cell
+      leftIcon="image"
       size="large"
       title="DELL画图"
       is-link
       bind:tap="clickDelle"
     />
-    <van-cell
-      icon="photo"
+    <t-cell
+    leftIcon="image-1"
       size="large"
       title="midjounery绘图"
       is-link
@@ -32,8 +32,8 @@
   </view>
 
   <view class="p-apps-item">
-    <van-cell
-      icon="service-o"
+    <t-cell
+      leftIcon="user-talk"
       size="large"
       title="语音交互"
       is-link
@@ -41,5 +41,3 @@
     />
   </view>
 </view>
-
-<van-toast id="van-toast" />

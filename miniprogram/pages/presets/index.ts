@@ -59,7 +59,6 @@ Component({
     // 初始数据获取
     getPresets: async function () {
       const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
-      // console.log('categories', categories, presets);
       const firstCategory = {
         id: 0,
         name: 'ALL',
@@ -76,6 +75,7 @@ Component({
       }))
       this.setData({ presets: newPresets, allPresets: newPresets });
       this.setState('allPresets', newPresets);
+      this.setState('allCategories', categories.rows);
     },
     getMyPresets: async function() {
       const presets = await queryMyPresetsList();
@@ -108,16 +108,20 @@ Component({
       this.setData({ activeKey: event.currentTarget.dataset.tab });
     },
     handleQueryChange: function(event: any) {
-      const query = event.detail;
+      const query = event.detail.value;
       this.setData({ query: query });
     },
     handleClickAddPresets: function() {
-      wx.showToast({ title: '功能开发中～', icon: 'none', duration: 2000 });
+      wx.navigateTo({
+        url: '../presets/pages/create-preset/index',
+      });
+      // wx.showToast({ title: '功能开发中～', icon: 'none', duration: 2000 });
     }
   },
   lifetimes: {
     attached() {
       this.getPresets();
+      // this.handleClickAddPresets();
     },
   }
 })

@@ -1,6 +1,7 @@
 // components/bottom-nav/bottom-nav.ts
 import { Menu } from '../../api/config/type';
 import { IAppOption } from 'typings';
+import { values } from 'mobx-miniprogram';
 
 const app = getApp<IAppOption>();
 

@@ -1,5 +1,3 @@
-// @ts-ignore
-import Dialog from '@vant/weapp/dialog/dialog';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { listenSafeHeightChange } from '../../utils/keyboards';
@@ -32,7 +30,7 @@ Component({
   },
   methods: {
     handleActiveNavChange(event: any) {
-      this.setData({ activeNav: event.detail.key });
+      this.setData({ activeNav: event.detail.key.value });
     },
     // 监听键盘高度
     subscribeKeyboard: function () {

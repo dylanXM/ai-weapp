@@ -1,9 +1,8 @@
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import { getFirstDayOfMonthTimestamp, getLastDayOfMonthTimestamp } from '../../utils/util';
+import { getFirstDayOfMonthTimestamp, getLastDayOfMonthTimestamp, getToday } from '../../utils/util';
 import { getSignMap } from '../../utils/sign';
 import { signOn, getSignList, getUserInfo } from '../../api/index';
-import Toast from '@vant/weapp/toast/toast';
 
 let _this: any = null;
 
@@ -24,6 +23,7 @@ Component({
       visible: false,
       minDay: getFirstDayOfMonthTimestamp(),
       maxDay: getLastDayOfMonthTimestamp(),
+      today: getToday(),
     },
     formatter: function(day: any) {
       if (!_this?.data) {
@@ -33,7 +33,7 @@ Component({
       const signMap = getSignMap(signList);
       const timeOfDay = new Date(day.date).getTime();
       if (signMap[timeOfDay]) {
-        day.bottomInfo = '已签到';
+        day.suffix = '已签到';
       }
       return day;
     },
@@ -54,8 +54,8 @@ Component({
   },
 
   observers: {
-    user: function (data) {
-      // console.log('data', data);
+    calendar: function (data) {
+      console.log('calendar', data, getToday());
     }
   },
 
@@ -79,7 +79,6 @@ Component({
 
     // 点击管理员
     clickWXAdmin: function() {
-      console.log('wx-admin to');
       wx.navigateTo({
         url: '../user/pages/wx-admin/index',
       });
@@ -121,13 +120,13 @@ Component({
         // 更新
         getSignList().then(res => this.setState('signList', res));
         getUserInfo().then(user => this.setState('user', user));
+        wx.showToast({ title: '签到成功！积分奖励已发放～', icon: 'none' });
         Toast('签到成功！积分奖励已发放～');
         // 关闭
         this.closeSignOn();
       } catch (err) {
-        Toast(err?.message || '接口出错了，请重试～');
+        wx.showToast({ title: err?.message || '接口出错了，请重试～', icon: 'none' });
       }
-      console.log('event', event);
     },
 
     // 点击卡密兑换

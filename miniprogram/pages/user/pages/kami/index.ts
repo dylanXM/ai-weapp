@@ -1,6 +1,5 @@
 import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
-import Toast from '@vant/weapp/toast/toast';
 import { useKami } from '../../../../api/index';
 import { getUserInfo } from '../../../../api/index';
 
@@ -29,7 +28,7 @@ Page({
    * 监听卡密变化
    */
   handleKamiChange(event: any) {
-    this.setData({ kami: event.detail });
+    this.setData({ kami: event.detail.value });
   },
 
   /**
@@ -39,15 +38,15 @@ Page({
     try {
       const { kami } = this.data;
       if (!kami) {
-        Toast('请输入卡密！');
+        wx.showToast({ title: '请输入卡密！', icon: 'none' });
         return;
       }
       this.setData({ loading: true });
       await useKami({ code: kami });
       getUserInfo().then(user => this.setState('user', user));
-      Toast('卡密兑换成功！');
+      wx.showToast({ title: '卡密兑换成功！', icon: 'none' });
     } catch (err) {
-      Toast(err?.message || '接口出错了，请重试');
+      wx.showToast({ title: err?.message || '接口出错了，请重试', icon: 'none' });
     } finally {
       this.setData({ loading: false });
     }

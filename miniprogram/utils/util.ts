@@ -62,3 +62,11 @@ export function getTimeStampFromString(dateString: string) {
   return date.getTime();
 }
 
+export function getToday() {
+  const date = new Date();
+  // 重置时间为00:00:00
+  date.setHours(0, 0, 0, 0);
+  // 返回时间戳
+  return date.getTime();
+}
+
