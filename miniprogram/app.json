@@ -10,8 +10,7 @@
     "pages/apps/pages/mind-map/index",
     "pages/apps/pages/dell-e/index",
     "pages/apps/pages/mid-journey/index",
-    "pages/presets/pages/create-preset/index",
-    "pages/chat/pages/chat-grous/index"
+    "pages/presets/pages/create-preset/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

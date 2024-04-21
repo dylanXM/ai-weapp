@@ -112,10 +112,10 @@ Component({
       this.setData({ query: query });
     },
     handleClickAddPresets: function() {
-      wx.navigateTo({
-        url: '../presets/pages/create-preset/index',
-      });
-      // wx.showToast({ title: '功能开发中～', icon: 'none', duration: 2000 });
+      // wx.navigateTo({
+      //   url: '../presets/pages/create-preset/index',
+      // });
+      wx.showToast({ title: '功能开发中～', icon: 'none', duration: 2000 });
     }
   },
   lifetimes: {
