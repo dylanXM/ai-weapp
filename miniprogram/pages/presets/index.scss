@@ -19,7 +19,6 @@
 .p-presets-list {
   flex: 1;
   background-color: white;
-  padding-top: 12px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -27,14 +26,14 @@
 .p-presets-item {
   display: flex;
   align-items: center;
-  margin: 0 12px 12px;
+  margin: 0 0 12px 12px;
   padding: 12px;
   border-radius: 6px;
-  background-color: #f1f1f1;
   max-width: 100%;
   flex-wrap: nowrap;
   overflow-y: scroll;
   overflow-x: hidden;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .p-presets-item-avatar {
@@ -53,6 +52,10 @@
 .p-presets-item-desc {
   margin-top: 4px;
   color: #888888;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: calc(100vw - 100px)
 }
 
 .p-presets-nav-container {

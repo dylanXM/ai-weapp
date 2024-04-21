@@ -38,7 +38,7 @@
     bind:confirm="searchPresets"
     bind:blur="searchPresets"
   />
-  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + 148}}px)">
+  <view class="p-presets-list" style="max-height: calc(100vh - {{navBar.navBarHeight + 136}}px)">
     <view
       wx:for="{{presets}}"
       class="p-presets-item"
