@@ -193,6 +193,8 @@
             data-text="{{group.id}}"
             icon="chat-o"
             title-class="p-common-ellipsis"
+            data-group="{{group}}"
+            bind:longpress="showGroupOperate"
           >
             <van-icon
               slot="right-icon"
@@ -212,13 +214,6 @@
           icon="coupon-o" border="{{ false }}"
           value="{{userBalance.modelCount}} 积分"
         />
-        <!-- <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
-          title="我已使用"
-          icon="paid"
-          border="{{ false }}"
-          value="{{userBalance.useModelToken}} tokens"
-        /> -->
         <van-cell
           custom-class="p-common-blur p-common-cell-padding"
           title="模型费用"
@@ -228,7 +223,7 @@
         />
       </view>
       <view class="p-chat-group-add">
-        <van-button custom-style="height: 34px;" bind:click="createChatGroup" round hairline block icon="add-o" type="primary">新建对话</van-button>
+        <van-button custom-style="height: 34px;" bind:click="createChatGroup" hairline block icon="add-o" type="primary">新建对话</van-button>
       </view>
     </view>
   </van-popup>
