@@ -31,3 +31,13 @@ export const groupActions = [
   { name: '重命名', action: 'rename' },
   { name: '清空聊天消息', action: 'clear' },
 ];
+
+export const presetError = {
+  catId: '请填写【应用分类】',
+  name: '请填写【应用名称】',
+  preset: '请填写【预设指令】',
+  des: '请填写【应用描述】',
+  demoData: '请填写【示例内容】',
+  coverImg: '请填写【应用Logo】',
+  public: '请填写【是否共享】',
+}

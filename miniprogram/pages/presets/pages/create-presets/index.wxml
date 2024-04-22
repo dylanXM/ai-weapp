@@ -1,0 +1,48 @@
+<van-nav-bar title="新建预设" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view>
+  <van-cell-group>
+    <van-cell bind:tap="openAppPicker" title="应用分类" value="{{ appClassify.chooseApp.label || ''}}" is-link />
+    <van-field
+      model:value="{{ appName }}"
+      label="应用名称"
+      input-align="right"
+    />
+    <van-field
+      model:value="{{ preset }}"
+      label="预设指令"
+      input-align="right"
+      type="textarea"
+      autosize
+    />
+    <van-field
+      model:value="{{ appDesc }}"
+      label="应用描述"
+      input-align="right"
+      type="textarea"
+      autosize
+    />
+    <van-field
+      model:value="{{ demo }}"
+      label="示例内容"
+      input-align="right"
+      type="textarea"
+      autosize
+    />
+    <van-cell title="应用Logo">
+      <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" />
+    </van-cell>
+    <van-cell title="是否共享">
+      <van-switch active-color="#07c160" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />
+    </van-cell>
+  </van-cell-group>
+
+  <van-button type="primary" custom-class="p-create-presets-btn" block bind:tap="createPreset">新建预设</van-button>
+</view>
+
+
+<van-action-sheet show="{{ appClassify.visible }}">
+  <van-picker columns="{{ appClassify.options }}" show-toolbar bind:cancel="closeAppPicker" bind:confirm="selectApp" />
+</van-action-sheet>

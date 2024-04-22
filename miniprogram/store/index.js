@@ -23,6 +23,7 @@ export const store = observable({
     modelType: 1,
   },
   allPresets: [],
+  allCategories: [],
   signList: [],
 
   // 计算属性, 暂时不需要
