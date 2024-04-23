@@ -129,9 +129,10 @@ Component({
         currentApp = allMinePresets.find((item: any) => item.id === currentAppId);
       }
       const appDemo = currentApp?.demoData?.split('\n').filter((item: string) => item) || [];
-      this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
       this.setState('model', modelInfo);
-      this.scrollToBottom();
+      this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo }, () => {
+        this.scrollToBottom();
+      });
     },
     messageMap: function (data) {
       // console.log('messageMap', data);
@@ -213,16 +214,18 @@ Component({
         originText: message.text,
       }));
       const chooseGroup = groups.find(group => group.id === groupId)
-      this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup });
-      this.scrollToBottom();
+      this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup }, () => {
+        this.scrollToBottom();
+      });
     },
     addGroupChat: function(message: Message) {
       // @ts-ignore
       const { currentGroup, messageMap } = this.data;
       const messages = messageMap[currentGroup.id];
       messages.push(message);
-      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
-      this.scrollToBottom();
+      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } }, () => {
+        this.scrollToBottom();
+      });
     },
     updateGroupChat: function(index: number, message: Partial<Message>) {
       const { currentGroup, messageMap, loading } = this.data;
@@ -236,12 +239,17 @@ Component({
         message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
-      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } });
+      this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } }, () => {
+        this.scrollToBottom();
+      });
       if (!message.loading) {
         setTimeout(this.scrollToBottom.bind(this), 400);
-      } else {
-        this.scrollToBottom();
       }
+      // if (!message.loading) {
+      //   setTimeout(this.scrollToBottom.bind(this), 400);
+      // } else {
+      //   this.scrollToBottom();
+      // }
     },
     chatProcess: async function(text?: string) {
       const _this = this;
@@ -563,8 +571,9 @@ Component({
       this.setState('userBalance', { ...this.data.userBalance, ...userBalance });
     },
     handlekeyboardHeightChange: function(event: any) {
-      this.setData({ keyboardHeight: event.detail.height, deviceScrollMinis: -100 });
-      this.scrollToBottom();
+      this.setData({ keyboardHeight: event.detail.height, deviceScrollMinis: -100 }, () => {
+        this.scrollToBottom();
+      });
     },
     // 新增应用dispatch
     dispatchAppId: function (appId: string) {
