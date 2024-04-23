@@ -40,7 +40,7 @@ export const queryMyPresetsList = async (): Promise<any> => {
 /**
  * 新建预设
  */
-export const createPreset = async (params: any): Promise<any> => {
+export const createMinePreset = async (params: any): Promise<any> => {
   const res = await request<any[]>({
     url: `${config.url}/app/customApp`,
     method: 'POST',

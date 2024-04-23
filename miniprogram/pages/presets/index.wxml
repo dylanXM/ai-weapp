@@ -5,6 +5,7 @@
     color="#4d4d4d"
     slot="left"
     size="24"
+    wx:if="{{ activeKey === 'mineApps' }}"
   />
   <view slot="title" class="p-presets-nav-container">
     <view

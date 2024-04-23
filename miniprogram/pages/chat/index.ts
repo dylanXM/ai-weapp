@@ -77,6 +77,7 @@ Component({
       userBalance: 'userBalance',
       bottomSafeHeight: 'bottomSafeHeight',
       allPresets: 'allPresets',
+      allMinePresets: 'allMinePresets'
     },
     actions: {
       setState: "setState",
@@ -112,7 +113,7 @@ Component({
     },
     currentGroup: function (data) {
       this.setData({ isScrollToLower: true });
-      const { allPresets } = this.data;
+      const { allPresets, allMinePresets } = this.data;
       if (!data.id) {
         return;
       }
@@ -123,7 +124,10 @@ Component({
         this.setState('model', modelInfo);
         return;
       } 
-      const currentApp = allPresets.find((item: any) => item.id === currentAppId);
+      let currentApp = allPresets.find((item: any) => item.id === currentAppId);
+      if (!currentApp) {
+        currentApp = allMinePresets.find((item: any) => item.id === currentAppId);
+      }
       const appDemo = currentApp?.demoData?.split('\n').filter((item: string) => item) || [];
       this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
       this.setState('model', modelInfo);
@@ -184,7 +188,7 @@ Component({
         this.queryChatList(alreadyHasGroup.id);
         return;
       }
-      const res = await createChat({ appId: event.detail.key });
+      const res = await createChat({ appId });
       const groups = this.data.groups;
       groups.unshift(res);
       this.setData({ groups, allGroups: groups });

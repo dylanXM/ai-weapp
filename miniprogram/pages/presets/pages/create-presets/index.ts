@@ -1,7 +1,7 @@
 import { presetError } from '../../../../const/config/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { store } from '../../../../store/index';
-import { createPreset } from '../../../../api/index';
+import { createMinePreset } from '../../../../api/index';
 
 Page({
 
@@ -165,14 +165,15 @@ Page({
       public: checked,
     };
     for (let key in params) {
-      if (params[key]) {
-        continue;
+      if (!params[key] && key !== 'public') {
+        wx.showToast({ title: presetError[key], icon: 'none' });
+        return;
       }
-      wx.showToast({ title: presetError[key], icon: 'none' });
-      return;
     }
-    createPreset(params).then(() => {
+    console.log('params', params);
+    createMinePreset(params).then(() => {
       // 返回
+      this.onBack();
     });
   },
 })

@@ -23,6 +23,7 @@ export const store = observable({
     modelType: 1,
   },
   allPresets: [],
+  allMinePresets: [],
   allCategories: [],
   signList: [],
 

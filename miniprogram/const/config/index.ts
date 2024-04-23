@@ -39,5 +39,4 @@ export const presetError = {
   des: '请填写【应用描述】',
   demoData: '请填写【示例内容】',
   coverImg: '请填写【应用Logo】',
-  public: '请填写【是否共享】',
 }

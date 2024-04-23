@@ -34,8 +34,9 @@
     <van-cell title="应用Logo">
       <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" />
     </van-cell>
-    <van-cell title="是否共享">
-      <van-switch active-color="#07c160" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />
+    <van-cell>
+      <view slot="title" style="margin-top: 4px;">是否共享</view>
+      <van-switch style="display: flex; flex-flow: row-reverse;" active-color="#07c160" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />
     </van-cell>
   </van-cell-group>
 
