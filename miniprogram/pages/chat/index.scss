@@ -63,7 +63,6 @@
 }
 
 .p-chat-search {
-  border-top: 1px solid #f1f1f1;
   position: relative;
   // min-height: 54px;
   padding: 12px;
@@ -168,7 +167,7 @@
   right: 0;
   // transform: rotate(180deg);
   z-index: 100;
-  box-shadow: 0px 0px 6px 4px #f1f1f1;
+  box-shadow: 0px 0px 3px 2px #e2e2e2;
   animation-fill-mode: forwards;
   animation: transfer 0.1s;
 }
@@ -215,7 +214,7 @@
 }
 
 .p-chat-group-search {
-  border-bottom: 1px solid #f1f1f1;
+  // border-bottom: 1px solid #f1f1f1;
 }
 
 .p-chat-group-list {
@@ -253,7 +252,7 @@
 .p-common-blur {
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  background-color: rgba(241, 241, 241, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-common-cell-padding {
@@ -317,11 +316,5 @@
 
 button[style="color: #07c160"] > view {
   color: #07c160 !important;
-}
-
-.safe-bottom {
-  backdrop-filter: blur(10px); /* 应用模糊效果 */
-  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(241, 241, 241, 0.5);
 }
 

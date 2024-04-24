@@ -173,7 +173,7 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="safe-bottom"></view>
+  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
 </view>
 
 <van-popup
