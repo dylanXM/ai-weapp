@@ -158,7 +158,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container', isScrollToLower: true });
+      this.setData({ toView: 'id_bottom_container' });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -245,11 +245,6 @@ Component({
       if (!message.loading) {
         setTimeout(this.scrollToBottom.bind(this), 400);
       }
-      // if (!message.loading) {
-      //   setTimeout(this.scrollToBottom.bind(this), 400);
-      // } else {
-      //   this.scrollToBottom();
-      // }
     },
     chatProcess: async function(text?: string) {
       const _this = this;
@@ -549,11 +544,10 @@ Component({
       const { navBar, bottomSafeHeight, deviceScrollMinis } = this.data;
       const { detail: { scrollHeight, scrollTop } } = event;
       const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight;
-      // console.log('onScroll', scrollMinis, deviceScrollMinis, scrollMinis - deviceScrollMinis - 60);
       if (deviceScrollMinis === -100) {
         this.setData({ deviceScrollMinis: scrollMinis });
       } else {
-        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - 60 <= 0 });
+        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - 70 <= 0 });
       }
     },
     // 更新userBalance

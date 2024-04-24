@@ -39,7 +39,7 @@
     <scroll-view
       scroll-y
       class="p-chat-messages"
-      scroll-with-animation
+      scroll-with-animation="{{ !loading }}"
       enable-passive
       id="messages-view"
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
@@ -70,7 +70,7 @@
           </view>
           <view class="p-chat-message-robot">
             <towxml nodes="{{message.text}}" />
-            <view wx:if="{{message.loading}}" class="p-chat-message-loading" />
+            <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" />
           </view>
           <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
             <van-button
