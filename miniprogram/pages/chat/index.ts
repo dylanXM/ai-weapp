@@ -62,6 +62,9 @@ Component({
     toView: '',
     deviceScrollMinis: -100,
     appImg: config.appImg,
+    searchStatus: {
+      active: false,
+    }
   },
 
   // @ts-ignore
@@ -150,6 +153,9 @@ Component({
     },
     model: function(data) {
       // console.log('model', data);
+    },
+    searchStatus: function(data) {
+      console.log('searchStatus', data);
     }
   },
 
@@ -466,7 +472,7 @@ Component({
       this.setData({ popupVisible: true });
     },
     closePopup: function() {
-      this.setData({ popupVisible: false });
+      this.setData({ popupVisible: false, searchStatus: { active: false } });
     },
     handleValueChange: function(event: any) {
       this.setData({ value: event.detail });
@@ -646,6 +652,18 @@ Component({
       const { text } = event.currentTarget.dataset;
       wx.setClipboardData({ data: text });
     },
+    /**
+     * 搜索框激活事件
+     */
+    handleSearchGroupFocus: function() {
+      this.setData({ searchStatus: { active: true } });
+    },
+    /**
+     * 搜索框失活事件
+     */
+    handleSearchGroupBlur: function() {
+      this.setData({ searchStatus: { active: false } });
+    }
   },
 
   lifetimes: {

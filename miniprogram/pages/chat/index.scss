@@ -63,16 +63,18 @@
 }
 
 .p-chat-search {
+  border-top: 1px solid #f1f1f1;
   position: relative;
   // min-height: 54px;
-  padding: 0 12px 8px;
+  padding: 12px;
   display: flex;
   align-items: center;
   // backdrop-filter: blur(10px); /* 应用模糊效果 */
   // -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   // background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
-  // background-color: #f1f1f1;
-  // border-top: #f1f1f1 1px solid;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(241, 241, 241, 0.5);
   box-sizing: border-box;
 }
 
@@ -80,9 +82,10 @@
   width: 100%;
   padding: 1px 12px;
   border: 1px solid #f1f1f1;
-  box-shadow: 0px 0px 6px 4px #eeeeee;
-  border-radius: 12px;
+  // box-shadow: 0px 0px 6px 4px #eeeeee;
+  border-radius: 6px;
   display: flex;
+  background-color: white;
 }
 
 .p-chat-search-input {
@@ -314,5 +317,11 @@
 
 button[style="color: #07c160"] > view {
   color: #07c160 !important;
+}
+
+.safe-bottom {
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(241, 241, 241, 0.5);
 }
 

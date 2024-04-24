@@ -27,7 +27,7 @@
 </van-nav-bar>
 
 <view
-  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+  style="height: calc(100vh - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : 0)}}px);"
   class="p-container"
 >
   <view
@@ -173,95 +173,106 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <van-popup
-    position="left"
-    show="{{ popupVisible }}"
-    bind:close="closePopup"
-    custom-class="p-chat-sidesheet"
-  >
-    <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
-      <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
-        <van-search placeholder="请输入搜索关键词" bind:change="searchChatGroup" />
-      </view>
-      <view class="p-chat-group-list">
-        <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
-          <van-cell
-            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}};"
-            border="{{false}}"
-            title="{{group.title}}"
-            bind:click="chooseGroup"
-            data-text="{{group.id}}"
-            icon="chat-o"
-            title-class="p-common-ellipsis"
+  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="safe-bottom"></view>
+</view>
+
+<van-popup
+  position="left"
+  show="{{ popupVisible }}"
+  bind:close="closePopup"
+  custom-class="p-chat-sidesheet"
+  custom-style="width: {{ searchStatus.active ? 100 : 75 }}%;"
+>
+  <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
+    <view style="padding-top: {{navBar.menuTop - 12}}px; width: {{ searchStatus.active ? 75 : 100 }}%" class="p-chat-group-search">
+      <van-search
+        placeholder="请输入搜索关键词"
+        bind:change="searchChatGroup"
+        show-action="{{ searchStatus.active }}"
+        action-text="取消"
+        bind:focus="handleSearchGroupFocus"
+        bind:cancel="handleSearchGroupBlur"
+        style="width: 75%;"
+      />
+    </view>
+    <view class="p-chat-group-list">
+      <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
+        <van-cell
+          custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}};"
+          border="{{false}}"
+          title="{{group.title}}"
+          bind:click="chooseGroup"
+          data-text="{{group.id}}"
+          icon="chat-o"
+          title-class="p-common-ellipsis"
+          data-group="{{group}}"
+          bind:longpress="showGroupOperate"
+        >
+          <van-icon
+            slot="right-icon"
+            name="ellipsis"
+            type="default"
             data-group="{{group}}"
-            bind:longpress="showGroupOperate"
-          >
-            <van-icon
-              slot="right-icon"
-              name="ellipsis"
-              type="default"
-              data-group="{{group}}"
-              catchtap="showGroupOperate"
-              size="26"
-            />
-          </van-cell>
-        </view>
-      </view>
-      <view class="p-chat-group-user p-common-blur">
-        <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
-          title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
-          icon="coupon-o" border="{{ false }}"
-          value="{{userBalance.modelCount}} 积分"
-        />
-        <van-cell
-          custom-class="p-common-blur p-common-cell-padding"
-          title="模型费用"
-          icon="bill-o"
-          border="{{ false }}"
-          value="{{userBalance.modelPrice}} 积分 / 对话"
-        />
-      </view>
-      <view class="p-chat-group-add">
-        <van-button custom-style="height: 34px;" bind:click="createChatGroup" hairline block icon="add-o" type="primary">新建对话</van-button>
+            catchtap="showGroupOperate"
+            size="26"
+          />
+        </van-cell>
       </view>
     </view>
-  </van-popup>
+    <view class="p-chat-group-user p-common-blur">
+      <van-cell
+        custom-class="p-common-blur p-common-cell-padding"
+        title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
+        icon="coupon-o" border="{{ false }}"
+        value="{{userBalance.modelCount}} 积分"
+      />
+      <van-cell
+        custom-class="p-common-blur p-common-cell-padding"
+        title="模型费用"
+        icon="bill-o"
+        border="{{ false }}"
+        value="{{userBalance.modelPrice}} 积分 / 对话"
+      />
+    </view>
+    <view class="p-chat-group-add">
+      <van-button custom-style="height: 34px;" bind:click="createChatGroup" hairline block icon="add-o" type="primary">新建对话</van-button>
+    </view>
+  </view>
+</van-popup>
 
-  <van-action-sheet
-    title="选择模型"
-    show="{{ modelConfig.visible }}"
-    actions="{{ modelConfig.options }}"
-    bind:close="closeModelActionSheet"
-    bind:select="onSelectModel"
-    cancel-text="取消"
-    bind:cancel="closeModelActionSheet"
-  />
+<van-action-sheet
+  title="选择模型"
+  show="{{ modelConfig.visible }}"
+  actions="{{ modelConfig.options }}"
+  bind:close="closeModelActionSheet"
+  bind:select="onSelectModel"
+  cancel-text="取消"
+  bind:cancel="closeModelActionSheet"
+/>
 
-  <van-action-sheet
-    show="{{ groupOperate.visible }}"
-    actions="{{ groupOperate.actions }}"
-    bind:close="closeGroupOperate"
-    bind:select="operateChatGroup"
-    cancel-text="取消"
-    bind:cancel="closeGroupOperate"
-  />
+<van-action-sheet
+  show="{{ groupOperate.visible }}"
+  actions="{{ groupOperate.actions }}"
+  bind:close="closeGroupOperate"
+  bind:select="operateChatGroup"
+  cancel-text="取消"
+  bind:cancel="closeGroupOperate"
+/>
 
-  <van-dialog
-    use-slot
+<van-dialog
+  use-slot
+  title="修改对话组名称"
+  show="{{ groupOperate.renameVisible }}"
+  show-cancel-button
+  bind:confirm="confirmRenameGroup"
+>
+  <van-field
+    value="{{ groupOperate.newName }}"
+    placeholder="请输入新的对话组名称"
     title="修改对话组名称"
-    show="{{ groupOperate.renameVisible }}"
-    show-cancel-button
-    bind:confirm="confirmRenameGroup"
-  >
-    <van-field
-      value="{{ groupOperate.newName }}"
-      placeholder="请输入新的对话组名称"
-      title="修改对话组名称"
-      bind:change="groupNewNameChange"
-      type="textarea"
-      border="{{ false }}"
-      size="large"
-    />
-  </van-dialog>
-</view>
+    bind:change="groupNewNameChange"
+    type="textarea"
+    border="{{ false }}"
+    size="large"
+  />
+</van-dialog>

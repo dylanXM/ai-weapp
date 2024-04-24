@@ -19,7 +19,7 @@
     style="display: {{activeNav === 'apps' ? 'block' : 'none'}}; height: 100%;"
   />
 
-  <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" />
+  <!-- <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" /> -->
 
   <van-dialog id="van-dialog" />
   <van-toast id="van-toast" />
