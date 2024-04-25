@@ -149,23 +149,23 @@
           type="textarea"
           size="large"
         />
-        <van-icon
-          wx:if="{{!loading}}"
-          name="upgrade"
-          size="34"
-          bind:click="chatProcess"
-          color="#4d4d4d"
-          class="p-chat-search-icon"
-        />
-        <van-icon
-          wx:if="{{loading}}"
-          name="stop-circle-o"
-          size="34"
-          color="red"
-          bind:click="cancelChatProcess"
-          class="p-chat-icon-cancel p-chat-search-icon"
-        />
       </view>
+      <van-icon
+        wx:if="{{!loading}}"
+        name="upgrade"
+        size="34"
+        bind:click="chatProcess"
+        color="#4d4d4d"
+        class="p-chat-search-icon"
+      />
+      <van-icon
+        wx:if="{{loading}}"
+        name="stop-circle-o"
+        size="34"
+        color="red"
+        bind:click="cancelChatProcess"
+        class="p-chat-icon-cancel p-chat-search-icon"
+      />
     </view>
   </view>
 
@@ -173,7 +173,7 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
+  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px"></view>
 </view>
 
 <van-popup
@@ -185,7 +185,7 @@
 >
   <view class="p-chat-group-container">
     <view style="padding-top: {{navBar.menuTop - 8}}px;" class="p-chat-group-search">
-      <van-cell border="{{ false }}" clickable bind:tap="handleClickSetting">
+      <van-cell border="{{ false }}" bind:tap="handleClickSetting">
         <view slot="title" class="p-chat-user-info">
           <van-image
             width="26px"
@@ -197,17 +197,17 @@
           />
           <view>{{user.userInfo.username}}</view>
         </view>
-        <van-icon slot="right-icon" name="add-o" capture-bind:tap="createChatGroup" class="custom-icon" size="26" />
+        <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" />
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
       <van-cell-group title="操作" inset border>
-        <van-cell
+        <!-- <van-cell
           title="新建预设"
           icon="coupon-o"
           is-link
           bind:tap="createChatGroup"
-        />
+        /> -->
         <van-cell
           title="预设模版"
           icon="bill-o"
@@ -290,10 +290,10 @@
       <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
     </van-cell-group>
 
-    <van-cell-group title="我的预设模版" inset>
+    <!-- <van-cell-group title="我的预设模版" inset>
       <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" />
       <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
-    </van-cell-group>
+    </van-cell-group> -->
   
   </view>
 </van-action-sheet>
