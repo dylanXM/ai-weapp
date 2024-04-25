@@ -1,0 +1,20 @@
+<van-nav-bar title="签到" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view wx:if="{{ calendar.visible }}">
+  <van-calendar
+    show
+    min-date="{{ calendar.minDay }}"
+    max-date="{{ calendar.maxDay }}"
+    bind:confirm="confirmSignOn"
+    formatter="{{ formatter }}"
+    readonly
+    round
+    show-title="{{ false }}"
+    confirm-text="签到"
+    color="#07c160"
+    class="p-user-calendar"
+    poppable="{{ false }}"
+  />
+</view>

@@ -5,19 +5,6 @@
     id="chat-component"
   />
 
-  <!-- <user
-    style="display: {{activeNav === 'user' ? 'block' : 'none'}}; height: 100%;"
-  /> -->
-
-  <!-- <presets
-    style="display: {{activeNav === 'presets' ? 'block' : 'none'}}; height: 100%;"
-    bind:clickApp="handleToChat"
-  /> -->
-
-  <!-- <apps
-    style="display: {{activeNav === 'apps' ? 'block' : 'none'}}; height: 100%;"
-  /> -->
-
   <van-dialog id="van-dialog" />
   <van-toast id="van-toast" />
 </view>

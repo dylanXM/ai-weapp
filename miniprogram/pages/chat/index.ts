@@ -64,6 +64,9 @@ Component({
     appImg: config.appImg,
     searchStatus: {
       active: false,
+    },
+    settings: {
+      visible: false,
     }
   },
 
@@ -679,6 +682,52 @@ Component({
       });
     },
 
+    /**
+     * 点击个人信息（setting）
+     */
+    handleClickSetting: function() {
+      this.setData({ settings: { visible: true } });
+    },
+    closeSetting: function() {
+      this.setData({ settings: { visible: false } });
+    },
+
+    /**
+     * 点击公众号
+     */
+    handleClickWXofficial: function() {
+      wx.navigateTo({
+        url: '../chat/pages/wx-official/index',
+      });
+    },
+
+    /**
+     * 点击管理员
+     */
+    handleClickWXAdmin: function() {
+      console.log('wx-admin to');
+      wx.navigateTo({
+        url: '../chat/pages/wx-admin/index',
+      });
+    },
+
+    /**
+     * 点击积分兑换
+     */
+    handleClickKaimi: function() {
+      wx.navigateTo({
+        url: '../chat/pages/kami/index',
+      });
+    },
+
+    /**
+     * 点击签到
+     */
+    handleClickSignIn: function() {
+      wx.navigateTo({
+        url: '../chat/pages/sign-in/index',
+      });
+    }
   },
 
   lifetimes: {

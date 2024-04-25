@@ -6,8 +6,6 @@
     "bottom-nav": "/components/bottom-nav/bottom-nav",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-toast": "@vant/weapp/toast/index",
-    "user": "/pages/user/index",
-    "presets": "/pages/presets/index",
     "apps": "/pages/apps/index"
   }
 }

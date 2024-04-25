@@ -1,19 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/pages/wx-admin/index",
-    "pages/user/pages/wx-official/index",
-    "pages/user/pages/ai-web/index",
-    "pages/user/pages/shop/index",
-    "pages/user/pages/connect-email/index",
-    "pages/user/pages/kami/index",
-    "pages/user/pages/sign-on/index",
+    "pages/chat/pages/wx-admin/index",
+    "pages/chat/pages/wx-official/index",
+    "pages/chat/pages/kami/index",
     "pages/apps/pages/mind-map/index",
     "pages/apps/pages/dell-e/index",
     "pages/apps/pages/mid-journey/index",
-    "pages/presets/pages/create-presets/index",
     "pages/chat/pages/apps/index",
-    "pages/chat/pages/create-presets/index"
+    "pages/chat/pages/create-presets/index",
+    "pages/chat/pages/sign-in/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",
