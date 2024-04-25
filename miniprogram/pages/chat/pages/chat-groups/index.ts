@@ -1,26 +1,18 @@
-// @ts-nocheck
-import { store } from '../../../../store/index';
-import { createStoreBindings } from 'mobx-miniprogram-bindings';
-
+// pages/chat/pages/chat-groups/index.ts
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    email: '',
-    password: '',
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.storeBindings = createStoreBindings(this, {
-      store, // 需要绑定的数据仓库
-      fields: ['navBar', 'mindDefaultData'],
-      actions: ['setState', 'setStates'],
-    })
+
   },
 
   /**
@@ -70,12 +62,5 @@ Page({
    */
   onShareAppMessage() {
 
-  },
-
-  /**
-   * 用户点击返回
-   */
-  onBack() {
-    wx.navigateBack();
   }
 })

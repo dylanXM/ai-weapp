@@ -34,7 +34,6 @@ Component({
    */
   data: {
     groups: [] as ChatGroup[],
-    allGroups: [] as ChatGroup[],
     messageMap: {} as Record<string, Message[]>,
     currentGroup: {} as ChatGroup,
     value: '',
@@ -83,7 +82,8 @@ Component({
       userBalance: 'userBalance',
       bottomSafeHeight: 'bottomSafeHeight',
       allPresets: 'allPresets',
-      allMinePresets: 'allMinePresets'
+      allMinePresets: 'allMinePresets',
+      allGroups: 'allGroups'
     },
     actions: {
       setState: "setState",
@@ -144,6 +144,7 @@ Component({
       // console.log('messageMap', data);
     },
     currentApp: function (data) {
+      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
@@ -171,7 +172,8 @@ Component({
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
-      this.setData({ groups: res, allGroups: res });
+      this.setData({ groups: res });
+      this.setState('allGroups', res);
       if (!groupId) {
         const firstGroup = res?.[0];
         if (!firstGroup) return;
@@ -201,7 +203,8 @@ Component({
       const res = await createChat({ appId });
       const groups = this.data.groups;
       groups.unshift(res);
-      this.setData({ groups, allGroups: groups });
+      this.setData({ groups });
+      this.setState('allGroups', groups);
       this.queryChatList(res.id);
       this.closePopup();
     },
@@ -209,7 +212,7 @@ Component({
       const query = event.detail;
       const { allGroups } = this.data;
       if (!query) {
-        this.setData({ groups: allGroups, allGroups });        
+        this.setData({ groups: allGroups });  
       }
       const newGroups = allGroups.filter(group => group.title.toLowerCase().includes(query.toLowerCase()));
       this.setData({ groups: newGroups });
@@ -668,7 +671,7 @@ Component({
       this.setData({ searchStatus: { active: false } });
     },
     /**
-     * 点击新建按钮
+     * 点击预设探索按钮
      */
     handleClickExplore: function(event: any) {
       wx.navigateTo({

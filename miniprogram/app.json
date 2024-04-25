@@ -4,12 +4,10 @@
     "pages/chat/pages/wx-admin/index",
     "pages/chat/pages/wx-official/index",
     "pages/chat/pages/kami/index",
-    "pages/apps/pages/mind-map/index",
-    "pages/apps/pages/dell-e/index",
-    "pages/apps/pages/mid-journey/index",
     "pages/chat/pages/apps/index",
     "pages/chat/pages/create-presets/index",
-    "pages/chat/pages/sign-in/index"
+    "pages/chat/pages/sign-in/index",
+    "pages/chat/pages/chat-groups/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

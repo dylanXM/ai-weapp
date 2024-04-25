@@ -181,62 +181,10 @@
   show="{{ popupVisible }}"
   bind:close="closePopup"
   custom-class="p-chat-sidesheet"
-  custom-style="width: {{ searchStatus.active ? 100 : 75 }}%;"
+  custom-style="width: 75%;"
 >
   <view class="p-chat-group-container">
-    <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
-      <van-search
-        placeholder="请输入搜索关键词"
-        bind:change="searchChatGroup"
-        show-action="{{ searchStatus.active }}"
-        action-text="取消"
-        bind:focus="handleSearchGroupFocus"
-        bind:cancel="handleSearchGroupBlur"
-        custom-class="{{ searchStatus.active ? 'p-search-group-field-part' : 'p-search-group-field' }}"
-      />
-    </view>
-    <view class="p-chat-group-list">
-      <view wx:for="{{groups}}" wx:key="id" wx:for-item="group">
-        <van-cell
-          custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'unset'}};"
-          border="{{false}}"
-          title="{{group.title}}"
-          bind:click="chooseGroup"
-          data-text="{{group.id}}"
-          icon="chat-o"
-          title-class="p-common-ellipsis"
-          data-group="{{group}}"
-          bind:longpress="showGroupOperate"
-        >
-          <van-icon
-            slot="right-icon"
-            name="ellipsis"
-            type="default"
-            data-group="{{group}}"
-            catchtap="showGroupOperate"
-            size="26"
-          />
-        </van-cell>
-      </view>
-    </view>
-    <view class="p-chat-group-user">
-      <van-cell
-        custom-class="p-common-cell-padding"
-        title="新建对话"
-        icon="coupon-o"
-        is-link
-        border="{{ false }}"
-        bind:tap="createChatGroup"
-      />
-      <van-cell
-        custom-class="p-common-cell-padding"
-        title="探索"
-        icon="bill-o"
-        is-link
-        border="{{ false }}"
-        data-key="presets"
-        bind:tap="handleClickExplore"
-      />
+    <view style="padding-top: {{navBar.menuTop - 8}}px;" class="p-chat-group-search">
       <van-cell border="{{ false }}" clickable bind:tap="handleClickSetting">
         <view slot="title" class="p-chat-user-info">
           <van-image
@@ -249,8 +197,40 @@
           />
           <view>{{user.userInfo.username}}</view>
         </view>
-        <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="26" />
+        <van-icon slot="right-icon" name="add-o" capture-bind:tap="createChatGroup" class="custom-icon" size="26" />
       </van-cell>
+    </view>
+    <view class="p-chat-group-list p-common-blur">
+      <van-cell-group title="操作" inset border>
+        <van-cell
+          title="新建预设"
+          icon="coupon-o"
+          is-link
+          bind:tap="createChatGroup"
+        />
+        <van-cell
+          title="预设模版"
+          icon="bill-o"
+          is-link
+          data-key="presets"
+          bind:tap="handleClickExplore"
+        />
+      </van-cell-group>
+      <van-cell-group wx:if="{{ groups.length }}" title="对话历史" inset border>
+        <van-cell
+          custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
+          title="{{group.title}}"
+          bind:click="chooseGroup"
+          data-text="{{group.id}}"
+          icon="chat-o"
+          title-class="p-common-ellipsis"
+          data-group="{{group}}"
+          bind:longpress="showGroupOperate"
+          wx:for="{{groups}}"
+          wx:key="id"
+          wx:for-item="group"
+        />
+      </van-cell-group>
     </view>
     <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
   </view>
@@ -293,21 +273,6 @@
   />
 </van-dialog>
 
-<!--这是个人信息弹出层-->
-<!-- <van-popup
-  round
-  position="bottom"
-  custom-style="height: 90%"
-  show="{{ settings.visible }}"
-  bind:close="closeSetting"
->
-  <view>
-    <view>
-      这是标题和返回按钮
-    </view>
-  </view>
-</van-popup> -->
-
 <van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
   <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)">
     <van-cell-group title="积分" inset>
@@ -321,6 +286,11 @@
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
+      <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" />
+      <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
+    </van-cell-group>
+
+    <van-cell-group title="我的预设模版" inset>
       <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" />
       <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
     </van-cell-group>
