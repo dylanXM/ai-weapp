@@ -1,28 +1,12 @@
-<van-nav-bar border="{{none}}" custom-style="background-color: #f1f1f1;">
+<van-nav-bar title="预设列表" border="{{none}}" custom-style="background-color: #f1f1f1;">
   <van-icon
-    name="add-o"
+    name="arrow-left"
     bind:click="handleClickAddPresets"
     color="#4d4d4d"
     slot="left"
     size="24"
-    wx:if="{{ activeKey === 'mineApps' }}"
+    bind:tap="onBack"
   />
-  <view slot="title" class="p-presets-nav-container">
-    <view
-      data-tab="mineApps"
-      class="p-presets-nav-item {{ activeKey === 'mineApps' ? 'p-presets-nav-item-active' : '' }}"
-      bind:tap="handleClickActiveTab"
-    >
-      我的
-    </view>
-    <view
-      data-tab="list"
-      class="p-presets-nav-item {{ activeKey === 'list' ? 'p-presets-nav-item-active' : '' }}"
-      bind:tap="handleClickActiveTab"
-    >
-      官方
-    </view>
-  </view>
 </van-nav-bar>
 
 <view

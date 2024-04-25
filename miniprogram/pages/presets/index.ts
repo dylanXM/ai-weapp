@@ -48,9 +48,6 @@ Component({
         this.searchPresets();
       }
     },
-    presets: function(data) {
-      console.log('presets', data);
-    }
   },
 
   /**

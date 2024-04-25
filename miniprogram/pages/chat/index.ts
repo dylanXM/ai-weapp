@@ -663,7 +663,22 @@ Component({
      */
     handleSearchGroupBlur: function() {
       this.setData({ searchStatus: { active: false } });
-    }
+    },
+    /**
+     * 点击新建按钮
+     */
+    handleClickExplore: function(event: any) {
+      wx.navigateTo({
+        url: '../chat/pages/apps/index',
+        events: {
+          createChatGroup: (event: any) => {
+            console.log('event', event);
+            this.createChatGroup(event);
+          },
+        }
+      });
+    },
+
   },
 
   lifetimes: {

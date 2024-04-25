@@ -214,7 +214,7 @@
 }
 
 .p-chat-group-search {
-  // border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .p-chat-group-list {
@@ -224,7 +224,6 @@
 
 .p-chat-group-user {
   border-top: 1px solid #f1f1f1;
-  min-height: 60px;
   box-sizing: border-box;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
@@ -256,7 +255,10 @@
 }
 
 .p-common-cell-padding {
-  padding: 10px 16px 0px;
+  border-bottom: 1px solid #f1f1f1;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-chat-nomessage-container {
@@ -316,5 +318,23 @@
 
 button[style="color: #07c160"] > view {
   color: #07c160 !important;
+}
+
+.p-search-group-field {
+  width: 100%;
+}
+
+.p-search-group-field-part {
+  width: 75%;
+}
+
+.p-chat-user-info {
+  display: flex;
+  align-items: center;
+}
+
+.p-chat-user-avatar {
+  margin-bottom: -8px;
+  margin-right: 8px;
 }
 

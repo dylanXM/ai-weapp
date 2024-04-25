@@ -183,8 +183,8 @@
   custom-class="p-chat-sidesheet"
   custom-style="width: {{ searchStatus.active ? 100 : 75 }}%;"
 >
-  <view class="p-chat-group-container" style="padding-bottom: {{bottomSafeHeight}}px;">
-    <view style="padding-top: {{navBar.menuTop - 12}}px; width: {{ searchStatus.active ? 75 : 100 }}%" class="p-chat-group-search">
+  <view class="p-chat-group-container">
+    <view style="padding-top: {{navBar.menuTop - 12}}px;" class="p-chat-group-search">
       <van-search
         placeholder="请输入搜索关键词"
         bind:change="searchChatGroup"
@@ -192,7 +192,7 @@
         action-text="取消"
         bind:focus="handleSearchGroupFocus"
         bind:cancel="handleSearchGroupBlur"
-        style="width: 75%;"
+        custom-class="{{ searchStatus.active ? 'p-search-group-field-part' : 'p-search-group-field' }}"
       />
     </view>
     <view class="p-chat-group-list">
@@ -219,24 +219,40 @@
         </van-cell>
       </view>
     </view>
-    <view class="p-chat-group-user p-common-blur">
+    <view class="p-chat-group-user">
       <van-cell
-        custom-class="p-common-blur p-common-cell-padding"
-        title="{{userBalance.modelType === 1 ? '普通' : '高级'}}额度"
-        icon="coupon-o" border="{{ false }}"
-        value="{{userBalance.modelCount}} 积分"
-      />
-      <van-cell
-        custom-class="p-common-blur p-common-cell-padding"
-        title="模型费用"
-        icon="bill-o"
+        custom-class="p-common-cell-padding"
+        title="新建对话"
+        icon="coupon-o"
+        is-link
         border="{{ false }}"
-        value="{{userBalance.modelPrice}} 积分 / 对话"
+        bind:tap="createChatGroup"
       />
+      <van-cell
+        custom-class="p-common-cell-padding"
+        title="探索"
+        icon="bill-o"
+        is-link
+        border="{{ false }}"
+        data-key="presets"
+        bind:tap="handleClickExplore"
+      />
+      <van-cell border="{{ false }}" clickable>
+        <view slot="title" class="p-chat-user-info">
+          <van-image
+            width="26px"
+            height="26px"
+            fit="cover"
+            radius="4"
+            src="{{user.userInfo.avatar}}"
+            custom-class="p-chat-user-avatar"
+          />
+          <view>{{user.userInfo.username}}</view>
+        </view>
+        <van-icon slot="right-icon" name="ellipsis" class="custom-icon" size="26" />
+      </van-cell>
     </view>
-    <view class="p-chat-group-add">
-      <van-button custom-style="height: 34px;" bind:click="createChatGroup" hairline block icon="add-o" type="primary">新建对话</van-button>
-    </view>
+    <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
   </view>
 </van-popup>
 
