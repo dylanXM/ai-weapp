@@ -24,12 +24,6 @@ Component({
   behaviors: [storeBindingsBehavior],
 
   /**
-   * 组件的属性列表
-   */
-  properties: {
-  },
-
-  /**
    * 组件的初始数据
    */
   data: {
@@ -140,27 +134,11 @@ Component({
         this.scrollToBottom();
       });
     },
-    messageMap: function (data) {
-      // console.log('messageMap', data);
-    },
     currentApp: function (data) {
-      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
     },
-    robotAvatar: function (data) {
-      // console.log('robotAvatar', data);
-    },
-    modelList: function(data) {
-      // console.log('modelList', data);
-    },
-    model: function(data) {
-      // console.log('model', data);
-    },
-    searchStatus: function(data) {
-      console.log('searchStatus', data);
-    }
   },
 
   /**
@@ -220,11 +198,15 @@ Component({
     queryChatList: async function(groupId: number) {
       const { messageMap, groups } = this.data;
       const res = await queryChat({ groupId });
-      const messages = res.map(message => ({
-        ...message,
-        text: message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {}),
-        originText: message.text,
-      }));
+      const messages = res.map(message => {
+        let text = message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {});
+        return {
+          ...message,
+          text,
+          originText: message.text,
+        }
+      });
+      console.log('messages', messages);
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup }, () => {
         this.scrollToBottom();

@@ -8,6 +8,7 @@ import {
   queryModelList,
   queryBaseModel,
   getSignList,
+  queryPresetsList,
 } from './api/index';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
@@ -48,6 +49,8 @@ App<IAppOption>({
 
     // 获取签到数据
     getSignList().then(res => this.setState('signList', res));
+    // 获取所有预设数据
+    queryPresetsList().then(res => this.setState('allPresets', res.rows));
   },
 
   initNavBar() {

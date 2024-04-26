@@ -185,8 +185,8 @@
 >
   <view class="p-chat-group-container">
     <view style="padding-top: {{navBar.menuTop - 8}}px;" class="p-chat-group-search">
-      <van-cell border="{{ false }}" bind:tap="handleClickSetting">
-        <view slot="title" class="p-chat-user-info">
+      <van-cell border="{{ false }}">
+        <view slot="title" class="p-chat-user-info" bind:tap="handleClickSetting">
           <van-image
             width="26px"
             height="26px"
@@ -196,12 +196,13 @@
             custom-class="p-chat-user-avatar"
           />
           <view>{{user.userInfo.username}}</view>
+          <van-icon name="arrow" color="#aaaaaa" size="18" />
         </view>
         <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" />
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
-      <van-cell-group title="操作" inset border>
+      <van-cell-group title="探索" inset border>
         <!-- <van-cell
           title="新建预设"
           icon="coupon-o"

@@ -10,7 +10,7 @@ export const formatAiText = (text: string) => {
   // let result = text.replace(/\*\*/g, '');
   // let result = text;
   // 将所有大于1的换行符转换为1个换行符
-  // result = result.replace(/(\r?\n|\r)+/g, '\n');
+  result = result.replace(/(\n|\r|↵)+/g, '\n');
   result = result.replace('~', '～');
   return result;
 };
