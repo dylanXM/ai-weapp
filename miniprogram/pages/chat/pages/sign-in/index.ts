@@ -120,6 +120,5 @@ Page({
     } finally {
       this.onBack();
     }
-    console.log('event', event);
   },
 })

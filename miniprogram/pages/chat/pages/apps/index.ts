@@ -138,7 +138,6 @@ Page({
     wx.navigateBack().then(() => {
       eventChannel.emit('createChatGroup', { detail: { key: appId } });
     });
-    this.triggerEvent("clickApp", { key: appId });
   },
   handleClickActiveTab: function(event: any) {
     this.setData({ activeKey: event.currentTarget.dataset.tab });

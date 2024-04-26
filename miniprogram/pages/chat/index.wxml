@@ -152,19 +152,19 @@
       </view>
       <van-icon
         wx:if="{{!loading}}"
-        name="upgrade"
-        size="34"
+        name="down"
+        size="16"
         bind:click="chatProcess"
-        color="#4d4d4d"
-        class="p-chat-search-icon"
+        color="{{ value ? 'white' : '#4d4d4d' }}"
+        class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
       />
       <van-icon
         wx:if="{{loading}}"
         name="stop-circle-o"
-        size="34"
+        size="30"
         color="red"
         bind:click="cancelChatProcess"
-        class="p-chat-icon-cancel p-chat-search-icon"
+        class="p-chat-icon-cancel"
       />
     </view>
   </view>

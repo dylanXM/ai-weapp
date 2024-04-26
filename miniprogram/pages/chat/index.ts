@@ -245,11 +245,10 @@ Component({
       // @ts-ignore
       const { loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
       const value = typeof text === 'string' && text ? text : _this.data.value;
-      const messages = messageMap[currentGroup.id];
       if (!value || value.trim() === '') {
-        Toast('请输入你的问题或需求');
         return;
       }
+      const messages = messageMap[currentGroup.id];
       if (loading) {
         Toast('请等待当前会话结束');
         return;
@@ -656,11 +655,11 @@ Component({
      * 点击预设探索按钮
      */
     handleClickExplore: function(event: any) {
+      this.closePopup();
       wx.navigateTo({
         url: '../chat/pages/apps/index',
         events: {
           createChatGroup: (event: any) => {
-            console.log('event', event);
             this.createChatGroup(event);
           },
         }
