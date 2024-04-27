@@ -41,7 +41,6 @@ Component({
       visible: false,
       options: [] as any[],
     },
-    requestTask: null as any,
     groupScroll: {},
     groupOperate: {
       visible: false,
@@ -351,7 +350,7 @@ Component({
             }
           }
           requestAnimationFrame(update) // 启动动画循环
-          const requestTask = wx.request({
+          wx.request({
             url: 'https://service.winmume.com/api/chatgpt/chat-process',
             method: 'POST',
             data: {
@@ -359,7 +358,6 @@ Component({
               prompt: `${value}\n`,
               options,
             },
-            enableChunked: modelCount >= modelPrice,
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
             },
@@ -375,78 +373,72 @@ Component({
                 });
                 _this.setData({ loading: false });
               }
+              const responseText: string = res.data;
+              if ([1].includes(model.keyType)) {
+                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
+                let chunk = responseText;
+                if (lastIndex !== -1) {
+                  chunk = responseText.substring(lastIndex);
+                }
+  
+                try {
+                  data = JSON.parse(chunk);
+                } catch (error) {
+                  /* 二次解析 */
+                  // const parseData = parseTextToJSON(responseText)
+                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
+                  if (chunk.includes('OpenAI timed out waiting for response')) {
+                    Toast.fail('会话超时了、告知管理员吧~~~');
+                  }
+                }
+              }
+  
+              /* 处理和百度一样格式的模型消息解析 */
+              if ([2, 3, 4].includes(model.keyType)) {
+                const lines = responseText
+                  .toString()
+                  .split('\n')
+                  .filter((line: string) => line.trim() !== '');
+  
+                let cacheResult = ''; // 拿到本轮传入的所有字段信息
+                let tem: any = {};
+                for (const line of lines) {
+                  try {
+                    const parseData = JSON.parse(line);
+                    cacheResult += parseData.result;
+                    tem = parseData;
+                  }
+                  catch (error) {
+                  }
+                }
+                tem.result = cacheResult;
+                data = tem;
+              }
+  
+              try {
+                /* 如果出现输出内容不一致就需要处理了 */
+                if (model.keyType === 1) {
+                  cacheResText = data.text;
+                  if (data?.userBanance) {
+                    userBalance = data?.userBanance;
+                  }
+                  if (data?.id) {
+                    isStreamIn = false;
+                  }
+                }
+    
+                if ([2, 3, 4].includes(model.keyType)) {
+                  const { text, is_end } = data;
+                  cacheResText = text;
+                  isStreamIn = !is_end;
+                  data?.userBanance && (userBalance = data?.userBanance);
+                }
+              } catch (error) {}
             },
             fail: function (error) {
               console.log('error', error);
             },
           });
-          requestTask.onChunkReceived(function (res) {
-            const responseText: string = uint8ArrayToString(res.data);
-            if (!responseText) {
-              return;
-            }
-            if ([1].includes(model.keyType)) {
-              const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
-              let chunk = responseText;
-              if (lastIndex !== -1) {
-                chunk = responseText.substring(lastIndex);
-              }
-
-              try {
-                data = JSON.parse(chunk);
-              } catch (error) {
-                /* 二次解析 */
-                // const parseData = parseTextToJSON(responseText)
-                // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-                if (chunk.includes('OpenAI timed out waiting for response')) {
-                  Toast.fail('会话超时了、告知管理员吧~~~');
-                }
-              }
-            }
-
-            /* 处理和百度一样格式的模型消息解析 */
-            if ([2, 3, 4].includes(model.keyType)) {
-              const lines = responseText
-                .toString()
-                .split('\n')
-                .filter((line: string) => line.trim() !== '');
-
-              let cacheResult = ''; // 拿到本轮传入的所有字段信息
-              let tem: any = {};
-              for (const line of lines) {
-                try {
-                  const parseData = JSON.parse(line);
-                  cacheResult += parseData.result;
-                  tem = parseData;
-                }
-                catch (error) {
-                }
-              }
-              tem.result = cacheResult;
-              data = tem;
-            }
-
-            try {
-              /* 如果出现输出内容不一致就需要处理了 */
-              if (model.keyType === 1) {
-                cacheResText = data.text;
-                if (data?.userBanance) {
-                  userBalance = data?.userBanance;
-                }
-                if (data?.id) {
-                  isStreamIn = false;
-                }
-              }
-  
-              if ([2, 3, 4].includes(model.keyType)) {
-                const { text, is_end } = data;
-                cacheResText = text;
-                isStreamIn = !is_end;
-                data?.userBanance && (userBalance = data?.userBanance);
-              }
-            } catch (error) {}
-          });
-          this.setData({ requestTask });
         };
         await fetchChatAPIOnce();
       } catch (error) {
@@ -514,14 +506,10 @@ Component({
       Toast.clear();
     },
     cancelChatProcess: function () {
-      const { loading, requestTask, messageMap, currentGroup } = this.data;
+      const { loading, messageMap, currentGroup } = this.data;
       const messages = messageMap[currentGroup.id];
       if (!loading) {
         return;
-      }
-      if (requestTask) {
-        requestTask.offChunkReceived();
-        requestTask.abort();
       }
       const lastMessage = messages[messages.length - 1];
       const lastText = lastMessage.originText;
@@ -719,7 +707,6 @@ Component({
   
     },
     detached() {
-      this.setData({ requestTask: null });
     }
   }
 })

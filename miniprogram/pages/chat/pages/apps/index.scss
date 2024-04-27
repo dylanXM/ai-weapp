@@ -16,6 +16,10 @@
   min-height: 54px;
 }
 
+.p-presets-search > view {
+  background-color: #fff !important;
+}
+
 .p-presets-list {
   flex: 1;
   background-color: white;
@@ -27,13 +31,12 @@
   display: flex;
   align-items: center;
   margin-left: 12px;
-  padding: 14px;
+  padding: 0 14px;
   border-radius: 6px;
   max-width: 100%;
   flex-wrap: nowrap;
   overflow-y: scroll;
   overflow-x: hidden;
-  border-bottom: 1px solid #f1f1f1;
 }
 
 .p-presets-item-avatar {
@@ -42,6 +45,11 @@
   min-height: 50px;
   width: 50px;
   min-width: 50px;
+}
+
+.p-presets-item-content {
+  border-bottom: 1px solid #f1f1f1;
+  padding: 12px 0;
 }
 
 .p-presets-item-title {

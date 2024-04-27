@@ -16,7 +16,6 @@
   <van-search
     background="#f1f1f1"
     placeholder="搜索"
-    clearable
     custom-class="p-presets-search"
     value="{{ query }}"
     bind:change="handleQueryChange"
@@ -33,7 +32,7 @@
       data-id="{{ item.id }}"
     >
       <van-image custom-class="p-presets-item-avatar" width="40" height="40" src="{{item.coverImg}}" />
-      <view>
+      <view class="p-presets-item-content">
         <view class="p-presets-item-title">{{item.name}}</view>
         <view class="p-presets-item-desc">{{item.des}}</view>
       </view>

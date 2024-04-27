@@ -26,10 +26,10 @@ Page({
       actions: ['setState', 'setStates'],
     });
 
-    if (this.data.activeKey === 'mineApps') {
-      this.getMyPresets().then(() => this.searchPresets());
-    }
-    this.getMyPresets();
+    // if (this.data.activeKey === 'mineApps') {
+    //   this.getMyPresets().then(() => this.searchPresets());
+    // }
+    // this.getMyPresets();
     this.getPresets();
   },
 
