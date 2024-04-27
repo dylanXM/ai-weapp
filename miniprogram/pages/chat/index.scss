@@ -91,7 +91,7 @@
 
   textarea {
     border-radius: 24px;
-    padding: 8px 12px;
+    padding: 8px 16px;
     min-height: 18px !important;
     line-height: 18px !important;
     font-size: 18px;
@@ -154,14 +154,13 @@
   padding-top: 4px;
   margin-left: 30px;
   align-items: center;
+  font-size: 16px;
 }
 
 .p-chat-message-robot {
-  padding-top: 4px;
   margin-left: 30px;
   word-break: break-all;
   white-space: pre-line;
-  margin-bottom: -20px;
 }
 
 .p-chat-robot-operate {
@@ -197,6 +196,7 @@
 }
 
 .p-chat-message-loading {
+  margin-top: 4px;
   margin-left: 4px;
   margin-bottom: 12px;
   width: 15px;

@@ -69,7 +69,7 @@
             <view class="p-chat-message-title-name">{{ currentApp.name || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
-            <towxml nodes="{{message.text}}" />
+            <wemark md="{{message.originText}}" link highlight type="wemark"></wemark>
             <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" />
           </view>
           <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >

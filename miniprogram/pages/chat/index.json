@@ -9,7 +9,6 @@
     "van-popup": "@vant/weapp/popup/index",
     "van-search": "@vant/weapp/search/index",
     "van-image": "@vant/weapp/image/index",
-    "towxml": "/towxml/towxml",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
@@ -17,6 +16,7 @@
     "van-dropdown-item": "@vant/weapp/dropdown-item/index",
     "van-transition": "@vant/weapp/transition/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "van-nav-bar": "@vant/weapp/nav-bar/index"
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "wemark": "/wemark/wemark"
   }
 }

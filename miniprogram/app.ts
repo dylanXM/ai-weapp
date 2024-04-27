@@ -15,7 +15,6 @@ import { createStoreBindings } from 'mobx-miniprogram-bindings';
 
 // app.ts
 App<IAppOption>({
-  towxml: require('./towxml/index'),
   onLaunch() {
     // @ts-ignore
     this.storeBindings = createStoreBindings(this, {

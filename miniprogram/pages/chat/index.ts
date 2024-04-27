@@ -198,10 +198,8 @@ Component({
       const { messageMap, groups } = this.data;
       const res = await queryChat({ groupId });
       const messages = res.map(message => {
-        let text = message.inversion ? message.text : app.towxml(formatAiText(message.text), 'markdown', {});
         return {
           ...message,
-          text,
           originText: message.text,
         }
       });
@@ -229,7 +227,6 @@ Component({
       const length = messages.length;
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
-        message.text = app.towxml(formatAiText(message.text), 'markdown', {});
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } }, () => {
