@@ -151,7 +151,7 @@
         />
       </view>
       <van-icon
-        wx:if="{{!loading}}"
+        wx:if="{{!loading && value.length}}"
         name="down"
         size="16"
         bind:click="chatProcess"
@@ -203,12 +203,6 @@
     </view>
     <view class="p-chat-group-list p-common-blur">
       <van-cell-group title="探索" inset border>
-        <!-- <van-cell
-          title="新建预设"
-          icon="coupon-o"
-          is-link
-          bind:tap="createChatGroup"
-        /> -->
         <van-cell
           title="预设模版"
           icon="bill-o"

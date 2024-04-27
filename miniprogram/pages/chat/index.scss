@@ -23,6 +23,9 @@
   // padding: 0 12px;
   box-sizing: border-box;
   background-color: transparent;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(241, 241, 241, 0.5);
 }
 
 .p-chat-message-avatar {
@@ -80,23 +83,22 @@
 
 .p-chat-search-border {
   width: 100%;
-  padding: 0 12px;
-  border: 1px solid #f1f1f1;
-  border-radius: 24px;
-  display: flex;
-  background-color: white;
-  margin-right: 4px;
+
 }
 
 .p-chat-search-input {
   flex: 1;
 
   textarea {
-    padding: 2px 0 1px;
+    border-radius: 24px;
+    padding: 8px 12px;
     min-height: 18px !important;
     line-height: 18px !important;
     font-size: 18px;
     box-sizing: content-box;
+    backdrop-filter: blur(10px); /* 应用模糊效果 */
+    -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+    background-color: rgba(241, 241, 241, 0.5);
   }
 }
 
@@ -108,6 +110,7 @@
   justify-content: center;
   border-radius: 34px;
   background-color: #f1f1f1;
+  margin-left: 6px;
 }
 
 .p-chat-search-icon-active {
@@ -118,6 +121,7 @@
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(241, 241, 241, 0.5);
+  border-bottom: #f1f1f1;
 }
 
 .p-navbar-title {
@@ -204,6 +208,7 @@
 
 .p-chat-icon-cancel {
   animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+  margin-left: 6px;
 }
 
 @keyframes ball-breath {
@@ -276,6 +281,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(241, 241, 241, 0.5);
 }
 
 .p-chat-nomessage-desc {
