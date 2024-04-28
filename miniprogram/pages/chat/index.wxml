@@ -99,7 +99,7 @@
               type="default"
               size="small"
               data-text="{{message.requestOptions.prompt}}"
-              bind:click="clickPrompt"
+              bind:click="continuePrompt"
             >
               继续
             </van-button>
