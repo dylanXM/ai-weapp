@@ -19,6 +19,7 @@
     block
     hairline
     type="primary"
+    color="#000"
     bind:tap="usekami"
     loading-text="激活兑换码"
   >

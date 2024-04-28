@@ -6,7 +6,7 @@ export const store = observable({
   user: {},
   model: {}, 
   modelList: {},
-  loading: true,
+  globalLoading: true,
   bottomSafeHeight: 0,
   navBar: {
     navBarHeight: 0, // 导航栏高度

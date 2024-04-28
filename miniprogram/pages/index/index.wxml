@@ -3,6 +3,7 @@
   <chat
     bind:onChange="handleActiveNavChange"
     id="chat-component"
+    wx:if="{{ !globalLoading }}"
   />
 
   <van-dialog id="van-dialog" />

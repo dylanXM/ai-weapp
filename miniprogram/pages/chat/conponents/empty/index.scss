@@ -1,6 +1,6 @@
 /* pages/chat/conponents/empty/index.wxss */
 .c-empty-container {
-  height: 100%;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,10 +10,10 @@
 .c-empty-title {
   font-size: 20px;
   font-weight: 600;
-  margin: 8px 0 0;
+  margin: 16px 0 0;
 }
 
 .c-empty-desc {
-  margin: 8px 0 12px;
+  margin: 16px 0 24px;
   color: #888888;
 }

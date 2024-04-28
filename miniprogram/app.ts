@@ -33,7 +33,7 @@ App<IAppOption>({
         if (!token) return;
         const user = await getUserInfo();
         // @ts-ignore
-        this.setStates({ user, loading: false });
+        this.setStates({ user, globalLoading: false });
       },
     });
     // 获取页面配置信息

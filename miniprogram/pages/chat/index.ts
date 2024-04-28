@@ -5,8 +5,6 @@ import { createChat, delGroup, queryChat, queryChatGroup, updateGroup, clearGrou
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
 // @ts-ignore
-import Toast from '@vant/weapp/toast/toast';
-// @ts-ignore
 import Dialog from '@vant/weapp/dialog/dialog';
 import { formatModelOptions, getChooseModel, getChooseModelInfo } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
@@ -134,6 +132,7 @@ Component({
       });
     },
     currentApp: function (data) {
+      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
@@ -168,7 +167,7 @@ Component({
       const appId = event.detail.key;
       const { allGroups, loading } = this.data;
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
       const alreadyHasGroup = allGroups.find(group => group.appId === appId);
@@ -246,7 +245,7 @@ Component({
       }
       const messages = messageMap[currentGroup.id];
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
       const { modelCount, modelPrice } = balance;
@@ -360,7 +359,7 @@ Component({
             },
             success: function (res) {
               if (res.statusCode !== 200) {
-                Toast(res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员');
+                wx.showToast({ title: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', icon: 'none' });
                 _this.updateGroupChat(messages.length - 1, {
                   loading: false,
                   text: '遇到错误了，请检查积分是否充足或联系系统管理员',
@@ -489,18 +488,12 @@ Component({
     chooseGroup: async function (event: any) {
       const { loading } = this.data;
       if (loading) {
-        Toast('请等待当前会话结束');
+        wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
-      Toast.loading({
-        duration: 0,
-        forbidClick: true,
-        message: '会话加载中...',
-      });
       const groupId = event.target.dataset.text;
       await this.queryChatList(groupId);
       this.closePopup();
-      Toast.clear();
     },
     cancelChatProcess: function () {
       const { loading, messageMap, currentGroup } = this.data;
@@ -618,6 +611,9 @@ Component({
     clickPrompt: function (event: any) {
       const { text } = event.currentTarget.dataset;
       this.chatProcess(text);
+    },
+    continuePrompt: function() {
+      this.chatProcess('继续');
     },
     // 复制gpt回答的内容
     copyGptResult: function (event: any) {

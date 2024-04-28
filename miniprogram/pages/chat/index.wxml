@@ -6,8 +6,8 @@
     slot="left"
     size="28"
   />
-  <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ currentApp.id }}" class="p-navbar-title">
-    <view>{{currentApp.name}}</view>
+  <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ groups.length && currentApp.id }}" class="p-navbar-title">
+    <view class="p-navbar-text">{{currentApp.name}}</view>
     <van-icon
       name="arrow"
       color="#aaaaaa"
@@ -15,8 +15,8 @@
       size="16"
     />
   </view>
-  <view slot="title" wx:if="{{ !currentApp.id }}" bind:tap="showModelActionSheet" data-group="{{currentGroup}}" class="p-navbar-title">
-    <view>{{model.modelName}}</view>
+  <view slot="title" wx:if="{{ groups.length && !currentApp.id }}" bind:tap="showModelActionSheet" data-group="{{currentGroup}}" class="p-navbar-title">
+    <view class="p-navbar-text">{{model.modelName}}</view>
     <van-icon
       name="arrow"
       color="#aaaaaa"
@@ -93,6 +93,16 @@
             >
               重新回答
             </van-button>
+            <van-button
+              custom-class="p-common-no-border"
+              icon="more-o"
+              type="default"
+              size="small"
+              data-text="{{message.requestOptions.prompt}}"
+              bind:click="clickPrompt"
+            >
+              继续
+            </van-button>
           </view>
         </view>
       </view>
@@ -103,8 +113,19 @@
         <image class="p-chat-empty-avatar" src="{{currentApp.coverImg || appImg}}" />
         <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
       </view>
-      <view class="p-chat-nomessage-demo">
-        <view wx:if="{{currentApp.id}}" class="p-chat-nomessage-demo-list">
+    </view>
+    <!-- 搜索区 -->
+    <view class="p-chat-search-container">
+      <van-icon
+        name="down"
+        size="16"
+        class="p-chat-message-to-bottom"
+        bindtap="scrollToBottom"
+        color="#4d4d4d"
+        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
+      />
+      <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
+        <view class="p-chat-nomessage-demo-list">
           <view
             wx:for="{{ currentApp.appDemo }}"
             bind:tap="clickPrompt"
@@ -120,52 +141,43 @@
           </view>
         </view>
       </view>
-    </view>
-    <!-- 搜索区 -->
-    <view class="p-chat-search">
-      <van-icon
-        name="down"
-        size="16"
-        class="p-chat-message-to-bottom"
-        bindtap="scrollToBottom"
-        color="#4d4d4d"
-        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
-      />
-      <view class="p-chat-search-border">
-        <van-field
-          placeholder="请输入你的问题或需求"
-          border="{{ false }}"
-          custom-style="padding: 0px;"
-          value="{{ value }}"
-          class="p-chat-search-input"
-          adjust-position="{{false}}"
-          bind:change="handleValueChange"
-          confirm-type="send"
-          confirm-hold="{{true}}"
-          bind:confirm="chatProcess"
-          disabled="{{ loading }}"
-          bind:keyboardheightchange="handlekeyboardHeightChange"
-          autosize
-          type="textarea"
-          size="large"
+      <view class="p-chat-search">
+        <view class="p-chat-search-border">
+          <van-field
+            placeholder="请输入你的问题或需求"
+            border="{{ false }}"
+            custom-style="padding: 0px;"
+            value="{{ value }}"
+            class="p-chat-search-input"
+            adjust-position="{{false}}"
+            bind:change="handleValueChange"
+            confirm-type="send"
+            confirm-hold="{{true}}"
+            bind:confirm="chatProcess"
+            disabled="{{ loading }}"
+            bind:keyboardheightchange="handlekeyboardHeightChange"
+            autosize
+            type="textarea"
+            size="large"
+          />
+        </view>
+        <van-icon
+          wx:if="{{!loading && value.length}}"
+          name="down"
+          size="20"
+          bind:click="chatProcess"
+          color="{{ value ? 'white' : '#4d4d4d' }}"
+          class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
+        />
+        <van-icon
+          wx:if="{{loading}}"
+          name="stop-circle-o"
+          size="34"
+          color="red"
+          bind:click="cancelChatProcess"
+          class="p-chat-icon-cancel"
         />
       </view>
-      <van-icon
-        wx:if="{{!loading && value.length}}"
-        name="down"
-        size="20"
-        bind:click="chatProcess"
-        color="{{ value ? 'white' : '#4d4d4d' }}"
-        class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
-      />
-      <van-icon
-        wx:if="{{loading}}"
-        name="stop-circle-o"
-        size="34"
-        color="red"
-        bind:click="cancelChatProcess"
-        class="p-chat-icon-cancel"
-      />
     </view>
   </view>
 
@@ -202,16 +214,17 @@
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
-      <van-cell-group title="探索" inset border>
+      <van-cell-group title="探索" inset border="{{ false }}">
         <van-cell
           title="预设模版"
           icon="bill-o"
           is-link
           data-key="presets"
           bind:tap="handleClickExplore"
+          border="{{ false }}"
         />
       </van-cell-group>
-      <van-cell-group wx:if="{{ groups.length }}" title="对话历史" inset border>
+      <van-cell-group wx:if="{{ groups.length }}" title="对话历史" inset border="{{ false }}">
         <van-cell
           custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
           title="{{group.title}}"
@@ -224,6 +237,7 @@
           wx:for="{{groups}}"
           wx:key="id"
           wx:for-item="group"
+          border="{{false}}"
         />
       </van-cell-group>
     </view>
@@ -263,8 +277,8 @@
     title="修改对话组名称"
     bind:change="groupNewNameChange"
     type="textarea"
-    border="{{ false }}"
     size="large"
+    custom-class="p-chat-rename-field"
   />
 </van-dialog>
 

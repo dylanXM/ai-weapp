@@ -14,7 +14,7 @@ Component({
   storeBindings: {
     store,
     fields: {
-      loading: 'loading',
+      globalLoading: 'globalLoading',
     },
     actions: {
       setState: "setState",
