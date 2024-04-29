@@ -144,7 +144,9 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container' });
+      this.setData({ toView: 'id_bottom_container' }, () => {
+        this.setData({ isScrollToLower: true });
+      });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
