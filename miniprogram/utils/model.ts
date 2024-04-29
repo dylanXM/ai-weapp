@@ -24,7 +24,8 @@ export const formatModelOptions = (modelMaps: ModelData['modelMaps'], chooseMode
       const isCurrentModel = model === chooseModel.model && modelName === chooseModel.modelName;
       const option = {
         name: modelName,
-        subname: `基于模型${model}训练，每次消耗${deductType === 1 ? '基础' : '高级'}模型 ${deduct} 积分`,
+        // subname: `基于模型${model}训练，每次消耗${deductType === 1 ? '基础' : '高级'}模型 ${deduct} 积分`,
+        subname: `每次消耗${deductType === 1 ? '基础' : '高级'}模型 ${deduct} 积分`,
         ..._model,
         color: isCurrentModel ? '#07c160' : '#323233',
         className: isCurrentModel ? 'p-chat-model-active-item' : '',

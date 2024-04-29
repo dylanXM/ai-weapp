@@ -453,6 +453,11 @@ Component({
       this.setData({ value: event.detail });
     },
     showModelActionSheet: function (event: any) {    
+      const { loading } = this.data;
+      if (loading) {
+        wx.showToast({ title: '请等待当前对话结束', icon: 'none' });
+        return;
+      }
       // @ts-ignore
       const { modelConfig, model, modelList, messageMap, currentGroup } = this.data;
       const messages = messageMap[currentGroup.id];
@@ -549,6 +554,11 @@ Component({
     },
     // 点击group的操作
     showGroupOperate: function (event: any) {
+      const { loading } = this.data;
+      if (loading) {
+        wx.showToast({ title: '请等待当前对话结束', icon: 'none' });
+        return;
+      }
       const { group } = event.currentTarget.dataset;
       const { messageMap } = this.data;
       let actions = group.appId ? groupActions.filter(g => g.action !== 'rename') : groupActions;
