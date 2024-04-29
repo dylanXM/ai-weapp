@@ -64,7 +64,7 @@
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
-  border-top: 1px solid rgba(241, 241, 241, 0.5);
+  border-top: 1px solid #f1f1f1;
   // background-color: #f1f1f1;
   box-sizing: border-box;
 }
@@ -315,7 +315,7 @@
   flex-shrink: 0;
   padding: 8px 16px;
   margin-left: 12px;
-  border: 1px solid rgba(241, 241, 241, 0.5);
+  border: 1px solid #f1f1f1;
   font-size: 14px;
   color: #323232;
   border-radius: 12px;
