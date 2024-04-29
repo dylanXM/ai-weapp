@@ -148,7 +148,7 @@
             border="{{ false }}"
             custom-style="padding: 0px;"
             value="{{ value }}"
-            class="p-chat-search-input"
+            custom-class="p-chat-search-input"
             adjust-position="{{false}}"
             bind:change="handleValueChange"
             confirm-type="send"
@@ -185,7 +185,7 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px"></view>
+  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px;"></view>
 </view>
 
 <van-popup
