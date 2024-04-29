@@ -211,7 +211,7 @@
           <!-- <van-icon name="arrow" color="#aaaaaa" size="18" /> -->
         </view>
         <!-- <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" /> -->
-        <van-icon slot="right-icon" name="ellipsis" size="26" />
+        <van-icon slot="right-icon" name="ellipsis" size="26" bind:tap="handleClickSetting" />
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
