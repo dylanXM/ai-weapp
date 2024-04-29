@@ -242,7 +242,7 @@
 .p-chat-group-list {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 12px;
+  padding: 12px 0;
 }
 
 .p-chat-group-user {
@@ -372,13 +372,10 @@ button[style="color: #07c160"] > view {
 }
 
 .p-chat-rename-field {
-   textarea {
-    border: 1px solid #f1f1f1;
-    padding: 6px 4px 4px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 4px;
-    font-size: 14px;
-   }
+  width: calc(100% - 24px);
+  border: 1px solid #f1f1f1;
+  padding: 6px 12px;
+  margin: 12px;
+  border-radius: 8px;
 }
 

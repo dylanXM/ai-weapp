@@ -208,20 +208,29 @@
             custom-class="p-chat-user-avatar"
           />
           <view>{{user.userInfo.username}}</view>
-          <van-icon name="arrow" color="#aaaaaa" size="18" />
+          <!-- <van-icon name="arrow" color="#aaaaaa" size="18" /> -->
         </view>
-        <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" />
+        <!-- <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" /> -->
+        <van-icon slot="right-icon" name="ellipsis" size="26" />
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
-      <van-cell-group title="探索" inset border="{{ false }}">
+      <van-cell-group inset border="{{ false }}">
+        <van-cell
+          title="新建会话"
+          icon="add"
+          is-link
+          data-key="presets"
+          bind:tap="createChatGroup"
+          border="{{ true }}"
+        />
         <van-cell
           title="预设模版"
-          icon="bill-o"
+          icon="coupon"
           is-link
           data-key="presets"
           bind:tap="handleClickExplore"
-          border="{{ false }}"
+          border="{{ true }}"
         />
       </van-cell-group>
       <van-cell-group wx:if="{{ groups.length }}" title="对话历史" inset border="{{ false }}">
@@ -230,7 +239,7 @@
           title="{{group.title}}"
           bind:click="chooseGroup"
           data-text="{{group.id}}"
-          icon="chat-o"
+          icon="chat"
           title-class="p-common-ellipsis"
           data-group="{{group}}"
           bind:longpress="showGroupOperate"
@@ -276,7 +285,6 @@
     placeholder="请输入新的对话组名称"
     title="修改对话组名称"
     bind:change="groupNewNameChange"
-    type="textarea"
     size="large"
     custom-class="p-chat-rename-field"
   />
