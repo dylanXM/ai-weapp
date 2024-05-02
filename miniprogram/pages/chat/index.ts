@@ -370,7 +370,7 @@ Component({
                 _this.setData({ loading: false });
               }
               const responseText: string = res.data;
-              if ([1].includes(model.keyType)) {
+              if ([1, 5].includes(model.keyType)) {
                 const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
                 let chunk = responseText;
                 if (lastIndex !== -1) {
@@ -413,7 +413,7 @@ Component({
   
               try {
                 /* 如果出现输出内容不一致就需要处理了 */
-                if (model.keyType === 1) {
+                if ([1, 5].includes(model.keyType)) {
                   cacheResText = data.text;
                   if (data?.userBanance) {
                     userBalance = data?.userBanance;

@@ -111,14 +111,16 @@ Page({
     try {
       // 签到
       await signOn();
+      wx.showToast({ title: '签到成功！积分奖励已发放～', icon: 'none' });
       // 更新
       getSignList().then(res => this.setState('signList', res));
       getUserInfo().then(user => this.setState('user', user));
-      wx.showToast({ title: '签到成功！积分奖励已发放～', icon: 'none' });
     } catch (err) {
       wx.showToast({ title: err?.message || '接口出错了，请重试～', icon: 'none' });
     } finally {
-      this.onBack();
+      setTimeout(() => {
+        this.onBack();
+      }, 2000);
     }
   },
 })
