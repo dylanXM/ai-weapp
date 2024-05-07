@@ -13,7 +13,9 @@ interface IRes<T> {
 
 const request = async <T>(params: IParams): Promise<IRes<T>> => {
   const token = wx.getStorageSync('token');
-  const header: { Authorization?: string } = {};
+  const header: { Authorization?: string; Accept: string } = {
+    Accept: 'application/json;charset=UTF-8',
+  };
   if (token) {
     header.Authorization = `Bearer ${wx.getStorageSync('token')}`;
   }

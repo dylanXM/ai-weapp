@@ -200,9 +200,9 @@ Component({
         return {
           ...message,
           originText: message.text,
+          text: formatAiText(message.text),
         }
       });
-      console.log('messages', messages);
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup }, () => {
         this.scrollToBottom();
@@ -226,6 +226,7 @@ Component({
       const length = messages.length;
       if (message.text && typeof message.text === 'string') {
         message.originText = message.text;
+        message.text = formatAiText(message.text);
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } }, () => {
@@ -356,6 +357,7 @@ Component({
             },
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
+              Accept: 'application/json;charset=UTF-8',
             },
             success: function (res) {
               if (res.statusCode !== 200) {
@@ -370,7 +372,9 @@ Component({
                 _this.setData({ loading: false });
               }
               const responseText: string = res.data;
-              if ([1, 5].includes(model.keyType)) {
+              if (typeof responseText !== 'string') {
+                data = responseText;
+              } else if ([1, 5].includes(model.keyType) && typeof responseText === 'string') {
                 const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
                 let chunk = responseText;
                 if (lastIndex !== -1) {
@@ -387,10 +391,7 @@ Component({
                     Toast.fail('会话超时了、告知管理员吧~~~');
                   }
                 }
-              }
-  
-              /* 处理和百度一样格式的模型消息解析 */
-              if ([2, 3, 4].includes(model.keyType)) {
+              } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
                 const lines = responseText
                   .toString()
                   .split('\n')
@@ -418,7 +419,7 @@ Component({
                   if (data?.userBanance) {
                     userBalance = data?.userBanance;
                   }
-                  if (data?.id) {
+                  if (data?.id || data?.is_end) {
                     isStreamIn = false;
                   }
                 }
