@@ -13,7 +13,7 @@
     round
     show-title="{{ false }}"
     confirm-text="签到"
-    color="#000"
+    color="#1989fa"
     class="p-user-calendar"
     poppable="{{ false }}"
   />

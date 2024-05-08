@@ -22,7 +22,6 @@ Page({
         return day;
       }
       const { signList } = _this.data;
-      console.log('signList', signList);
       const signMap = getSignMap(signList);
       const timeOfDay = new Date(day.date).getTime();
       if (signMap[timeOfDay]) {

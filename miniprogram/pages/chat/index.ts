@@ -199,8 +199,7 @@ Component({
       const messages = res.map(message => {
         return {
           ...message,
-          originText: message.text,
-          text: formatAiText(message.text),
+          originText: formatAiText(message.text),
         }
       });
       const chooseGroup = groups.find(group => group.id === groupId)
@@ -225,8 +224,7 @@ Component({
       const messages = messageMap[currentGroup.id];
       const length = messages.length;
       if (message.text && typeof message.text === 'string') {
-        message.originText = message.text;
-        message.text = formatAiText(message.text);
+        message.originText = formatAiText(message.text);
       }
       messages[index] = { ...messages[index], ...message };
       this.setData({ messageMap: { ...messageMap, [currentGroup.id]: messages } }, () => {

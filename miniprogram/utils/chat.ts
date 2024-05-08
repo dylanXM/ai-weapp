@@ -7,7 +7,7 @@ function processString(input: string) {
   });
 
   // 将所有链接转换为markdown格式的链接
-  processedString = processedString.replace(/(?:^|\s)(http[s]?:\/\/[^\s]+)(?:\s|$)/g, '[$1]($1)');
+  processedString = processedString.replace(/(?:^|\s)(http[s]?:\/\/[^\s]+)(?:\s|$)/g, ' [$1]($1)\n\n');
 
   return processedString;
 }
