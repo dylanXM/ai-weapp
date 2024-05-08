@@ -84,7 +84,7 @@
 
 .p-chat-search-input {
   flex: 1;
-  // background-color: #f1f1f1;
+  background-color: #f1f1f1;
 
   textarea {
     border-radius: 24px;
@@ -95,8 +95,7 @@
     box-sizing: content-box;
     backdrop-filter: blur(10px); /* 应用模糊效果 */
     -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-    background-color: rgba(241, 241, 241, 0.5);
-    // background: #fff;
+    background-color: #fff;
   }
 }
 
@@ -137,6 +136,9 @@
 }
 
 .p-chat-message-contianer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   padding-bottom: 18px;
   margin: 0 18px;
 }
@@ -153,25 +155,32 @@
 
 .p-chat-message-title-name {
   margin-left: 8px;
-  font-weight: 600;
-  color: #AAAAAA;
 }
 
-.p-chat-message-container {
+.p-chat-message-user-container {
   margin-left: 30px;
-  align-items: center;
   font-size: 16px;
-	line-height: 1.8em;
+  line-height: 1.8em;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #00aeec;
+  padding: 6px 12px;
+  border-radius: 6px 6px 0 6px;
+  color: #fff;
+  width: fit-content;
 }
 
 .p-chat-message-robot {
-  margin-left: 30px;
+  margin-top: 8px;
   word-break: break-all;
-  white-space: pre-line;
+  background-color: #fff;
+  padding: 6px 12px;
+  border-radius: 0 6px 6px 6px;
+  width: fit-content;
 }
 
 .p-chat-robot-operate {
-  margin-left: 20px;
+  margin-left: -10px;
 }
 
 .p-chat-message-to-bottom {
@@ -203,9 +212,7 @@
 }
 
 .p-chat-message-loading {
-  margin-top: 4px;
-  margin-left: 4px;
-  margin-bottom: 12px;
+  margin: 4px;
   width: 15px;
   height: 15px;
   background-color: black; /* 小圆球的颜色，这里使用蓝色 */
@@ -324,6 +331,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  background-color: #fff;
 }
 
 .p-common-no-border {

@@ -31,7 +31,7 @@
   class="p-container"
 >
   <view
-    class="p-chat-container"
+    class="p-chat-container p-common-bg"
     wx:if="{{groups.length !== 0}}"
     style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
   >
@@ -53,14 +53,15 @@
         wx:key="chatId"
         wx:for-item="message"
         wx:for-index="idx"
+        style="display: flex; justify-content: {{ message.inversion ? 'flex-end' : 'flex-start' }};"
       >
         <!-- 用户信息 -->
         <view style="padding-top: {{ idx === 0 ? 18 : 0 }}px;" class="p-chat-message-contianer" wx:if="{{message.inversion}}">
-          <view class="p-chat-message-title">
+          <!-- <view class="p-chat-message-title">
             <image class="p-chat-message-avatar" src="{{user.userInfo.avatar}}" />
             <view class="p-chat-message-title-name">您</view>
-          </view>
-          <view class="p-chat-message-container">{{message.text}}</view>
+          </view> -->
+          <view class="p-chat-message-user-container">{{message.text}}</view>
         </view>
 
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
@@ -71,38 +72,38 @@
           <view class="p-chat-message-robot">
             <wemark md="{{message.originText}}" link highlight type="wemark"></wemark>
             <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" />
-          </view>
-          <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
-            <van-button
-              custom-class="p-common-no-border"
-              icon="label-o"
-              type="default"
-              size="small"
-              data-text="{{message.originText}}"
-              bind:click="copyGptResult"
-            >
-              复制
-            </van-button>
-            <van-button
-              custom-class="p-common-no-border"
-              icon="replay"
-              type="default"
-              size="small"
-              data-text="{{message.requestOptions.prompt}}"
-              bind:click="clickPrompt"
-            >
-              重新回答
-            </van-button>
-            <van-button
-              custom-class="p-common-no-border"
-              icon="more-o"
-              type="default"
-              size="small"
-              data-text="{{message.requestOptions.prompt}}"
-              bind:click="continuePrompt"
-            >
-              继续
-            </van-button>
+            <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
+              <van-button
+                custom-class="p-common-no-border"
+                icon="label-o"
+                type="default"
+                size="small"
+                data-text="{{message.originText}}"
+                bind:click="copyGptResult"
+              >
+                复制
+              </van-button>
+              <van-button
+                custom-class="p-common-no-border"
+                icon="replay"
+                type="default"
+                size="small"
+                data-text="{{message.requestOptions.prompt}}"
+                bind:click="clickPrompt"
+              >
+                重新回答
+              </van-button>
+              <van-button
+                custom-class="p-common-no-border"
+                icon="more-o"
+                type="default"
+                size="small"
+                data-text="{{message.requestOptions.prompt}}"
+                bind:click="continuePrompt"
+              >
+                继续
+              </van-button>
+            </view>
           </view>
         </view>
       </view>
@@ -115,7 +116,7 @@
       </view>
     </view>
     <!-- 搜索区 -->
-    <view class="p-chat-search-container">
+    <view class="p-chat-search-container p-common-bg">
       <van-icon
         name="down"
         size="16"
@@ -185,7 +186,7 @@
     <empty style="height: 100%" bind:createChatGroup="createChatGroup" />
   </view>
 
-  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px;"></view>
+  <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px;" class="p-common-bg"></view>
 </view>
 
 <van-popup
@@ -282,11 +283,12 @@
 >
   <van-field
     value="{{ groupOperate.newName }}"
-    placeholder="请输入新的对话组名称"
+    placeholder="{{ groupOperate.group.title }}"
     title="修改对话组名称"
     bind:change="groupNewNameChange"
     size="large"
     custom-class="p-chat-rename-field"
+    border="{{ false }}"
   />
 </van-dialog>
 
