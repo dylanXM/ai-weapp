@@ -7,7 +7,8 @@
     "pages/chat/pages/apps/index",
     "pages/chat/pages/create-presets/index",
     "pages/chat/pages/sign-in/index",
-    "pages/chat/pages/chat-groups/index"
+    "pages/chat/pages/chat-groups/index",
+    "pages/login/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

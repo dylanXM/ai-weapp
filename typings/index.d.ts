@@ -25,6 +25,7 @@ export type ListenersType = Record<GlobalDataKey, ListenerCallback[]>;
 export type ListenerCallback = <T extends GlobalDataKey>(value: GlobalData[T]) => void;
 
 interface IAppOption {
-  towxml: any;
   initNavBar: () => void;
+  getConfigs: () => void;
+  loginSuccess: (code: string) => Promise<void>;
 }

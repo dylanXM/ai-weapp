@@ -1,0 +1,20 @@
+<van-nav-bar title="登录" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view>
+  <van-button
+    loading="{{ loading }}"
+    custom-class="p-login-btn"
+    round
+    block
+    hairline
+    type="info"
+    size="default"
+    bind:tap="reLogin"
+    loading-text="重新登录"
+    
+  >
+    重新登录
+  </van-button>
+</view>

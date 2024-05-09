@@ -1,17 +1,15 @@
-// @ts-nocheck
 import { IAppOption } from '../typings';
 import {
-  getWechatSession,
   queryFront,
-  wxLogin,
-  getUserInfo,
   queryModelList,
   queryBaseModel,
   getSignList,
   queryPresetsList,
+  getUserInfo,
 } from './api/index';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import { login } from './utils/login';
 
 // app.ts
 App<IAppOption>({
@@ -22,34 +20,19 @@ App<IAppOption>({
       actions: ['setState', 'setStates'],
     })
     this.initNavBar();
+    this.getConfigs();
     // 登录
     wx.login({
       success: async res => {
-        const session = await getWechatSession({ code: res.code });
-        wx.setStorageSync('openId', session.openId);
-        wx.setStorageSync('sessionKey', session.sessionKey);
-        const token = await wxLogin({ openId: session.openId });
-        wx.setStorageSync('token', token);
-        if (!token) return;
-        const user = await getUserInfo();
-        // @ts-ignore
-        this.setStates({ user, globalLoading: false });
+        try {
+          this.loginSuccess(res.code);
+        } catch (err) {
+          wx.navigateTo({
+            url: '../login/index',
+          })
+        }
       },
     });
-    // 获取页面配置信息
-    // @ts-ignore
-    queryFront().then(res => this.setStates({ ...res }));
-
-    // 获取模型数据
-    // @ts-ignore
-    queryBaseModel().then(res => this.setState('model', res.modelInfo));
-    // @ts-ignore
-    queryModelList().then(res => this.setState('modelList', res));
-
-    // 获取签到数据
-    getSignList().then(res => this.setState('signList', res));
-    // 获取所有预设数据
-    queryPresetsList().then(res => this.setState('allPresets', res.rows));
   },
 
   initNavBar() {
@@ -66,6 +49,31 @@ App<IAppOption>({
     }
     // @ts-ignore
     this.setState('navBar', navbar);
-  }
+  },
+
+  getConfigs() {
+    // 获取页面配置信息
+    // @ts-ignore
+    queryFront().then(res => this.setStates({ ...res }));
+
+    // 获取模型数据
+    // @ts-ignore
+    queryBaseModel().then(res => this.setState('model', res.modelInfo));
+    // @ts-ignore
+    queryModelList().then(res => this.setState('modelList', res));
+
+    // 获取签到数据
+    getSignList().then(res => this.setState('signList', res));
+    // 获取所有预设数据
+    queryPresetsList().then(res => this.setState('allPresets', res.rows));
+  },
+
+  async loginSuccess(code: string) {
+    const token = await login(code);
+    if (!token) return;
+    const user = await getUserInfo();
+    // @ts-ignore
+    this.setStates({ user, globalLoading: false });
+  },
 
 })

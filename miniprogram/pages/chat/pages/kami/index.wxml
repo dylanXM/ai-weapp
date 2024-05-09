@@ -20,9 +20,9 @@
     block
     hairline
     type="info"
+    size="default"
     bind:tap="usekami"
     loading-text="激活兑换码"
-    size="default"
   >
     激活兑换码
   </van-button>
