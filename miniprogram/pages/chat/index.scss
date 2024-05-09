@@ -177,10 +177,13 @@
   padding: 6px 12px;
   border-radius: 0 6px 6px 6px;
   width: fit-content;
+  max-width: calc(100vw - 60px);
+  white-space: pre-line;
 }
 
 .p-chat-robot-operate {
   margin-left: -10px;
+  white-space: initial;
 }
 
 .p-chat-message-to-bottom {
