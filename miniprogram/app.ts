@@ -62,8 +62,6 @@ App<IAppOption>({
     // @ts-ignore
     queryModelList().then(res => this.setState('modelList', res));
 
-    // 获取签到数据
-    getSignList().then(res => this.setState('signList', res));
     // 获取所有预设数据
     queryPresetsList().then(res => this.setState('allPresets', res.rows));
   },
@@ -71,6 +69,8 @@ App<IAppOption>({
   async loginSuccess(code: string) {
     const token = await login(code);
     if (!token) return;
+    // 获取签到数据
+    getSignList().then(res => this.setState('signList', res));
     const user = await getUserInfo();
     // @ts-ignore
     this.setStates({ user, globalLoading: false });
