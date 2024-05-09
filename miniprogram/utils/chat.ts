@@ -12,6 +12,37 @@ function processString(input: string) {
   return processedString;
 }
 
+function replaceMarkdownLinks(text: string) {
+  // 匹配 Markdown 链接的正则表达式
+  const markdownLinkRegex = /-\s*\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g;
+  let matches;
+  let updatedText: string = text;
+  let index = 1;
+
+  // 使用 while 循环遍历所有匹配项
+  while ((matches = markdownLinkRegex.exec(text)) !== null) {
+    const [fullMatch, , link] = matches;
+
+    // 找到当前匹配项的位置
+    const positionBeforeLink = updatedText.indexOf(fullMatch);
+
+    // 提取链接前面的段落
+    const precedingText = updatedText.slice(0, positionBeforeLink).split('\n').pop().trim();
+
+    // 使用前面的段落文本创建新的链接
+    const newLink = `${index++}. [${precedingText}](${link})`;
+
+    // 用新的链接替换原始匹配项
+    updatedText =
+      updatedText.slice(0, positionBeforeLink - precedingText.length - 1).trim() +
+      '\n\n' +
+      newLink +
+      updatedText.slice(positionBeforeLink + fullMatch.length);
+  }
+
+  return updatedText;
+}
+
 export const formatAiText = (text: string) => {
   if (text === null) {
     return '无回复内容';
@@ -19,13 +50,11 @@ export const formatAiText = (text: string) => {
   if (!text) {
     return '';
   }
-  let result = processString(text);
-  console.log('result', result);
-  // 替换掉所有的“**”字符串
-  // let result = text.replace(/\*\*/g, '');
-  // let result = text;
-  // 将所有大于1的换行符转换为1个换行符
-  // result = result.replace(/(\n|\r|↵)+/g, '\n');
-  // result = result.replace('~', '～');
+  let result = text.replace(/↵/g, '\n');
+
+  result = processString(text);
+  
+  result = replaceMarkdownLinks(result);
+
   return result;
 };

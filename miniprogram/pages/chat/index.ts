@@ -132,7 +132,6 @@ Component({
       });
     },
     currentApp: function (data) {
-      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }

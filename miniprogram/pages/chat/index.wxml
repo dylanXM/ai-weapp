@@ -72,7 +72,7 @@
           <view class="p-chat-message-robot">
             <wemark md="{{message.originText}}" link highlight type="wemark"></wemark>
             <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" />
-            <view wx:if="{{!message.loading && !message.error}}" class="p-chat-robot-operate" >
+            <view wx:if="{{!message.loading && !message.error && message.text}}" class="p-chat-robot-operate">
               <van-button
                 custom-class="p-common-no-border"
                 icon="label-o"
@@ -100,6 +100,7 @@
                 size="small"
                 data-text="{{message.requestOptions.prompt}}"
                 bind:click="continuePrompt"
+                wx:if="{{ messageMap[currentGroup.id].length === idx + 1 }}"
               >
                 继续
               </van-button>
