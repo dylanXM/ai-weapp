@@ -655,6 +655,38 @@ Component({
     },
 
     /**
+     * 点击图片生成
+     */
+    handleClickDraw: function(event: any) {
+      wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
+      // this.closePopup();
+      // wx.navigateTo({
+      //   url: '../chat/pages/draw/index',
+      //   events: {
+      //     createChatGroup: (event: any) => {
+      //       this.createChatGroup(event);
+      //     },
+      //   }
+      // });
+    },
+
+    /**
+     * 点击图片生成
+     */
+    handleClickDraw: function(event: any) {
+      wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
+      // this.closePopup();
+      // wx.navigateTo({
+      //   url: '../chat/pages/draw/index',
+      //   events: {
+      //     createChatGroup: (event: any) => {
+      //       this.createChatGroup(event);
+      //     },
+      //   }
+      // });
+    },
+
+    /**
      * 点击个人信息（setting）
      */
     handleClickSetting: function() {

@@ -163,6 +163,11 @@
             type="textarea"
             size="large"
           />
+          <!-- <van-icon
+            wx:if="{{!loading}}"
+            name="description"
+            size="28"
+          /> -->
           <van-icon
             wx:if="{{!loading}}"
             name="down"
@@ -223,13 +228,26 @@
           title="新建会话"
           icon="add"
           is-link
-          data-key="presets"
           bind:tap="createChatGroup"
           border="{{ true }}"
           color="#1989fa"
         />
       </van-cell-group>
       <van-cell-group inset border="{{ false }}" title="探索">
+        <!-- <van-cell
+          title="文件/链接分析"
+          icon="description"
+          is-link
+          bind:tap="handleClickAnalyze"
+          border="{{ true }}"
+        /> -->
+        <van-cell
+          title="图片生成"
+          icon="photo"
+          is-link
+          bind:tap="handleClickDraw"
+          border="{{ true }}"
+        />
         <van-cell
           title="预设模版"
           icon="coupon"
