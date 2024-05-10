@@ -1,9 +1,8 @@
 /* pages/chat/conponents/empty/index.wxss */
 .c-empty-container {
-  padding-top: -100px;
+  padding-top: 180px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: #f1f1f1;
   height: 100%;
@@ -16,6 +15,6 @@
 }
 
 .c-empty-desc {
-  margin: 16px 0 24px;
+  margin: 16px 0 48px;
   color: #888888;
 }

@@ -9,7 +9,7 @@
   <view class="c-empty-desc">
     点击下方按钮，开始一个新的对话吧
   </view>
-  <view>
-    <van-button type="primary" color="#1989fa" bind:tap="createChatGroup">新建对话</van-button>
+  <view style="width: 40%">
+    <van-button type="primary" round block color="#1989fa" bind:tap="createChatGroup">新建对话</van-button>
   </view>
 </view>

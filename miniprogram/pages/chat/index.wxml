@@ -306,8 +306,8 @@
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
-      <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" />
-      <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
+      <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
+      <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
 
     <!-- <van-cell-group title="我的预设模版" inset>

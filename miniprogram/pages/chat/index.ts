@@ -373,23 +373,6 @@ Component({
               const responseText: string = res.data;
               if (typeof responseText !== 'string') {
                 data = responseText;
-              } else if ([1, 5].includes(model.keyType) && typeof responseText === 'string') {
-                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
-                let chunk = responseText;
-                if (lastIndex !== -1) {
-                  chunk = responseText.substring(lastIndex);
-                }
-  
-                try {
-                  data = JSON.parse(chunk);
-                } catch (error) {
-                  /* 二次解析 */
-                  // const parseData = parseTextToJSON(responseText)
-                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-                  if (chunk.includes('OpenAI timed out waiting for response')) {
-                    Toast.fail('会话超时了、告知管理员吧~~~');
-                  }
-                }
               } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
                 const lines = responseText
                   .toString()
@@ -409,7 +392,24 @@ Component({
                 }
                 tem.result = cacheResult;
                 data = tem;
-              }
+              } else {
+                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
+                let chunk = responseText;
+                if (lastIndex !== -1) {
+                  chunk = responseText.substring(lastIndex);
+                }
+  
+                try {
+                  data = JSON.parse(chunk);
+                } catch (error) {
+                  /* 二次解析 */
+                  // const parseData = parseTextToJSON(responseText)
+                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
+                  if (chunk.includes('OpenAI timed out waiting for response')) {
+                    Toast.fail('会话超时了、告知管理员吧~~~');
+                  }
+                }
+              } 
   
               try {
                 /* 如果出现输出内容不一致就需要处理了 */
@@ -421,9 +421,7 @@ Component({
                   if (data?.id || data?.is_end) {
                     isStreamIn = false;
                   }
-                }
-    
-                if ([2, 3, 4].includes(model.keyType)) {
+                } else {
                   const { text, is_end } = data;
                   cacheResText = text;
                   isStreamIn = !is_end;
