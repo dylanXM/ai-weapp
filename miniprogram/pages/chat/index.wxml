@@ -241,13 +241,13 @@
           bind:tap="handleClickAnalyze"
           border="{{ true }}"
         /> -->
-        <van-cell
+        <!-- <van-cell
           title="图片生成"
           icon="photo"
           is-link
           bind:tap="handleClickDraw"
           border="{{ true }}"
-        />
+        /> -->
         <van-cell
           title="预设模版"
           icon="coupon"
@@ -285,13 +285,13 @@
 </van-popup>
 
 <van-action-sheet
-  title="选择模型"
   show="{{ modelConfig.visible }}"
   actions="{{ modelConfig.options }}"
   bind:close="closeModelActionSheet"
   bind:select="onSelectModel"
   cancel-text="取消"
   bind:cancel="closeModelActionSheet"
+  description="选择模型"
 />
 
 <van-action-sheet
