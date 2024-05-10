@@ -538,7 +538,8 @@ Component({
     },
     handlekeyboardHeightChange: function(event: any) {
       this.setData({ keyboardHeight: event.detail.height }, () => {
-        setTimeout(() => this.scrollToBottom(), 100);
+        this.scrollToBottom();
+        setTimeout(() => this.setData({ isScrollToLower: true, viewId: 'id_bottom_container' }), 100);
       });
     },
     // 新增应用dispatch

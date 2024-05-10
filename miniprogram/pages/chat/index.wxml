@@ -149,6 +149,7 @@
             placeholder="请输入你的问题或需求"
             border="{{ false }}"
             custom-style="padding: 0px;"
+            style="flex: 1;"
             value="{{ value }}"
             custom-class="p-chat-search-input"
             adjust-position="{{false}}"
@@ -162,23 +163,23 @@
             type="textarea"
             size="large"
           />
+          <van-icon
+            wx:if="{{!loading}}"
+            name="down"
+            size="18"
+            bind:click="chatProcess"
+            color="{{ value ? 'white' : '#aaaaaa' }}"
+            class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
+          />
+          <van-icon
+            wx:if="{{loading}}"
+            name="stop-circle"
+            size="32" 
+            color="red"
+            bind:click="cancelChatProcess"
+            class="p-chat-icon-cancel"
+          />
         </view>
-        <van-icon
-          wx:if="{{!loading && value.length}}"
-          name="down"
-          size="20"
-          bind:click="chatProcess"
-          color="{{ value ? 'white' : '#4d4d4d' }}"
-          class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
-        />
-        <van-icon
-          wx:if="{{loading}}"
-          name="stop-circle-o"
-          size="34"
-          color="red"
-          bind:click="cancelChatProcess"
-          class="p-chat-icon-cancel"
-        />
       </view>
     </view>
   </view>

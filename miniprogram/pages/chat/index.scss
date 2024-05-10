@@ -78,12 +78,18 @@
 }
 
 .p-chat-search-border {
+  display: flex;
+  align-items: center;
   width: 100%;
+  padding: 0px 8px;
+  background-color: #fff;
+  border-radius: 30px;
 }
 
 .p-chat-search-input {
   flex: 1;
-  background-color: #f1f1f1;
+  background-color: transparent;
+  width: 100%;
 
   textarea {
     border-radius: 24px;
@@ -94,7 +100,7 @@
     box-sizing: content-box;
     backdrop-filter: blur(10px); /* 应用模糊效果 */
     -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-    background-color: #fff;
+    background-color: transparent;
   }
 }
 
@@ -219,7 +225,7 @@
 }
 
 .p-chat-icon-cancel {
-  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+  // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
   margin-left: 6px;
 }
 
