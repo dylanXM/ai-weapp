@@ -143,9 +143,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container' }, () => {
-        this.setData({ isScrollToLower: true });
-      });
+      this.setData({ toView: 'id_bottom_container' });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -540,7 +538,7 @@ Component({
     },
     handlekeyboardHeightChange: function(event: any) {
       this.setData({ keyboardHeight: event.detail.height }, () => {
-        this.scrollToBottom();
+        setTimeout(() => this.scrollToBottom(), 100);
       });
     },
     // 新增应用dispatch

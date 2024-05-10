@@ -27,7 +27,7 @@ function replaceMarkdownLinks(text: string) {
     const positionBeforeLink = updatedText.indexOf(fullMatch);
 
     // 提取链接前面的段落
-    const precedingText = updatedText.slice(0, positionBeforeLink).split('\n').pop().trim();
+    const precedingText = updatedText.slice(0, positionBeforeLink).split('\n').pop().trim().replace(/_/g, '-');
 
     // 使用前面的段落文本创建新的链接
     const newLink = `${index++}. [${precedingText}](${link})`;

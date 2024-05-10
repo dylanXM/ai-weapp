@@ -66,6 +66,11 @@ Component({
 				}
 
             }
+        },
+
+        handleClickNavigator(event) {
+          const { url } = event.target.dataset;
+          wx.showToast({ title: '暂不支持打开外部链接', icon: 'none' });
         }
     }
 });
