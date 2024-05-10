@@ -382,4 +382,18 @@ button[style="color: #07c160"] > view {
   margin: 12px;
   border-radius: 8px;
 }
+.p-chat-history-operate {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  color: #1989fa;
+}
+
+.p-chat-history-operate-text {
+  font-size: 14px;
+  margin-left: 4px;
+}
 

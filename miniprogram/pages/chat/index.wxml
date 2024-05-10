@@ -225,7 +225,10 @@
           data-key="presets"
           bind:tap="createChatGroup"
           border="{{ true }}"
+          color="#1989fa"
         />
+      </van-cell-group>
+      <van-cell-group inset border="{{ false }}" title="探索">
         <van-cell
           title="预设模版"
           icon="coupon"
@@ -235,22 +238,28 @@
           border="{{ true }}"
         />
       </van-cell-group>
-      <van-cell-group wx:if="{{ groups.length }}" title="对话历史" inset border="{{ false }}">
-        <van-cell
-          custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
-          title="{{group.title}}"
-          bind:click="chooseGroup"
-          data-text="{{group.id}}"
-          icon="chat"
-          title-class="p-common-ellipsis"
-          data-group="{{group}}"
-          bind:longpress="showGroupOperate"
-          wx:for="{{groups}}"
-          wx:key="id"
-          wx:for-item="group"
-          border="{{false}}"
-        />
-      </van-cell-group>
+      <view style="position: relative;">
+        <van-cell-group title="会话历史" wx:if="{{ groups.length }}" inset border="{{ false }}">
+          <!-- <view class="p-chat-history-operate" bind:tap="createChatGroup">
+            <van-icon name="add" color="#1989fa" />
+            <view class="p-chat-history-operate-text">新建会话</view>
+          </view> -->
+          <van-cell
+            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
+            title="{{group.title}}"
+            bind:click="chooseGroup"
+            data-text="{{group.id}}"
+            icon="chat"
+            title-class="p-common-ellipsis"
+            data-group="{{group}}"
+            bind:longpress="showGroupOperate"
+            wx:for="{{groups}}"
+            wx:key="id"
+            wx:for-item="group"
+            border="{{false}}"
+          />
+        </van-cell-group>
+      </view>
     </view>
     <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
   </view>
