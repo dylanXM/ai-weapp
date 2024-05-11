@@ -10,10 +10,7 @@ import { isEmptyObj } from '../../utils/common';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-// import manager from '../../utils/record-manager';
-const plugin = requirePlugin("WechatSI");
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-const manager = plugin.getRecordRecognitionManager();
+import manager from '../../utils/record-manager';
 
 // pages/chat/index.ts
 Component({
@@ -812,14 +809,14 @@ Component({
           console.log("succ tts", res.filename);
           const innerAudioContext = wx.createInnerAudioContext({
             useWebAudioImplement: false // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
-          })
+          });
           innerAudioContext.src = res.filename;
           innerAudioContext.play() // 播放
         },
         fail: function(res: any) {
             console.log("fail tts", res)
         }
-    })
+      })
     }
   },
 
