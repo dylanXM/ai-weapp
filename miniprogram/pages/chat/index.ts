@@ -734,7 +734,17 @@ Component({
      * 点击语音
      */
     handleClickVoice: function() {
-      wx.hideKeyboard();
+      wx.hideKeyboard({
+        success: res => {
+          console.log('hideKeyboard success res', res)
+        },
+        fail: res => {
+          console.log('hideKeyboard fail res', res)
+        },
+        complete: res => {
+          console.log('hideKeyboard complete res', res)
+        }
+      });
       this.setData({ inputState: 'voice' });
     },
 
