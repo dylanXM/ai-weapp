@@ -1,11 +1,5 @@
 <van-nav-bar border="{{false}}" custom-class="p-navbar-container">
-  <van-icon
-    name="wap-nav"
-    bind:click="showPopup"
-    color="#4d4d4d"
-    slot="left"
-    size="28"
-  />
+  <text bind:tap="showPopup" slot="left" class="iconfont icon-list"></text>
   <view slot="title" data-group="{{currentGroup}}" bind:tap="showGroupOperate" wx:if="{{ groups.length && currentApp.id }}" class="p-navbar-title">
     <view class="p-navbar-text">{{currentApp.name}}</view>
     <van-icon
@@ -145,7 +139,10 @@
       </view>
       <view class="p-chat-search">
         <view class="p-chat-search-border">
+          <!-- <text bind:tap="handleClickVoice" wx:if="{{!loading && !value.length && inputState === 'text'}}" class="iconfont icon-yuyin"></text> -->
+          <text bind:tap="handleClickCancelVoice" wx:if="{{inputState === 'voice' && !recordState.isSpeeching}}" class="iconfont icon-keyboard"></text>
           <van-field
+            wx:if="{{inputState === 'text'}}"
             placeholder="请输入你的问题或需求"
             border="{{ false }}"
             custom-style="padding: 0px;"
@@ -163,25 +160,19 @@
             type="textarea"
             size="large"
           />
-          <!-- <van-icon
-            wx:if="{{!loading}}"
-            name="description"
-            size="28"
-          /> -->
-          <van-icon
-            wx:if="{{!loading}}"
-            name="down"
-            size="18"
-            bind:click="chatProcess"
-            color="{{ value ? 'white' : '#aaaaaa' }}"
-            class="p-chat-search-icon {{ value ? 'p-chat-search-icon-active' : '' }}"
+          <text bindtouchstart="startRecord" bindtouchend="stopRecord" class="p-chat-voice-text" wx:if="{{inputState === 'voice'}}">{{recordState.speechText}}</text>
+          <text
+            wx:if="{{!loading && inputState === 'text'}}"
+            bind:tap="chatProcess"
+            style="color: {{  value ? 'white' : '#aaaaaa' }};"
+            class="iconfont icon-send {{ value ? 'p-chat-search-icon-active' : '' }}"
           />
           <van-icon
             wx:if="{{loading}}"
             name="stop-circle"
             size="32" 
             color="red"
-            bind:click="cancelChatProcess"
+            bind:tap="cancelChatProcess"
             class="p-chat-icon-cancel"
           />
         </view>

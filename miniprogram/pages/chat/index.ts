@@ -1,6 +1,4 @@
-// @ts-nocheck
 import { ChatGroup, Message } from 'miniprogram/api/chat/type';
-import { IAppOption } from 'typings';
 import { createChat, delGroup, queryChat, queryChatGroup, updateGroup, clearGroup } from '../../api/chat/index';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
@@ -9,13 +7,10 @@ import Dialog from '@vant/weapp/dialog/dialog';
 import { formatModelOptions, getChooseModel, getChooseModelInfo } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
-import { uint8ArrayToString } from '../../utils/util';
-import { throttle } from '../../utils/throttle';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-
-const app = getApp<IAppOption>();
+// import manager from '../../utils/record-manager';
 
 // pages/chat/index.ts
 Component({
@@ -57,6 +52,11 @@ Component({
     },
     settings: {
       visible: false,
+    },
+    inputState: 'text' as 'text' | 'voice',
+    recordState: {
+      isSpeeching: false,
+      speechText: '按住 说话'
     }
   },
 
@@ -169,7 +169,7 @@ Component({
         wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
-      const alreadyHasGroup = allGroups.find(group => group.appId === appId);
+      const alreadyHasGroup = allGroups.find((group: { appId: string; }) => group.appId === appId);
       if (alreadyHasGroup) {
         this.setData({ currentGroup: alreadyHasGroup });
         this.queryChatList(alreadyHasGroup.id);
@@ -189,7 +189,7 @@ Component({
       if (!query) {
         this.setData({ groups: allGroups });  
       }
-      const newGroups = allGroups.filter(group => group.title.toLowerCase().includes(query.toLowerCase()));
+      const newGroups = allGroups.filter((group: { title: string; }) => group.title.toLowerCase().includes(query.toLowerCase()));
       this.setData({ groups: newGroups });
     },
     queryChatList: async function(groupId: number) {
@@ -246,7 +246,6 @@ Component({
         wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
       }
-      const { modelCount, modelPrice } = balance;
       const options: Record<string, any> = {
         groupId: currentGroup.id,
         usingNetwork: false,
@@ -361,14 +360,14 @@ Component({
                 wx.showToast({ title: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', icon: 'none' });
                 _this.updateGroupChat(messages.length - 1, {
                   loading: false,
-                  text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+                  text: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员',
                   error: true,
                   conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
                   requestOptions: { prompt: value, options: { ...options } },
                 });
                 _this.setData({ loading: false });
               }
-              const responseText: string = res.data;
+              const responseText: string = res.data as string;
               if (typeof responseText !== 'string') {
                 data = responseText;
               } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
@@ -404,7 +403,7 @@ Component({
                   // const parseData = parseTextToJSON(responseText)
                   // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
                   if (chunk.includes('OpenAI timed out waiting for response')) {
-                    Toast.fail('会话超时了、告知管理员吧~~~');
+                    wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
                   }
                 }
               } 
@@ -480,7 +479,7 @@ Component({
       this.updateUserBalance(this.data.user, model);
       const { currentGroup } = this.data;
       if (!currentGroup.appId) {
-        const modelTypeInfo = getChooseModelInfo(this.data.modelList.modelTypeList, model.keyType);
+        const modelTypeInfo = getChooseModelInfo(this.data.modelList.modelTypeList, String(model.keyType));
         updateGroup({ groupId: currentGroup.id, modelConfig: JSON.stringify({ modelInfo: model, modelTypeInfo }) }).then(() => {
           this.chatGroup(currentGroup.id);
         });
@@ -673,7 +672,7 @@ Component({
     /**
      * 点击图片生成
      */
-    handleClickDraw: function(event: any) {
+    handleClickAnalyze: function(event: any) {
       wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
       // this.closePopup();
       // wx.navigateTo({
@@ -731,7 +730,69 @@ Component({
       wx.navigateTo({
         url: '../chat/pages/sign-in/index',
       });
-    }
+    },
+
+    /**
+     * 点击语音
+     */
+    handleClickVoice: function() {
+      this.setData({ inputState: 'voice' });
+    },
+
+    /**
+     * 点击取消语音
+     */
+    handleClickCancelVoice: function() {
+      this.setData({ inputState: 'text' });
+    },
+
+    /**
+     * 开始录音事件
+     */
+    startRecord: function () {
+      this.setData({ recordState: { isSpeeching: true, speechText: '按住 说话' } });
+
+      // 语音开始识别
+      // manager.start({ lang: 'zh_CN' });
+    },
+
+    /**
+     * 结束录音事件
+     */
+    stopRecord: function () {
+      this.setData({ recordState: { isSpeeching: false, speechText: '松开 发送' } });
+      // manager.stop();
+    },
+
+        /**
+     * 识别语音 -- 初始化
+     */
+    initRecord: function () {
+
+      // manager.onRecognize = function (res) {
+      //     console.log(res);
+      // }
+
+      // manager.onStart = function (res) {
+      //     console.log("成功开始录音识别", res);
+      // }
+      // // 识别错误事件
+      // manager.onError = function (res) {
+      //     console.error("error msg", res)
+      //     if (res.retcode == -30011) {
+      //         manager.stop();
+      //     }
+      // }
+
+      //识别结束事件
+      // manager.onStop = function (res) {
+      //   if (res.result == '') {
+      //     wx.showToast({ title: '听不清楚，请重新说一遍！', icon: 'none' });
+      //     return;
+      //   }
+      //   let msg = res.result.substr(0, res.result.length - 1);
+      // }
+    },
   },
 
   lifetimes: {

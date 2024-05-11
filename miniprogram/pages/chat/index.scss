@@ -25,7 +25,6 @@
 .p-chat-message-avatar {
   height: 22px;
   width: 22px;
-  border-radius: 11px;
 }
 
 .p-chat-empty-avatar {
@@ -81,7 +80,6 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0px 8px;
   background-color: #fff;
   border-radius: 30px;
 }
@@ -102,17 +100,6 @@
     -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
     background-color: transparent;
   }
-}
-
-.p-chat-search-icon {
-  transform: rotate(180deg);
-  padding: 7px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 34px;
-  background-color: #f1f1f1;
-  margin-left: 6px;
 }
 
 .p-chat-search-icon-active {
@@ -227,6 +214,7 @@
 .p-chat-icon-cancel {
   // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
   margin-left: 6px;
+  margin-right: 8px;
 }
 
 @keyframes ball-breath {
@@ -382,6 +370,86 @@ button[style="color: #07c160"] > view {
   padding: 6px 12px;
   margin: 12px;
   border-radius: 8px;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-send {
+  height: 32px;
+  width: 32px;
+  font-size: 20px !important;
+  padding: 4px 2px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  background-color: #f1f1f1;
+  margin-left: 6px;
+  box-sizing: border-box;
+  margin-right: 8px;
+}
+
+.icon-send:before {
+  content: "\e6fd";
+}
+
+.icon-list:before {
+  content: "\e630";
+}
+
+.icon-yuyin {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-left: 8px;
+}
+
+.icon-yuyin:before {
+  content: "\e6e1";
+}
+
+.p-chat-voice-text {
+  flex: 1;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  background-color: transparent;
+}
+
+.p-chat-voice-text:active {
+  background-color: rgb(214, 214, 214);
+}
+
+.p-chat-voice-text:after {
+  content: none;
+}
+
+.p-chat-voice-text::after {
+  border: none;
+}
+
+.icon-keyboard {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-left: 8px;
+}
+.icon-keyboard:before {
+  content: "\e71b";
 }
 
 

@@ -132,8 +132,10 @@
 }
 .wemark_inline_code{
 	background:#f0f0f0;
-	padding:3px 5px;
-	word-wrap:break-word;
+	padding:2px 4px;
+  word-wrap:break-word;
+  margin: 0 2px;
+  border-radius: 3px;
 }
 .wemark_inline_text{
 	word-wrap:break-word;
