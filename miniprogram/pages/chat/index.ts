@@ -10,7 +10,10 @@ import { isEmptyObj } from '../../utils/common';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import manager from '../../utils/record-manager';
+// import manager from '../../utils/record-manager';
+const plugin = requirePlugin("WechatSI");
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager();
 
 // pages/chat/index.ts
 Component({
@@ -87,7 +90,7 @@ Component({
   observers: {
     user: function (data) {
       if (isEmptyObj(data)) return;
-      const { model, currentGroup } = this.data;
+      const { currentGroup } = this.data;
       // @ts-ignore
       if (!isEmptyObj(this.data.model)) {
         // @ts-ignore
@@ -103,10 +106,6 @@ Component({
         // @ts-ignore
         this.updateUserBalance(this.data.user, data);
       }
-    },
-    bottomSafeHeight: function (data) {
-    },
-    keyboardHeight: function (data) {
     },
     currentGroup: function (data) {
       this.setData({ isScrollToLower: true });
@@ -221,7 +220,6 @@ Component({
         return;
       }
       const messages = messageMap[currentGroup.id];
-      const length = messages.length;
       if (message.text && typeof message.text === 'string') {
         message.originText = formatAiText(message.text);
       }
@@ -753,7 +751,8 @@ Component({
       this.setData({ recordState: { isSpeeching: true, speechText: '松开 发送' } });
 
       // 语音开始识别
-      manager.start({ duration: 30000, lang: "zh_CN" });
+      manager.start({ duration: 10000, lang: 'zh_CN' });
+      console.log('manager', manager);
     },
 
     /**
@@ -768,13 +767,10 @@ Component({
      * 识别语音 -- 初始化
      */
     initRecord: function () {
-
-      manager.onRecognize = function (res: any) {
-        console.log(res);
-      };
+      const that = this;
 
       manager.onStart = function (res: any) {
-        console.log("成功开始录音识别", res);
+        wx.showToast({ title: '语音正在识别中...', icon: 'none' });
       };
       // 识别错误事件
       manager.onError = function (res: any) {
@@ -792,7 +788,7 @@ Component({
         }
         let msg = res.result.substr(0, res.result.length - 1);
         console.log('msg', msg);
-        this.chatProcess(msg);
+        that.chatProcess(msg);
       };
     },
   },
