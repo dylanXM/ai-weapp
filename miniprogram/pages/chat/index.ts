@@ -734,26 +734,14 @@ Component({
      * 点击语音
      */
     handleClickVoice: function() {
-      wx.hideKeyboard({
-        success: res => {
-          console.log('hideKeyboard success res', res)
-        },
-        fail: res => {
-          console.log('hideKeyboard fail res', res)
-        },
-        complete: res => {
-          console.log('hideKeyboard complete res', res)
-        }
-      });
-      this.setData({ inputState: 'voice' });
+      this.setData({ inputState: 'voice', keyboardHeight: 0 });
     },
 
     /**
      * 点击取消语音
      */
     handleClickCancelVoice: function() {
-      wx.hideKeyboard();
-      this.setData({ inputState: 'text' });
+      this.setData({ inputState: 'text', keyboardHeight: 0 });
     },
 
     /**
