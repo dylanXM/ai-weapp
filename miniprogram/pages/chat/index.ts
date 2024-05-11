@@ -734,14 +734,20 @@ Component({
      * 点击语音
      */
     handleClickVoice: function() {
-      this.setData({ inputState: 'voice', keyboardHeight: 0 });
+      this.setData({ inputState: 'voice', keyboardHeight: 0 }, () => {
+        this.scrollToBottom();
+        setTimeout(() => this.setData({ isScrollToLower: true, viewId: 'id_bottom_container' }), 100);
+      });
     },
 
     /**
      * 点击取消语音
      */
     handleClickCancelVoice: function() {
-      this.setData({ inputState: 'text', keyboardHeight: 0 });
+      this.setData({ inputState: 'text', keyboardHeight: 0 }, () => {
+        this.scrollToBottom();
+        setTimeout(() => this.setData({ isScrollToLower: true, viewId: 'id_bottom_container' }), 100);
+      });
     },
 
     /**
