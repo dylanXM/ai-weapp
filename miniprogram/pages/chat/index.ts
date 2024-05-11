@@ -734,6 +734,7 @@ Component({
      * 点击语音
      */
     handleClickVoice: function() {
+      wx.hideKeyboard();
       this.setData({ inputState: 'voice' });
     },
 
@@ -741,6 +742,7 @@ Component({
      * 点击取消语音
      */
     handleClickCancelVoice: function() {
+      wx.hideKeyboard();
       this.setData({ inputState: 'text' });
     },
 
