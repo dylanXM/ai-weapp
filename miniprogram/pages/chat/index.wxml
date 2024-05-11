@@ -87,7 +87,7 @@
               >
                 重新回答
               </van-button>
-              <van-button
+              <!-- <van-button
                 custom-class="p-common-no-border"
                 icon="more-o"
                 type="default"
@@ -97,6 +97,16 @@
                 wx:if="{{ messageMap[currentGroup.id].length === idx + 1 }}"
               >
                 继续
+              </van-button> -->
+              <van-button
+                custom-class="p-common-no-border"
+                icon="play"
+                type="default"
+                size="small"
+                data-text="{{message.originText}}"
+                bind:tap="playTextSpeech"
+              >
+                播放
               </van-button>
             </view>
           </view>
