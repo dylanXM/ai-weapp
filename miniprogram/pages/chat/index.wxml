@@ -73,7 +73,7 @@
                 type="default"
                 size="small"
                 data-text="{{message.originText}}"
-                bind:click="copyGptResult"
+                bind:tap="copyGptResult"
               >
                 复制
               </van-button>
@@ -83,7 +83,7 @@
                 type="default"
                 size="small"
                 data-text="{{message.requestOptions.prompt}}"
-                bind:click="clickPrompt"
+                bind:tap="clickPrompt"
               >
                 重新回答
               </van-button>
@@ -93,7 +93,7 @@
                 type="default"
                 size="small"
                 data-text="{{message.requestOptions.prompt}}"
-                bind:click="continuePrompt"
+                bind:tap="continuePrompt"
                 wx:if="{{ messageMap[currentGroup.id].length === idx + 1 }}"
               >
                 继续
@@ -139,7 +139,7 @@
       </view>
       <view class="p-chat-search">
         <view class="p-chat-search-border">
-          <!-- <text bind:tap="handleClickVoice" wx:if="{{!loading && !value.length && inputState === 'text'}}" class="iconfont icon-yuyin"></text> -->
+          <text bind:tap="handleClickVoice" wx:if="{{!loading && !value.length && inputState === 'text'}}" class="iconfont icon-yuyin"></text>
           <text bind:tap="handleClickCancelVoice" wx:if="{{inputState === 'voice' && !recordState.isSpeeching}}" class="iconfont icon-keyboard"></text>
           <van-field
             wx:if="{{inputState === 'text'}}"
@@ -257,7 +257,7 @@
           <van-cell
             custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
             title="{{group.title}}"
-            bind:click="chooseGroup"
+            bind:tap="chooseGroup"
             data-text="{{group.id}}"
             icon="chat"
             title-class="p-common-ellipsis"

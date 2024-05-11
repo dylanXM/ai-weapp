@@ -82,6 +82,8 @@
   width: 100%;
   background-color: #fff;
   border-radius: 30px;
+  height: 46px;
+  box-sizing: content-box;
 }
 
 .p-chat-search-input {
@@ -188,7 +190,7 @@
   z-index: 100;
   box-shadow: 0px 0px 3px 2px #e2e2e2;
   animation-fill-mode: forwards;
-  animation: transfer 0.1s;
+  animation: transfer .2s;
 }
 
 @keyframes transfer {

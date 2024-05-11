@@ -10,7 +10,7 @@ import { isEmptyObj } from '../../utils/common';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-// import manager from '../../utils/record-manager';
+import manager from '../../utils/record-manager';
 
 // pages/chat/index.ts
 Component({
@@ -670,7 +670,7 @@ Component({
     },
 
     /**
-     * 点击图片生成
+     * 点击文件分析
      */
     handleClickAnalyze: function(event: any) {
       wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
@@ -750,18 +750,18 @@ Component({
      * 开始录音事件
      */
     startRecord: function () {
-      this.setData({ recordState: { isSpeeching: true, speechText: '按住 说话' } });
+      this.setData({ recordState: { isSpeeching: true, speechText: '松开 发送' } });
 
       // 语音开始识别
-      // manager.start({ lang: 'zh_CN' });
+      manager.start({ duration: 30000, lang: "zh_CN" });
     },
 
     /**
      * 结束录音事件
      */
     stopRecord: function () {
-      this.setData({ recordState: { isSpeeching: false, speechText: '松开 发送' } });
-      // manager.stop();
+      this.setData({ recordState: { isSpeeching: false, speechText: '按住 说话' } });
+      manager.stop();
     },
 
         /**
@@ -769,35 +769,37 @@ Component({
      */
     initRecord: function () {
 
-      // manager.onRecognize = function (res) {
-      //     console.log(res);
-      // }
+      manager.onRecognize = function (res: any) {
+        console.log(res);
+      };
 
-      // manager.onStart = function (res) {
-      //     console.log("成功开始录音识别", res);
-      // }
-      // // 识别错误事件
-      // manager.onError = function (res) {
-      //     console.error("error msg", res)
-      //     if (res.retcode == -30011) {
-      //         manager.stop();
-      //     }
-      // }
+      manager.onStart = function (res: any) {
+        console.log("成功开始录音识别", res);
+      };
+      // 识别错误事件
+      manager.onError = function (res: any) {
+        console.error("error msg", res)
+        if (res.retcode == -30011) {
+          manager.stop();
+        }
+      };
 
       //识别结束事件
-      // manager.onStop = function (res) {
-      //   if (res.result == '') {
-      //     wx.showToast({ title: '听不清楚，请重新说一遍！', icon: 'none' });
-      //     return;
-      //   }
-      //   let msg = res.result.substr(0, res.result.length - 1);
-      // }
+      manager.onStop = function (res: any) {
+        if (res.result == '') {
+          wx.showToast({ title: '听不清楚，请重新说一遍！', icon: 'none' });
+          return;
+        }
+        let msg = res.result.substr(0, res.result.length - 1);
+        console.log('msg', msg);
+        this.chatProcess(msg);
+      };
     },
   },
 
   lifetimes: {
     attached() {
-  
+      this.initRecord();
     },
     detached() {
     }
