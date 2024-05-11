@@ -404,7 +404,15 @@ button[style="color: #07c160"] > view {
   content: "\e630";
 }
 
+.icon-yuyin-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
 .icon-yuyin {
+  position: absolute;
+  z-index: 20;
   width: 32px;
   height: 32px;
   display: flex;

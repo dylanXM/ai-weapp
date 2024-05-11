@@ -149,7 +149,9 @@
       </view>
       <view class="p-chat-search">
         <view class="p-chat-search-border">
-          <text bind:tap="handleClickVoice" wx:if="{{!loading && !value.length && inputState === 'text'}}" class="iconfont icon-yuyin"></text>
+          <view class="icon-yuyin-container">
+            <text bind:tap="handleClickVoice" wx:if="{{!loading && !value.length && inputState === 'text'}}" class="iconfont icon-yuyin"></text>
+          </view>
           <text bind:tap="handleClickCancelVoice" wx:if="{{inputState === 'voice' && !recordState.isSpeeching}}" class="iconfont icon-keyboard"></text>
           <van-field
             wx:if="{{inputState === 'text'}}"
