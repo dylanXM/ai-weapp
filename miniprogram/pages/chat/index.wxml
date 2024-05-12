@@ -51,10 +51,6 @@
       >
         <!-- 用户信息 -->
         <view style="padding-top: {{ idx === 0 ? 18 : 0 }}px;" class="p-chat-message-contianer" wx:if="{{message.inversion}}">
-          <!-- <view class="p-chat-message-title">
-            <image class="p-chat-message-avatar" src="{{user.userInfo.avatar}}" />
-            <view class="p-chat-message-title-name">您</view>
-          </view> -->
           <view class="p-chat-message-user-container">{{message.text}}</view>
         </view>
 
@@ -87,17 +83,6 @@
               >
                 重新回答
               </van-button>
-              <!-- <van-button
-                custom-class="p-common-no-border"
-                icon="more-o"
-                type="default"
-                size="small"
-                data-text="{{message.requestOptions.prompt}}"
-                bind:tap="continuePrompt"
-                wx:if="{{ messageMap[currentGroup.id].length === idx + 1 }}"
-              >
-                继续
-              </van-button> -->
               <van-button
                 custom-class="p-common-no-border"
                 icon="play"
@@ -122,14 +107,6 @@
     </view>
     <!-- 搜索区 -->
     <view class="p-chat-search-container p-common-bg">
-      <!-- <van-icon
-        name="down"
-        size="16"
-        class="p-chat-message-to-bottom"
-        bindtap="scrollToBottom"
-        color="#4d4d4d"
-        wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
-      /> -->
       <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
         <view class="p-chat-nomessage-demo-list">
           <view
@@ -219,9 +196,7 @@
             custom-class="p-chat-user-avatar"
           />
           <view>{{user.userInfo.username}}</view>
-          <!-- <van-icon name="arrow" color="#aaaaaa" size="18" /> -->
         </view>
-        <!-- <van-icon slot="right-icon" name="add-o" catchtap="createChatGroup" class="custom-icon" size="26" /> -->
         <van-icon slot="right-icon" name="ellipsis" size="26" bind:tap="handleClickSetting" />
       </van-cell>
     </view>
@@ -237,18 +212,11 @@
         />
       </van-cell-group>
       <van-cell-group inset border="{{ false }}" title="探索">
-        <!-- <van-cell
-          title="文件/链接分析"
+        <van-cell
+          title="文档解读"
           icon="description"
           is-link
           bind:tap="handleClickAnalyze"
-          border="{{ true }}"
-        /> -->
-        <van-cell
-          title="图片生成"
-          icon="photo"
-          is-link
-          bind:tap="handleClickDraw"
           border="{{ true }}"
         />
         <van-cell
@@ -262,10 +230,6 @@
       </van-cell-group>
       <view style="position: relative;">
         <van-cell-group title="会话历史" wx:if="{{ groups.length }}" inset border="{{ false }}">
-          <!-- <view class="p-chat-history-operate" bind:tap="createChatGroup">
-            <van-icon name="add" color="#1989fa" />
-            <view class="p-chat-history-operate-text">新建会话</view>
-          </view> -->
           <van-cell
             custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
             title="{{group.title}}"
@@ -340,11 +304,6 @@
       <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
       <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
-
-    <!-- <van-cell-group title="我的预设模版" inset>
-      <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" />
-      <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" />
-    </van-cell-group> -->
   
   </view>
 </van-action-sheet>
