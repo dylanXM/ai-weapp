@@ -141,7 +141,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container' });
+      setTimeout(() => this.setData({ toView: 'id_bottom_container' }), 300);
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -509,14 +509,32 @@ Component({
     },
     // 消息区滚动事件
     onScroll: function(event: any) {
-      const { navBar, bottomSafeHeight, deviceScrollMinis, keyboardHeight } = this.data;
       const { detail: { scrollHeight, scrollTop } } = event;
-      const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight;
-      if (deviceScrollMinis === -100) {
-        this.setData({ deviceScrollMinis: scrollMinis });
-      } else {
-        this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - keyboardHeight - 70 <= 0 });
-      }
+
+      const _this = this;
+      const query = _this.createSelectorQuery();
+      query.select('#id_bottom_container').boundingClientRect();
+      query.exec((res) => {
+        // res[0] 是查询到的第一个节点的信息
+        if (res[0]) {
+          const rect = res[0];
+          console.log('rect', rect, scrollHeight, scrollTop, _this.windowHeight);
+          // 获取页面滚动位置
+          wx.pageScrollTo({
+            scrollTop: 0, // 滚动到顶部
+            duration: 0,  // 不需要动画
+            success: function(res) {
+              // 检查元素是否在视图范围内
+              _this.setData({ isScrollToLower: rect.top >= 0 && rect.bottom <= scrollHeight });
+              if (rect.top >= 0 && rect.bottom <= scrollHeight) {
+                console.log('元素在视野范围内');
+              } else {
+                console.log('元素不在视野范围内');
+              }
+            }
+          });
+        }
+      });
     },
     // 更新userBalance
     updateUserBalance: function(user: any, model: any) {
