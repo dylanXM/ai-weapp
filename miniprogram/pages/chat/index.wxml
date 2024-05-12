@@ -122,14 +122,14 @@
     </view>
     <!-- 搜索区 -->
     <view class="p-chat-search-container p-common-bg">
-      <!-- <van-icon
+      <van-icon
         name="down"
         size="16"
         class="p-chat-message-to-bottom"
         bindtap="scrollToBottom"
         color="#4d4d4d"
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
-      /> -->
+      />
       <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
         <view class="p-chat-nomessage-demo-list">
           <view

@@ -754,11 +754,9 @@ Component({
      */
     startRecord: function () {
       this.setData({ recordState: { isSpeeching: true, speechText: '松开 发送' } });
-      wx.showToast({ title: '相关功能正在审核中，敬请期待～', icon: 'none' });
-      return;
 
       // 语音开始识别
-      // manager.start({ duration: 10000, lang: 'zh_CN' });
+      manager.start({ duration: 10000, lang: 'zh_CN' });
     },
 
     /**
@@ -778,12 +776,14 @@ Component({
       manager.onStart = function (res: any) {
         wx.showToast({ title: '语音正在识别中...', icon: 'none' });
       };
+
       // 识别错误事件
       manager.onError = function (res: any) {
-        console.error("error msg", res)
-        if (res.retcode == -30011) {
-          manager.stop();
-        }
+        wx.showToast({ title: '未识别到任何内容～', icon: 'none' });
+        console.error("error msg", res);
+        // if (res.retcode == -30011) {
+        //   manager.stop();
+        // }
       };
 
       //识别结束事件
@@ -808,7 +808,6 @@ Component({
         tts: true,
         content: text,
         success: function(res: any) {
-          console.log("succ tts", res.filename);
           const innerAudioContext = wx.createInnerAudioContext({
             useWebAudioImplement: false // 是否使用 WebAudio 作为底层音频驱动，默认关闭。对于短音频、播放频繁的音频建议开启此选项，开启后将获得更优的性能表现。由于开启此选项后也会带来一定的内存增长，因此对于长音频建议关闭此选项
           });
@@ -816,7 +815,7 @@ Component({
           innerAudioContext.play() // 播放
         },
         fail: function(res: any) {
-            console.log("fail tts", res)
+          wx.showToast({ title: '文案过长，暂无法播放语音', icon: 'none' });
         }
       })
     }
