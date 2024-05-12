@@ -107,7 +107,6 @@ Component({
       }
     },
     currentGroup: function (data) {
-      this.setData({ isScrollToLower: true });
       const { allPresets, allMinePresets } = this.data;
       if (!data.id) {
         return;
@@ -125,9 +124,7 @@ Component({
       }
       const appDemo = currentApp?.demoData?.split('\n').filter((item: string) => item) || [];
       this.setState('model', modelInfo);
-      this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo }, () => {
-        this.scrollToBottom();
-      });
+      this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
     },
     currentApp: function (data) {
       if (data.coverImg) {
@@ -141,9 +138,7 @@ Component({
    */
   methods: {
     scrollToBottom: function () {
-      this.setData({ toView: 'id_bottom_container' }, () => {
-        setTimeout(() => this.setData({ toView: 'id_bottom_container' }), 350);
-      });
+      this.setData({ toView: 'id_bottom_container' });
     },
     chatGroup: async function(groupId?: number) {
       const res = await queryChatGroup();
@@ -203,7 +198,7 @@ Component({
       });
       const chooseGroup = groups.find(group => group.id === groupId)
       this.setData({ messageMap: { ...messageMap, [groupId]: messages }, currentGroup: chooseGroup }, () => {
-        this.scrollToBottom();
+        setTimeout(() => this.scrollToBottom(), 500);
       });
     },
     addGroupChat: function(message: Message) {
@@ -511,7 +506,14 @@ Component({
     },
     // 消息区滚动事件
     onScroll: function(event: any) {
-      const { detail: { scrollHeight, scrollTop } } = event;
+      const { detail: { scrollHeight, scrollTop } } = event; 
+      // const { navBar, bottomSafeHeight, deviceScrollMinis, keyboardHeight } = this.data;
+      // const scrollMinis = scrollHeight - scrollTop - navBar?.navBarHeight - bottomSafeHeight;
+      // if (deviceScrollMinis === -100) {
+      //   this.setData({ deviceScrollMinis: scrollMinis });
+      // } else {
+      //   this.setData({ isScrollToLower: scrollMinis - deviceScrollMinis - keyboardHeight - 70 <= 0 });
+      // }
 
       const _this = this;
       const query = _this.createSelectorQuery();
@@ -520,7 +522,7 @@ Component({
         // res[0] 是查询到的第一个节点的信息
         if (res[0]) {
           const rect = res[0];
-          console.log('rect', rect, scrollHeight, scrollTop, _this.windowHeight);
+          console.log('rect', rect, scrollHeight, scrollTop, rect.bottom <= scrollHeight);
           // 获取页面滚动位置
           wx.pageScrollTo({
             scrollTop: 0, // 滚动到顶部
