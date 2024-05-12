@@ -10,7 +10,9 @@ import { isEmptyObj } from '../../utils/common';
 import config, { groupActions, modelTypeMap } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
-import manager from '../../utils/record-manager';
+const plugin = requirePlugin("WechatSI");
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager();
 
 // pages/chat/index.ts
 Component({
