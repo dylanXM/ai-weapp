@@ -781,9 +781,9 @@ Component({
       manager.onError = function (res: any) {
         wx.showToast({ title: '未识别到任何内容～', icon: 'none' });
         console.error("error msg", res);
-        // if (res.retcode == -30011) {
-        //   manager.stop();
-        // }
+        if (res.retcode == -30011) {
+          manager.stop();
+        }
       };
 
       //识别结束事件

@@ -214,8 +214,9 @@
 
 .p-chat-icon-cancel {
   // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
-  margin-left: 6px;
-  margin-right: 8px;
+  position: absolute;
+  right: 8px;
+  top: 7px;
 }
 
 @keyframes ball-breath {
