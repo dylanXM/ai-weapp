@@ -142,7 +142,7 @@ Component({
   methods: {
     scrollToBottom: function () {
       this.setData({ toView: 'id_bottom_container' }, () => {
-        setTimeout(() => this.setData({ toView: 'id_bottom_container' }), 1000);
+        setTimeout(() => this.setData({ toView: 'id_bottom_container' }), 350);
       });
     },
     chatGroup: async function(groupId?: number) {
