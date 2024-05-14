@@ -218,6 +218,13 @@
       </van-cell-group>
       <van-cell-group inset border="{{ false }}" title="探索">
         <van-cell
+          title="图片生成"
+          icon="photo"
+          is-link
+          bind:tap="handleClickDraw"
+          border="{{ true }}"
+        />
+        <van-cell
           title="文档解读"
           icon="description"
           is-link
