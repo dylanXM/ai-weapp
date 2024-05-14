@@ -61,7 +61,11 @@
           </view>
           <view class="p-chat-message-robot">
             <wemark md="{{message.originText}}" link highlight type="wemark"></wemark>
-            <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" />
+            <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading-container">
+              <view class="p-chat-message-loading" />
+              <view class="p-chat-message-loading-1" />
+              <view class="p-chat-message-loading-2" />
+            </view>
             <view wx:if="{{!message.loading && !message.error && message.text}}" class="p-chat-robot-operate">
               <van-button
                 custom-class="p-common-no-border"
