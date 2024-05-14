@@ -306,30 +306,15 @@
   width: 80%;
 }
 
-.p-chat-nomessage-demo-list {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  overflow-x: auto;
-  width: 100%;
-}
-
 .p-chat-nomessage-demo-item {
-  // flex-shrink: 0;
-  // padding: 8px 16px;
-  // margin-left: 12px;
-  // border: 1px solid #f1f1f1;
-  // font-size: 14px;
-  // color: #323232;
-  // border-radius: 8px;
-  // max-width: 180px;
-  // overflow: hidden;
-  // white-space: nowrap;
-  // text-overflow: ellipsis;
-  // background-color: #fff;
   margin-top: 12px;
   border-radius: 12px;
+}
+
+.p-chat-nomessage-demo-item-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .p-common-no-border {

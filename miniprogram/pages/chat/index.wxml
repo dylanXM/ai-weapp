@@ -111,10 +111,10 @@
             wx:for-item="item"
             data-text="{{item}}"
             custom-class="p-chat-nomessage-demo-item"
-            title="{{item}}"
             clickable
           >
             <van-icon slot="icon" size="large" name="award" color="rgb(248, 158, 50)" style="margin-right: 8px;" />
+            <view class="p-chat-nomessage-demo-item-title" slot="title">{{item}}</view>
           </van-cell>
         </view>
       </view>
