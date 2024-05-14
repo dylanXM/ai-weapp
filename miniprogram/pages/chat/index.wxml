@@ -103,6 +103,20 @@
       <view class="p-chat-nomessage-desc">
         <image class="p-chat-empty-avatar" src="{{currentApp.coverImg || appImg}}" />
         <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
+        <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
+          <van-cell
+            wx:for="{{ currentApp.appDemo }}"
+            bind:tap="clickPrompt"
+            wx:key="item"
+            wx:for-item="item"
+            data-text="{{item}}"
+            custom-class="p-chat-nomessage-demo-item"
+            title="{{item}}"
+            clickable
+          >
+            <van-icon slot="icon" size="large" name="award" color="rgb(248, 158, 50)" style="margin-right: 8px;" />
+          </van-cell>
+        </view>
       </view>
     </view>
     <!-- 搜索区 -->
@@ -115,23 +129,6 @@
         color="#4d4d4d"
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
       /> -->
-      <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
-        <view class="p-chat-nomessage-demo-list">
-          <view
-            wx:for="{{ currentApp.appDemo }}"
-            bind:tap="clickPrompt"
-            wx:key="item"
-            wx:for-item="item"
-            size="small"
-            round
-            type="default"
-            data-text="{{item}}"
-            class="p-chat-nomessage-demo-item"
-          >
-            {{item}}
-          </view>
-        </view>
-      </view>
       <view class="p-chat-search">
         <view class="p-chat-search-border">
           <view class="icon-yuyin-container" wx:if="{{!loading && !value.length && inputState === 'text'}}">

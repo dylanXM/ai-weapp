@@ -302,8 +302,8 @@
 }
 
 .p-chat-nomessage-demo {
-  display: flex;
-  align-items: center;
+  margin-top: 40px;
+  width: 80%;
 }
 
 .p-chat-nomessage-demo-list {
@@ -316,18 +316,20 @@
 }
 
 .p-chat-nomessage-demo-item {
-  flex-shrink: 0;
-  padding: 8px 16px;
-  margin-left: 12px;
-  border: 1px solid #f1f1f1;
-  font-size: 14px;
-  color: #323232;
-  border-radius: 8px;
-  max-width: 180px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  background-color: #fff;
+  // flex-shrink: 0;
+  // padding: 8px 16px;
+  // margin-left: 12px;
+  // border: 1px solid #f1f1f1;
+  // font-size: 14px;
+  // color: #323232;
+  // border-radius: 8px;
+  // max-width: 180px;
+  // overflow: hidden;
+  // white-space: nowrap;
+  // text-overflow: ellipsis;
+  // background-color: #fff;
+  margin-top: 12px;
+  border-radius: 12px;
 }
 
 .p-common-no-border {
