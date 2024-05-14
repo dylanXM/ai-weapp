@@ -21,6 +21,7 @@ App<IAppOption>({
     })
     this.initNavBar();
     this.getConfigs();
+    this.shareConfig();
     // 登录
     wx.login({
       success: async res => {
@@ -64,6 +65,13 @@ App<IAppOption>({
 
     // 获取所有预设数据
     queryPresetsList().then(res => this.setState('allPresets', res.rows));
+  },
+
+  shareConfig() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   },
 
   async loginSuccess(code: string) {

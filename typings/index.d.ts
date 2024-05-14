@@ -28,4 +28,5 @@ interface IAppOption {
   initNavBar: () => void;
   getConfigs: () => void;
   loginSuccess: (code: string) => Promise<void>;
+  shareConfig: () => void;
 }

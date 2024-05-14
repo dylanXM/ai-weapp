@@ -228,7 +228,7 @@
           border="{{ true }}"
         />
         <van-cell
-          title="预设模版"
+          title="角色预设"
           icon="coupon"
           is-link
           data-key="presets"
