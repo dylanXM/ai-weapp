@@ -342,7 +342,7 @@ Component({
             method: 'POST',
             data: {
               appId: currentGroup.appId,
-              prompt: `${value}\n`,
+              prompt: `${value}`,
               options,
             },
             header: {
