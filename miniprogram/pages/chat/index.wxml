@@ -39,7 +39,6 @@
       wx:if="{{messageMap[currentGroup.id].length !== 0}}"
       scroll-into-view="{{toView}}"
       lower-threshold="120"
-      bindscroll="onScroll"
       refresher-default-style="none"
     >
       <view
@@ -315,6 +314,10 @@
     <van-cell-group title="联系我们" inset>
       <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
       <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
+    </van-cell-group>
+
+    <van-cell-group wx:if="{{ defaultAvatar === user.userInfo.avatar }}" title="操作" inset>
+      <van-cell title="使用微信信息" icon="wechat" is-link bind:tap="useWXInfo" />
     </van-cell-group>
   
   </view>

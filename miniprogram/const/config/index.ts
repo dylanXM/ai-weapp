@@ -39,4 +39,6 @@ export const presetError = {
   des: '请填写【应用描述】',
   demoData: '请填写【示例内容】',
   coverImg: '请填写【应用Logo】',
-}
+};
+
+export const defaultAvatar = 'https://img.zcool.cn/community/01a6095f110b9fa8012066219b67d4.png?x-oss-process=image/auto-orient,1/resize,m_lfit,w_1280,limit_1/sharpen,100';

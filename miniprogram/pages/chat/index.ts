@@ -7,9 +7,10 @@ import Dialog from '@vant/weapp/dialog/dialog';
 import { formatModelOptions, getChooseModel, getChooseModelInfo } from '../../utils/model';
 import { formatAiText } from '../../utils/chat';
 import { isEmptyObj } from '../../utils/common';
-import config, { groupActions, modelTypeMap } from '../../const/config/index';
+import config, { groupActions, modelTypeMap, defaultAvatar } from '../../const/config/index';
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
+import { getUserInfo, updateUserInfo } from '../../api/index';
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
@@ -22,6 +23,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    defaultAvatar: defaultAvatar,
     groups: [] as ChatGroup[],
     messageMap: {} as Record<string, Message[]>,
     currentGroup: {} as ChatGroup,
@@ -838,6 +840,25 @@ Component({
         },
         fail: function(res: any) {
           wx.showToast({ title: '文案过长，暂无法播放语音', icon: 'none' });
+        }
+      })
+    },
+
+    /**
+     * 使用微信名称和头像更新信息
+     */
+    useWXInfo: function() {
+      const _this = this;
+      wx.showLoading({ title: '正在更新用户信息' });
+      wx.getUserProfile({
+        desc: '用于完善用户信息',
+        success: function(res: any) {
+          const { nickName, avatarUrl } = res.userInfo;
+          updateUserInfo({ username: nickName, avatar: avatarUrl }).then(() => {
+            getUserInfo().then(user => _this.setState('user', user));
+          }).catch(console.error).finally(() => {
+            wx.hideLoading();
+          });
         }
       })
     }

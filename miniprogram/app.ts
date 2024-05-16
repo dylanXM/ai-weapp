@@ -53,17 +53,13 @@ App<IAppOption>({
   },
 
   getConfigs() {
-    // 获取页面配置信息
-    // @ts-ignore
+    // @ts-ignore 获取页面配置信息
     queryFront().then(res => this.setStates({ ...res }));
-
-    // 获取模型数据
-    // @ts-ignore
+    // @ts-ignore 获取模型数据
     queryBaseModel().then(res => this.setState('model', res.modelInfo));
     // @ts-ignore
     queryModelList().then(res => this.setState('modelList', res));
-
-    // 获取所有预设数据
+    // @ts-ignore 获取所有预设数据
     queryPresetsList().then(res => this.setState('allPresets', res.rows));
   },
 

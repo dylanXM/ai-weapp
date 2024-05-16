@@ -42,6 +42,18 @@ export const getUserInfo = async (): Promise<UserData> => {
 }
 
 /**
+ * 更新用户信息
+ */
+export const updateUserInfo = async ({ username, avatar }: { username: string; avatar: string }): Promise<any> => {
+  const res = await request<any>({
+    url: `${config.url}/user/updateUserNameAndAvatar`,
+    method: 'POST',
+    data: { username, avatar },
+  });
+  return res.data;
+}
+
+/**
  * 获取签到列表
  */
 export const getSignList = async () => {
