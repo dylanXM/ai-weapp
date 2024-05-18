@@ -12,7 +12,7 @@ Page({
       count: 0,
       rows: []
     },
-    myDrawList: [],
+    myDrawList: [] as unknown[],
   },
 
   /**
@@ -28,7 +28,7 @@ Page({
     this.getAllDrawList();
     this.getMyDrawList();
 
-    this.toDrawPage();
+    // this.toDrawPage();
   },
 
   /**
@@ -92,11 +92,10 @@ Page({
    */
   getAllDrawList: async function() {
     const list = await queryAllDrawList({
-      size: 5,
+      size: 999,
       rec: 1,
       model: 'DALL-E2',
     });
-    console.log('all list', list);
     this.setData({ allDrawList: { ...list } });
   },
 
@@ -105,6 +104,8 @@ Page({
    */
   getMyDrawList: async function() {
     const list = await queryMyDrawList({
+      size: 5,
+      rec: 1,
       model: 'DALL-E2',
     });
     this.setData({ myDrawList: [...list] });
@@ -114,8 +115,32 @@ Page({
    * 跳往我的绘画页面
    */
   toDrawPage: function() {
+    const _this = this;
     wx.navigateTo({
       url: '../draw/pages/draw-picture/index',
+      events: {
+        refreshMyDraws: function() {
+          _this.getMyDrawList();
+        }
+      }
+    });
+  },
+
+  /**
+   * 跳往图片详情页
+   */
+  toImageDetail: function(event: any) {
+    console.log('event', event);
+    const { image } = event.target.dataset;
+    const url = `?url=${image.answer}&prompt=${image.prompt}`;
+    const _this = this;
+    wx.navigateTo({
+      url: `../draw/pages/detail/index${url}`,
+      events: {
+        refreshMyDraws: function() {
+          _this.getMyDrawList();
+        }
+      }
     });
   }
 })

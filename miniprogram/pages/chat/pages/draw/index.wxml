@@ -9,7 +9,8 @@
   <view class="p-draw-item">
     <view class="p-draw-item-header">
       <view class="p-draw-item-header-title">绘画广场</view>
-      <view class="p-draw-item-header-operate">查看更多</view>
+      <van-button bind:tap="getAllDrawList" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
+      <!-- <view class="p-draw-item-header-operate">查看更多</view> -->
     </view>
     <view class="p-draw-all-list">
       <view wx:if="{{!allDrawList.rows.length}}" class="p-draw-none-list">暂无数据</view>
@@ -21,7 +22,14 @@
         wx:for-index="idx"
         style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
       >
-        <van-image width="200" height="200" src="{{item.answer}}" radius="8" />
+        <van-image
+          width="200"
+          height="200"
+          src="{{item.answer}}"
+          radius="8"
+          data-image="{{item}}"
+          bind:tap="toImageDetail"
+        />
       </view>
     </view>
   </view>
@@ -29,23 +37,39 @@
   <view class="p-draw-item">
     <view class="p-draw-item-header">
       <view class="p-draw-item-header-title">我的绘画</view>
+      <van-button bind:tap="getMyDrawList" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
     </view>
-    <view class="p-draw-my-list">
+    <view class="p-draw-all-list">
       <view wx:if="{{!myDrawList.length}}" class="p-draw-none-list">暂无数据</view>
       <view
-        wx:if="{{allDrawList.length}}"
-        wx:for="{{allDrawList}}"
+        wx:if="{{myDrawList.length}}"
+        wx:for="{{myDrawList}}"
         wx:fot-item="item"
         wx:key="id"
         wx:for-index="idx"
         style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
       >
-        <van-image width="200" height="200" src="{{item.answer}}" radius="8" />
+        <van-image
+          width="200"
+          height="200"
+          src="{{item.answer}}"
+          radius="8"
+          data-image="{{item}}"
+          bind:tap="toImageDetail"
+        />
       </view>
     </view>
   </view>
 </view>
 
 <view class="p-draw-generate-btn">
-  <van-button type="info" block bind:tap="toDrawPage">生成图片</van-button>
+  <van-button
+    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+    type="info"
+    block
+    bind:tap="toDrawPage"
+    icon="photo"
+  >
+    生成图片 (积分：{{user.userBalance.model3Count}})
+  </van-button>
 </view>

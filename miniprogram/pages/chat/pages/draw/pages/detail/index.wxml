@@ -1,2 +1,34 @@
-<!--pages/chat/pages/draw/pages/detail/index.wxml-->
-<text>pages/chat/pages/draw/pages/detail/index.wxml</text>
+<van-nav-bar title="绘画详情" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view
+  class="p-draw-detail-container"
+  style="height: calc(100vh - {{navBar.navBarHeight + 74}}px)"
+>
+  <van-image
+    width="{{windowWidth - 24}}"
+    height="{{windowWidth - 24}}"
+    radius="8"
+    src="{{url}}"
+  />
+
+  <view>
+    <view class="p-draw-detail-title">绘画提示词</view>
+    <view class="p-draw-detail-prompt">
+      <view class="p-draw-detail-text">{{prompt}}</view>
+      <view class="p-draw-detail-operate">
+        <van-button
+          bind:tap="copyPrompt"
+          size="small"
+          icon="label"
+          type="default"
+          data-text="{{prompt}}"
+          custom-class="p-draw-detail-operate-btn"
+        >
+          复制
+        </van-button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -24,6 +24,7 @@ const request = async <T>(params: IParams): Promise<IRes<T>> => {
       wx.request({
         ...params,
         header,
+        timeout: 120000,
         success: res => {
           if (res.statusCode === 200) {
             resolve(res?.data as unknown as IRes<T>)

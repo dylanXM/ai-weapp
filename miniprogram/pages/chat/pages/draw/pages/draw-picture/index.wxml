@@ -8,14 +8,15 @@
 >
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">输入描述词</view>
-    <view class="p-dp-field-textarea">
+    <view>
       <van-field
+        value="{{ formData.prompt }}"
         custom-style="border-radius: 12px"
+        custom-class="p-dp-field-textarea"
         type="textarea"
         placeholder="请输入留言"
         autosize
         border="{{ false }}"
-        clearable
         bind:change="handlePromptChange"
       />
     </view>
@@ -23,7 +24,7 @@
 
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">图片质量</view>
-    <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
+    <van-radio-group value="{{ formData.quality }}" bind:change="handleQualityChange" direction="horizontal">
       <van-radio name="standard">标准（5普通积分）</van-radio>
       <van-radio name="hq">高级（10普通积分）</van-radio>
     </van-radio-group>
@@ -31,7 +32,7 @@
 
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">图片尺寸</view>
-    <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
+    <van-radio-group value="{{ formData.size }}" bind:change="handleSizeChange" direction="horizontal">
       <van-radio name="1024x1024">1024 x 1024</van-radio>
       <van-radio name="1024x1792">1024 x 1792</van-radio>
       <van-radio name="1794x1024">1794 x 1024</van-radio>
@@ -46,13 +47,44 @@
         wx:for-item="item"
         wx:for-index="idx"
         class="p-dp-pic-types-item"
+        wx:key="item"
       >
-        <van-button round size="small">{{item}}</van-button>
+        <van-button bind:tap="handleTypeClick" round size="small" data-type="{{item}}">{{item}}</van-button>
+      </view>
+    </view>
+  </view>
+
+  <view class="p-dp-field-container" style="margin-top: -12px;">
+    <view class="p-dp-field-title">我的生成</view>
+    <view class="p-dp-all-list">
+      <view wx:if="{{!state.url.length && !state.loading}}" class="p-dp-none-list">暂无数据</view>
+      <van-image wx:if="{{ state.loading }}" use-loading-slot>
+        <van-loading radius="8" slot="loading" type="spinner" width="200" height="200" vertical />
+      </van-image>
+      <view
+        wx:if="{{state.url.length}}"
+        wx:for="{{state.url}}"
+        wx:fot-item="item"
+        wx:key="id"
+        wx:for-index="idx"
+        style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+      >
+        <van-image width="200" height="200" src="{{item}}" radius="8" />
       </view>
     </view>
   </view>
 </view>
 
 <view class="p-dp-generate-btn">
-  <van-button type="info" block bind:tap="toDrawPage">立即生成</van-button>
+  <van-button
+    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+    bind:tap="generatePicture"
+    type="info"
+    block
+    loading="{{ state.loading }}"
+    loading-text="图片生成中..."
+    icon="photo"
+  >
+    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.model3Count}} 积分）
+  </van-button>
 </view>

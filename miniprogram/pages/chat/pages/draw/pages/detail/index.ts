@@ -1,18 +1,27 @@
-// pages/chat/pages/draw/pages/detail/index.ts
+import { store } from '../../../../../../store/index';
+import { createStoreBindings } from 'mobx-miniprogram-bindings';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    windowWidth: wx.getSystemInfoSync().windowWidth,
+    url: '',
+    prompt: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
-
+  onLoad(option: any) {
+    this.setData({ ...option });
+    createStoreBindings(this, {
+      store, // 需要绑定的数据仓库
+      fields: ['navBar', 'user', 'allPresets'],
+      actions: ['setState', 'setStates'],
+    });
   },
 
   /**
@@ -62,5 +71,20 @@ Page({
    */
   onShareAppMessage() {
 
-  }
+  },
+
+  /**
+   * 用户点击返回
+   */
+  onBack() {
+    wx.navigateBack();
+  },
+
+  /**
+   * 复制prompt
+   */
+  copyPrompt: function (event: any) {
+    const { text } = event.currentTarget.dataset;
+    wx.setClipboardData({ data: text });
+  },
 })

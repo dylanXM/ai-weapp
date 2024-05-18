@@ -14,13 +14,17 @@
 }
 
 .p-dp-field-textarea {
-  border: 1px solid #f1f1f1;
-  border-radius: 12px;
-  min-height: 100px;
+  width: calc(100vh - 24px);
+  margin: -10px -16px;
 
   textarea {
+    padding: 12px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid #f1f1f1;
     font-size: 14px !important;
     line-height: 18px !important;
+    min-height: 100px;
   }
 }
 
@@ -37,4 +41,23 @@
 .p-dp-pic-types-item {
   margin-bottom: 12px;
   margin-right: 12px;
+}
+
+.p-dp-all-list {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.p-dp-img {
+  width: 45%;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.p-dp-none-list {
+  font-size: 14px;
+  color: #888888;
 }

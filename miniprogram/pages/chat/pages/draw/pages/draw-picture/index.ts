@@ -1,5 +1,6 @@
 import { store } from '../../../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import { drawPicture } from '../../../../../../api/index';
 
 Page({
 
@@ -7,7 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    state: {
+      hasGenerated: false,
+      loading: false,
+      url: [] as string[],
+    },
     formData: {
+      n: 1,
       prompt: '',
       quality: 'standard',
       size: '1024x1024',
@@ -19,7 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.storeBindings = createStoreBindings(this, {
+    createStoreBindings(this, {
       store, // 需要绑定的数据仓库
       fields: ['navBar', 'user', 'allPresets'],
       actions: ['setState', 'setStates'],
@@ -79,16 +86,74 @@ Page({
    * 用户点击返回
    */
   onBack() {
-    wx.navigateBack();
+    const { state } = this.data;
+    wx.navigateBack().then(() => {
+      const eventChannel = this.getOpenerEventChannel();
+      if (state.hasGenerated) {
+        eventChannel.emit('refreshMyDraws', {});
+      }
+    });
   },
 
   /**
    * 描述词变化
    */
   handlePromptChange: function(event: any) {
-    console.log('event', event);
     const { formData } = this.data;
     const prompt = event.detail;
-    this.setData({  })
+    this.setData({ formData: { ...formData, prompt } });
+  },
+
+  /**
+   * 图片质量变化
+   */
+  handleQualityChange: function(event: any) {
+    console.log('event', event);
+    const { formData } = this.data;
+    const quality = event.detail;
+    this.setData({ formData: { ...formData, quality } });
+  },
+
+  /**
+   * 图片尺寸变化
+   */
+  handleSizeChange: function(event: any) {
+    console.log('event', event);
+    const { formData } = this.data;
+    const size = event.detail;
+    this.setData({ formData: { ...formData, size } });
+  },
+
+  /**
+   * 图片质量点击
+   */
+  handleTypeClick: function(event: any) {
+    const type = event.currentTarget.dataset.type;
+    console.log('event', event, type);
+    const { formData } = this.data;
+    const { prompt } = formData;
+    this.setData({ formData: { ...formData, prompt: `${prompt}${prompt ? '，' : ''}${type}` } });
+  },
+
+  /**
+   * 生成图片
+   */
+  generatePicture: async function() {
+    const { formData, state } = this.data;
+    if (!formData.prompt) {
+      wx.showToast({ title: '请填写描述词', icon: 'none' });
+      return;
+    }
+    try {
+      this.setData({ state: { ...state, loading: true } });
+      const res =  await drawPicture(formData);
+      console.log('res', res);
+      const resUrl = res?.[0];
+      const url: string[] = [resUrl, ...(state.url || [])];
+      this.setData({ state: { ...state, loading: false, url, hasGenerated: true } });
+    } catch (error) {
+      wx.showToast({ title: '图片生成失败，请重试', icon: 'error' });
+      this.setData({ state: { ...state, loading: false } });
+    }
   }
 })

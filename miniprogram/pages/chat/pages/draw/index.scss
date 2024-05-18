@@ -2,6 +2,7 @@
   box-sizing: border-box;
   padding-top: 12px;
   padding-bottom: 24px;
+  overflow-y: auto;
 }
 
 .p-draw-item {
@@ -34,8 +35,16 @@
   padding-bottom: 12px;
 }
 
+.p-draw-img {
+  width: 45%;
+  height: 200px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
 .p-draw-my-list {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   overflow-x: hidden;
   overflow-y: auto;

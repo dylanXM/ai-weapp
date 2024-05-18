@@ -831,7 +831,7 @@ Component({
   lifetimes: {
     attached() {
       this.initRecord();
-      this.handleClickDraw();
+      // this.handleClickDraw();
     },
     detached() {
     }
