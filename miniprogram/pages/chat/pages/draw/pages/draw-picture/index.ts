@@ -87,5 +87,8 @@ Page({
    */
   handlePromptChange: function(event: any) {
     console.log('event', event);
+    const { formData } = this.data;
+    const prompt = event.detail;
+    this.setData({  })
   }
 })
