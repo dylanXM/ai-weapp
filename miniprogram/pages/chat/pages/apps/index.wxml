@@ -31,10 +31,13 @@
       bind:tap="handleClickPreset"
       data-id="{{ item.id }}"
     >
-      <van-image custom-class="p-presets-item-avatar" width="40" height="40" src="{{item.coverImg}}" />
+      <van-image custom-class="p-presets-item-avatar" width="32" height="32" src="{{item.coverImg}}" />
       <view class="p-presets-item-content">
         <view class="p-presets-item-title">{{item.name}}</view>
         <view class="p-presets-item-desc">{{item.des}}</view>
+      </view>
+      <view class="p-presets-item-button">
+        <van-icon size="small" name="down" />
       </view>
     </view>
   </view>

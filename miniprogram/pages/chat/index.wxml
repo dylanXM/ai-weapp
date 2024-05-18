@@ -55,7 +55,7 @@
 
         <view class="p-chat-message-robot-contianer" wx:if="{{!message.inversion}}">
           <view class="p-chat-message-title">
-            <image class="p-chat-message-avatar" src="{{currentApp.coverImg || appImg}}" />
+            <image class="p-chat-message-avatar" src="{{currentApp.coverImg || './images/icon.png'}}" />
             <view class="p-chat-message-title-name">{{ currentApp.name || 'sweetAI'}}</view>
           </view>
           <view class="p-chat-message-robot">
@@ -92,6 +92,17 @@
               >
                 播放
               </van-button>
+              <van-button
+                custom-class="p-common-no-border"
+                icon="more-o"
+                type="default"
+                size="small"
+                data-text="{{message.originText}}"
+                bind:tap="continuePrompt"
+                wx:if="{{ !message.inversion && message.originText && idx === messageMap[currentGroup.id].length - 1 }}"
+              >
+                继续
+              </van-button>
             </view>
           </view>
         </view>
@@ -100,7 +111,7 @@
     </scroll-view>
     <view wx:if="{{messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-container">
       <view class="p-chat-nomessage-desc">
-        <image class="p-chat-empty-avatar" src="{{currentApp.coverImg || appImg}}" />
+        <image class="p-chat-empty-avatar" src="{{currentApp.coverImg || './images/icon.png'}}" />
         <view class="p-chat-empty-desc">今天有什么可以帮您？</view>
         <view wx:if="{{currentApp.id && messageMap[currentGroup.id].length === 0}}" class="p-chat-nomessage-demo">
           <van-cell
