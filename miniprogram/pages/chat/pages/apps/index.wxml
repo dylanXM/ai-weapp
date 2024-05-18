@@ -1,4 +1,4 @@
-<van-nav-bar title="预设列表" border="{{none}}" custom-style="background-color: #f1f1f1;">
+<van-nav-bar title="角色列表" border="{{none}}" custom-style="background-color: #f1f1f1;">
   <van-icon
     name="arrow-left"
     bind:click="handleClickAddPresets"

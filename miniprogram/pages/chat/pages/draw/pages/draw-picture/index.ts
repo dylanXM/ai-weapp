@@ -1,6 +1,5 @@
+import { store } from '../../../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
-import { store } from '../../../../store/index';
-import { queryAllDrawList, queryMyDrawList } from '../../../../api/index';
 
 Page({
 
@@ -8,11 +7,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    allDrawList: {
-      count: 0,
-      rows: []
+    formData: {
+      prompt: '',
+      quality: 'standard',
+      size: '1024x1024',
     },
-    myDrawList: [],
+    typeActions: ['古风', '二次元', '写实照片', '油画', '水彩画', '油墨画', '黑白雕版画', '雕塑', '3D模型', '手绘草图', '炭笔画', '极简线条画', '电影质感', '机械感'],
   },
 
   /**
@@ -24,11 +24,6 @@ Page({
       fields: ['navBar', 'user', 'allPresets'],
       actions: ['setState', 'setStates'],
     });
-
-    this.getAllDrawList();
-    this.getMyDrawList();
-
-    this.toDrawPage();
   },
 
   /**
@@ -88,34 +83,9 @@ Page({
   },
 
   /**
-   * 获取所有绘画
+   * 描述词变化
    */
-  getAllDrawList: async function() {
-    const list = await queryAllDrawList({
-      size: 5,
-      rec: 1,
-      model: 'DALL-E2',
-    });
-    console.log('all list', list);
-    this.setData({ allDrawList: { ...list } });
-  },
-
-  /**
-   * 获取我的绘画
-   */
-  getMyDrawList: async function() {
-    const list = await queryMyDrawList({
-      model: 'DALL-E2',
-    });
-    this.setData({ myDrawList: [...list] });
-  },
-
-  /**
-   * 跳往我的绘画页面
-   */
-  toDrawPage: function() {
-    wx.navigateTo({
-      url: '../draw/pages/draw-picture/index',
-    });
+  handlePromptChange: function(event: any) {
+    console.log('event', event);
   }
 })

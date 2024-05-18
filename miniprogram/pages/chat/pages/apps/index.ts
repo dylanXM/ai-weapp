@@ -146,9 +146,4 @@ Page({
     const query = event.detail;
     this.setData({ query: query });
   },
-  // handleClickAddPresets: function() {
-  //   wx.navigateTo({
-  //     url: 'pages/create-presets/index',
-  //   }).catch(console.error);
-  // }
 })

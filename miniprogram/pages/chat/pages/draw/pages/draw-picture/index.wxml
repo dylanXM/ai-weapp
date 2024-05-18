@@ -1,0 +1,58 @@
+<van-nav-bar title="AI绘画" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view
+  class="p-dp-container"
+  style="height: calc(100vh - {{navBar.navBarHeight + 74}}px)"
+>
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">输入描述词</view>
+    <view class="p-dp-field-textarea">
+      <van-field
+        custom-style="border-radius: 12px"
+        type="textarea"
+        placeholder="请输入留言"
+        autosize
+        border="{{ false }}"
+        clearable
+        bind:change="handlePromptChange"
+      />
+    </view>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图片质量</view>
+    <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
+      <van-radio name="standard">标准（5普通积分）</van-radio>
+      <van-radio name="hq">高级（10普通积分）</van-radio>
+    </van-radio-group>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图片尺寸</view>
+    <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
+      <van-radio name="1024x1024">1024 x 1024</van-radio>
+      <van-radio name="1024x1792">1024 x 1792</van-radio>
+      <van-radio name="1794x1024">1794 x 1024</van-radio>
+    </van-radio-group>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图像类型</view>
+    <view class="p-dp-pic-types">
+      <view
+        wx:for="{{typeActions}}"
+        wx:for-item="item"
+        wx:for-index="idx"
+        class="p-dp-pic-types-item"
+      >
+        <van-button round size="small">{{item}}</van-button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="p-dp-generate-btn">
+  <van-button type="info" block bind:tap="toDrawPage">立即生成</van-button>
+</view>

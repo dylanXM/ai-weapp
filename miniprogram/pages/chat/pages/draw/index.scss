@@ -1,1 +1,53 @@
-/* pages/chat/pages/draw/index.wxss */
+.p-draw-container {
+  box-sizing: border-box;
+  padding-top: 12px;
+  padding-bottom: 24px;
+}
+
+.p-draw-item {
+  border-bottom: 18px;
+  padding: 12px;
+}
+
+.p-draw-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.p-draw-item-header-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.p-draw-item-header-operate {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #888888;
+}
+
+.p-draw-all-list {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.p-draw-my-list {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.p-draw-none-list {
+  font-size: 14px;
+  color: #888888;
+}
+
+.p-draw-generate-btn {
+  margin: 0 12px;
+  border-radius: 12px;
+}
+

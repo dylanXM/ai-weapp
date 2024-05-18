@@ -3,3 +3,4 @@ export * from './config/index';
 export * from './chat/index';
 export * from './model/index';
 export * from './category/index';
+export * from './draw/index';

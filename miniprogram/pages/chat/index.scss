@@ -301,7 +301,7 @@
 }
 
 .p-chat-nomessage-demo {
-  margin-top: 40px;
+  margin: 40px 0 100px;
   width: 80%;
 }
 
@@ -311,6 +311,7 @@
 }
 
 .p-chat-nomessage-demo-item-title {
+  width: max-content;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
