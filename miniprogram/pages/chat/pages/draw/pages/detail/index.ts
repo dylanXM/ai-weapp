@@ -27,6 +27,7 @@ Page({
     });
     const ctx = wx.createCanvasContext('image');
     const _this = this;
+    wx.showLoading({ title: '图片加载中...', mask: true });
     wx.getImageInfo({
       src: option.url, // 图片地址
       success: (res) => {
@@ -34,6 +35,11 @@ Page({
         ctx.drawImage(res.path, 0, 0, windowWidth, windowWidth);
         ctx.draw();
         _this.setData({ downloadDisabled: false });
+        wx.hideLoading();
+      },
+      fail: () => {
+        wx.showToast({ title: '图片加载失败', icon: 'error' });
+        wx.hideLoading();
       }
     });
   },
