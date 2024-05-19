@@ -8,7 +8,7 @@
 >
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">输入描述词</view>
-    <view>
+    <view class="p-dp-field-textarea-constainer">
       <van-field
         value="{{ formData.prompt }}"
         custom-style="border-radius: 12px"
@@ -18,7 +18,27 @@
         autosize
         border="{{ false }}"
         bind:change="handlePromptChange"
+        maxlength="{{ 400 }}"
       />
+      <view class="p-dp-info-container">
+        <view class="p-dp-info-number">{{ formData.prompt.length || 0 }} / 400</view>
+        <view class="p-dp-info-clear" bind:tap="clearPrompt">清空</view>
+      </view>
+    </view>
+    <view style="margin-top: 12px;">
+      <van-button
+        wx:for="{{ initPrompts }}"
+        wx:for-item="item"
+        wx:for-index="idx"
+        data-text="{{item.prompt}}"
+        round
+        size="small"
+        color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        custom-style="margin-right: 8px;"
+        bind:tap="applyPrompt"
+      >
+        {{ item.title }}
+      </van-button>
     </view>
   </view>
 

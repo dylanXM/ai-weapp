@@ -338,7 +338,7 @@
     </van-cell-group>
 
     <van-cell-group title="操作" inset>
-      <van-cell size="large" title="体验版尝鲜" icon="new" is-link bind:tap="handleClickTestVersion" />
+      <van-cell size="large" title="体验版尝鲜" icon="new-o" is-link bind:tap="handleClickTestVersion" />
       <van-cell size="large" wx:if="{{ defaultAvatar === user.userInfo.avatar }}" title="使用微信信息" icon="wechat" is-link bind:tap="useWXInfo" />
     </van-cell-group>
   

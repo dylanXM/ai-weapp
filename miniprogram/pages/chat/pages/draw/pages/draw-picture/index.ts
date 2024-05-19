@@ -36,6 +36,7 @@ Page({
       size: '1024x1024',
     },
     typeActions: ['古风', '二次元', '写实照片', '油画', '水彩画', '油墨画', '黑白雕版画', '雕塑', '3D模型', '手绘草图', '炭笔画', '极简线条画', '电影质感', '机械感'],
+    initPrompts: initPrompts,
   },
 
   /**
@@ -188,5 +189,22 @@ Page({
     wx.navigateTo({
       url: navigateUrl
     });
+  },
+
+  /**
+   * 清空
+   */
+  clearPrompt: function() {
+    const { formData } = this.data;
+    this.setData({ formData: { ...formData, prompt: '' } });
+  },
+
+  /**
+   * 更新prompt
+   */
+  applyPrompt: function(event: any) {
+    const { text } = event.currentTarget.dataset;
+    const { formData } = this.data;
+    this.setData({ formData: { ...formData, prompt: text } });
   }
 })

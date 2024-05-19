@@ -84,13 +84,13 @@ Page({
    * 用户点击返回
    */
   onBack() {
-    // wx.navigateBack();
-    wx.redirectTo({
-      url: '../../../index/index',
-      fail: (err) => {
-        console.log('err', err);
-      }
-    });
+    wx.navigateBack();
+    // wx.redirectTo({
+    //   url: '../../../index/index',
+    //   fail: (err) => {
+    //     console.log('err', err);
+    //   }
+    // });
   },
 
   /**

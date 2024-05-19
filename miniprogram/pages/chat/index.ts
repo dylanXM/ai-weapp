@@ -644,7 +644,7 @@ Component({
     handleClickDraw: function(event: any) {
       // wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
       this.closePopup();
-      wx.redirectTo({
+      wx.navigateTo({
         url: '../chat/pages/draw/index',
       });
     },
