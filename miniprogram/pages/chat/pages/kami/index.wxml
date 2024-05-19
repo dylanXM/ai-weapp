@@ -16,13 +16,14 @@
   <van-button
     loading="{{ loading }}"
     custom-class="p-kami-btn"
-    round
     block
     hairline
     type="info"
     size="default"
     bind:tap="usekami"
     loading-text="激活兑换码"
+    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+    round
   >
     激活兑换码
   </van-button>

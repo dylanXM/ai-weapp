@@ -10,11 +10,11 @@
     bind:confirm="confirmSignOn"
     formatter="{{ formatter }}"
     readonly
-    round
     show-title="{{ false }}"
     confirm-text="签到"
-    color="#1989fa"
     class="p-user-calendar"
     poppable="{{ false }}"
+    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+    custom-style="border-radius: 8px;"
   />
 </view>

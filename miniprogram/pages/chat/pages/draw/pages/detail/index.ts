@@ -16,12 +16,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(option: any) {
+    const { windowWidth } = this.data;
     this.setData({ ...option });
     createStoreBindings(this, {
       store, // 需要绑定的数据仓库
       fields: ['navBar', 'user', 'allPresets'],
       actions: ['setState', 'setStates'],
     });
+    const ctx = wx.createCanvasContext('image');
+    wx.getImageInfo({
+      src: option.url, // 图片地址
+      success: (res) => {
+        console.log(res);
+        ctx.drawImage(res.path, 0, 0, windowWidth, windowWidth);
+        ctx.draw();
+      }
+    })
   },
 
   /**
@@ -87,4 +97,60 @@ Page({
     const { text } = event.currentTarget.dataset;
     wx.setClipboardData({ data: text });
   },
+
+  /**
+   * 绘制同款
+   */
+  toDrawPicture: function() {
+    const url = `../../../draw/pages/draw-picture/index?prompt=${this.data.prompt}`;
+    wx.navigateTo({
+      url
+    });
+  },
+
+  /**
+   * 点击保存图片
+   */
+  handleClickSave(event: any) {
+    console.log('event', event);
+    const { value } = event.currentTarget.dataset;
+    wx.canvasToTempFilePath({
+      canvasId: value,
+      success: (res) => {
+        const tempFilePath = res.tempFilePath;
+        // 图片
+        wx.getSetting({
+          success: (res) => {
+            console.log(res);
+            const status = res.authSetting['scope.writePhotosAlbum'];
+            if (!status) {
+              // 引导用户授权...
+            } else {
+              // 保存图片到系统相册
+              this.saveImg(tempFilePath);
+            }
+          }
+        })
+      },
+      fail: function(err) {
+        console.log(err);
+      }
+    });
+   },
+   /* 保存图片 */
+   saveImg(tempFilePath: string) {
+     wx.saveImageToPhotosAlbum({
+       filePath: tempFilePath,
+       success: function (res) {
+         wx.showToast({
+           title: '保存图片成功',
+         })
+       },
+       fail: function (err) {
+         wx.showToast({
+           title: '保存图片失败' ,
+         })
+       }
+     })
+   }
 })

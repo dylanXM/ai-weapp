@@ -1,6 +1,8 @@
 .p-dp-container {
   box-sizing: border-box;
   padding: 12px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .p-dp-field-container {

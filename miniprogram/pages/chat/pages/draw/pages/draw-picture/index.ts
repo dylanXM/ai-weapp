@@ -1,6 +1,6 @@
 import { store } from '../../../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
-import { drawPicture } from '../../../../../../api/index';
+import { drawPicture, getUserInfo } from '../../../../../../api/index';
 
 Page({
 
@@ -25,12 +25,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
+  onLoad(option: any) {
     createStoreBindings(this, {
       store, // 需要绑定的数据仓库
       fields: ['navBar', 'user', 'allPresets'],
       actions: ['setState', 'setStates'],
     });
+    const { formData } = this.data;
+    this.setData({ formData: { ...formData, prompt: option.prompt } });
   },
 
   /**
@@ -147,12 +149,13 @@ Page({
     try {
       this.setData({ state: { ...state, loading: true } });
       const res =  await drawPicture(formData);
+      getUserInfo().then(user => this.setState('user', user));
       console.log('res', res);
       const resUrl = res?.[0];
       const url: string[] = [resUrl, ...(state.url || [])];
       this.setData({ state: { ...state, loading: false, url, hasGenerated: true } });
     } catch (error) {
-      wx.showToast({ title: '图片生成失败，请重试', icon: 'error' });
+      wx.showToast({ title: '图片生成失败，请重试~', icon: 'error' });
       this.setData({ state: { ...state, loading: false } });
     }
   }

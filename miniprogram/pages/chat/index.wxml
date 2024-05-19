@@ -199,9 +199,13 @@
   custom-style="width: 75%;"
 >
   <view class="p-chat-group-container">
-    <view style="padding-top: {{navBar.menuTop - 8}}px;" class="p-chat-group-search">
-      <van-cell border="{{ false }}">
-        <view slot="title" class="p-chat-user-info" bind:tap="handleClickSetting">
+    <view
+      style="padding-top: {{navBar.menuTop - 8}}px;"
+      class="p-chat-group-search"
+      bind:tap="handleClickSetting"
+    >
+      <van-cell border="{{ false }}" value="可签到获取积分">
+        <view slot="title" class="p-chat-user-info">
           <van-image
             width="26px"
             height="26px"
@@ -212,7 +216,7 @@
           />
           <view>{{user.userInfo.username}}</view>
         </view>
-        <van-icon slot="right-icon" name="ellipsis" size="26" bind:tap="handleClickSetting" />
+        <!-- <van-icon slot="right-icon" name="ellipsis" size="26" bind:tap="handleClickSetting" /> -->
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
@@ -315,6 +319,7 @@
     <van-cell-group title="积分" inset>
       <van-cell title="普通模型积分" value="{{user.userBalance.model3Count}}" />
       <van-cell title="高级模型积分" value="{{user.userBalance.model4Count}}" />
+      <van-cell title="绘画积分" value="{{user.userBalance.drawMjCount}}" />
     </van-cell-group>
 
     <van-cell-group title="积分获取" inset>

@@ -4,7 +4,7 @@
 
 <view
   class="p-draw-container"
-  style="height: calc(100vh - {{navBar.navBarHeight + 74}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)"
 >
   <view class="p-draw-item">
     <view class="p-draw-item-header">
@@ -69,7 +69,9 @@
     block
     bind:tap="toDrawPage"
     icon="photo"
+    size="large"
+    custom-style="border-radius: 8px;"
   >
-    生成图片 (积分：{{user.userBalance.model3Count}})
+    生成图片 (积分：{{user.userBalance.drawMjCount}})
   </van-button>
 </view>

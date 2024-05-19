@@ -4,7 +4,7 @@
 
 <view
   class="p-dp-container"
-  style="height: calc(100vh - {{navBar.navBarHeight + 74}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)"
 >
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">输入描述词</view>
@@ -14,7 +14,7 @@
         custom-style="border-radius: 12px"
         custom-class="p-dp-field-textarea"
         type="textarea"
-        placeholder="请输入留言"
+        placeholder="请输入描述词..."
         autosize
         border="{{ false }}"
         bind:change="handlePromptChange"
@@ -58,7 +58,7 @@
     <view class="p-dp-field-title">我的生成</view>
     <view class="p-dp-all-list">
       <view wx:if="{{!state.url.length && !state.loading}}" class="p-dp-none-list">暂无数据</view>
-      <van-image wx:if="{{ state.loading }}" use-loading-slot>
+      <van-image wx:if="{{state.loading}}" use-loading-slot width="200" height="200">
         <van-loading radius="8" slot="loading" type="spinner" width="200" height="200" vertical />
       </van-image>
       <view
@@ -84,7 +84,9 @@
     loading="{{ state.loading }}"
     loading-text="图片生成中..."
     icon="photo"
+    custom-style="border-radius: 8px;"
+    size="large"
   >
-    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.model3Count}} 积分）
+    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.drawMjCount}} 积分）
   </van-button>
 </view>
