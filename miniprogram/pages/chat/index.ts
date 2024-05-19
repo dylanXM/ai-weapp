@@ -644,13 +644,8 @@ Component({
     handleClickDraw: function(event: any) {
       // wx.showToast({ title: '功能开发中，敬请期待～', icon: 'none' });
       this.closePopup();
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../chat/pages/draw/index',
-        events: {
-          createChatGroup: (event: any) => {
-            this.createChatGroup(event);
-          },
-        }
       });
     },
 
@@ -696,6 +691,16 @@ Component({
       console.log('wx-admin to');
       wx.navigateTo({
         url: '../chat/pages/wx-admin/index',
+      });
+    },
+
+    /**
+     * 点击体验版
+     */
+    handleClickTestVersion: function() {
+      console.log('wx-admin to');
+      wx.navigateTo({
+        url: '../chat/pages/test-version/index',
       });
     },
 

@@ -84,7 +84,13 @@ Page({
    * 用户点击返回
    */
   onBack() {
-    wx.navigateBack();
+    // wx.navigateBack();
+    wx.redirectTo({
+      url: '../../../index/index',
+      fail: (err) => {
+        console.log('err', err);
+      }
+    });
   },
 
   /**
@@ -133,14 +139,8 @@ Page({
     console.log('event', event);
     const { image } = event.target.dataset;
     const url = `?url=${image.answer}&prompt=${image.prompt}`;
-    const _this = this;
     wx.navigateTo({
       url: `../draw/pages/detail/index${url}`,
-      events: {
-        refreshMyDraws: function() {
-          _this.getMyDrawList();
-        }
-      }
     });
   }
 })

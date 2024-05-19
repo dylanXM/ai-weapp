@@ -1,0 +1,14 @@
+<van-nav-bar title="体验版" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view class="p-tv-container">
+  <image src="./images/test-version.jpg" show-menu-by-longpress class="p-tv-image" />
+
+  <view class="p-tv-text">
+    长按识别二维码
+  </view>
+  <view class="p-tv-text">
+    体验 sweetAI 最新版
+  </view>
+</view>

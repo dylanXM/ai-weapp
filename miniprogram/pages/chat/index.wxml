@@ -226,8 +226,9 @@
           icon="add"
           is-link
           bind:tap="createChatGroup"
-          border="{{ true }}"
+          border="{{ false }}"
           color="#1989fa"
+          size="large"
         />
       </van-cell-group>
       <van-cell-group inset border="{{ false }}" title="探索">
@@ -237,6 +238,7 @@
           is-link
           bind:tap="handleClickDraw"
           border="{{ true }}"
+          size="large"
         />
         <van-cell
           title="文档解读"
@@ -244,6 +246,7 @@
           is-link
           bind:tap="handleClickAnalyze"
           border="{{ true }}"
+          size="large"
         />
         <van-cell
           title="角色预设"
@@ -252,6 +255,7 @@
           data-key="presets"
           bind:tap="handleClickExplore"
           border="{{ true }}"
+          size="large"
         />
       </van-cell-group>
       <view style="position: relative;">
@@ -269,6 +273,7 @@
             wx:key="id"
             wx:for-item="group"
             border="{{false}}"
+            size="large"
           />
         </van-cell-group>
       </view>
@@ -317,23 +322,24 @@
 <van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
   <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)">
     <van-cell-group title="积分" inset>
-      <van-cell title="普通模型积分" value="{{user.userBalance.model3Count}}" />
-      <van-cell title="高级模型积分" value="{{user.userBalance.model4Count}}" />
-      <van-cell title="绘画积分" value="{{user.userBalance.drawMjCount}}" />
+      <van-cell size="large" title="普通模型积分" value="{{user.userBalance.model3Count}}" />
+      <van-cell size="large" title="高级模型积分" value="{{user.userBalance.model4Count}}" />
+      <van-cell size="large" title="绘画积分" value="{{user.userBalance.drawMjCount}}" />
     </van-cell-group>
 
     <van-cell-group title="积分获取" inset>
-      <van-cell title="签到获取积分" is-link bind:tap="handleClickSignIn" />
-      <van-cell title="积分兑换" is-link bind:tap="handleClickKaimi" />
+      <van-cell icon="gift-o" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
+      <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKaimi" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
-      <van-cell title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
-      <van-cell title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
+      <van-cell size="large" icon="miniprogram-o" title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
+      <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
 
-    <van-cell-group wx:if="{{ defaultAvatar === user.userInfo.avatar }}" title="操作" inset>
-      <van-cell title="使用微信信息" icon="wechat" is-link bind:tap="useWXInfo" />
+    <van-cell-group title="操作" inset>
+      <van-cell size="large" title="体验版尝鲜" icon="new" is-link bind:tap="handleClickTestVersion" />
+      <van-cell size="large" wx:if="{{ defaultAvatar === user.userInfo.avatar }}" title="使用微信信息" icon="wechat" is-link bind:tap="useWXInfo" />
     </van-cell-group>
   
   </view>

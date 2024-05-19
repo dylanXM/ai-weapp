@@ -10,6 +10,7 @@ Page({
     windowWidth: wx.getSystemInfoSync().windowWidth,
     url: '',
     prompt: '',
+    downloadDisabled: true,
   },
 
   /**
@@ -17,21 +18,24 @@ Page({
    */
   onLoad(option: any) {
     const { windowWidth } = this.data;
-    this.setData({ ...option });
+    const { url = '', prompt = '' } = option;
+    this.setData({ url, prompt });
     createStoreBindings(this, {
       store, // 需要绑定的数据仓库
       fields: ['navBar', 'user', 'allPresets'],
       actions: ['setState', 'setStates'],
     });
     const ctx = wx.createCanvasContext('image');
+    const _this = this;
     wx.getImageInfo({
       src: option.url, // 图片地址
       success: (res) => {
         console.log(res);
         ctx.drawImage(res.path, 0, 0, windowWidth, windowWidth);
         ctx.draw();
+        _this.setData({ downloadDisabled: false });
       }
-    })
+    });
   },
 
   /**
@@ -112,7 +116,12 @@ Page({
    * 点击保存图片
    */
   handleClickSave(event: any) {
-    console.log('event', event);
+    const _this = this;
+    const { downloadDisabled } = _this.data;
+    if (downloadDisabled) {
+      wx.showToast({ title: '图片正在准备中，请稍后重试～', icon: 'none' });
+      return;
+    }
     const { value } = event.currentTarget.dataset;
     wx.canvasToTempFilePath({
       canvasId: value,
@@ -125,9 +134,21 @@ Page({
             const status = res.authSetting['scope.writePhotosAlbum'];
             if (!status) {
               // 引导用户授权...
+              wx.authorize({
+                scope: 'scope.writePhotosAlbum',
+                success: () => {
+                  _this.saveImg(tempFilePath);
+                },
+                fail: () => {
+                  wx.showToast({
+                    title: '保存图片失败' ,
+                    icon: 'error',
+                  });
+                }
+              })
             } else {
               // 保存图片到系统相册
-              this.saveImg(tempFilePath);
+              _this.saveImg(tempFilePath);
             }
           }
         })
@@ -144,12 +165,13 @@ Page({
        success: function (res) {
          wx.showToast({
            title: '保存图片成功',
-         })
+         });
        },
        fail: function (err) {
          wx.showToast({
            title: '保存图片失败' ,
-         })
+           icon: 'error',
+         });
        }
      })
    }

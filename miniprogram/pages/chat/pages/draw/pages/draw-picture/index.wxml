@@ -25,8 +25,8 @@
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">图片质量</view>
     <van-radio-group value="{{ formData.quality }}" bind:change="handleQualityChange" direction="horizontal">
-      <van-radio name="standard">标准（5普通积分）</van-radio>
-      <van-radio name="hq">高级（10普通积分）</van-radio>
+      <van-radio name="standard">标准（5绘画积分）</van-radio>
+      <van-radio name="hq">高级（10绘画积分）</van-radio>
     </van-radio-group>
   </view>
 
@@ -69,7 +69,14 @@
         wx:for-index="idx"
         style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
       >
-        <van-image width="200" height="200" src="{{item}}" radius="8" />
+        <van-image
+          width="200"
+          height="200"
+          src="{{item}}"
+          radius="8"
+          data-url="{{item}}"
+          bind:tap="previewPicture"
+        />
       </view>
     </view>
   </view>
@@ -82,7 +89,7 @@
     type="info"
     block
     loading="{{ state.loading }}"
-    loading-text="图片生成中..."
+    loading-text="绘制时间较长，请耐心等待..."
     icon="photo"
     custom-style="border-radius: 8px;"
     size="large"
