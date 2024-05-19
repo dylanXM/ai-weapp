@@ -32,14 +32,15 @@
   display: flex;
   overflow-y: hidden;
   overflow-x: auto;
-  padding-bottom: 12px;
+  padding: 4px 4px 12px;
 }
 
 .p-draw-img {
-  width: 45%;
+  width: 200px;
   height: 200px;
+  box-shadow: 0px 0px 3px 2px #e2e2e2;
   border-radius: 8px;
-  margin-bottom: 18px;
+  border: 1px solid #f1f1f1;
 }
 
 .p-draw-my-list {

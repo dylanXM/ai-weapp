@@ -21,6 +21,7 @@
         wx:key="id"
         wx:for-index="idx"
         style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+        class="p-draw-img"
       >
         <van-image
           width="200"
@@ -48,6 +49,7 @@
         wx:key="id"
         wx:for-index="idx"
         style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+        class="p-draw-img"
       >
         <van-image
           width="200"
