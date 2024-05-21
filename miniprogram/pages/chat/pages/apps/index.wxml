@@ -65,7 +65,8 @@
             wx:for-index="idx"
             style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
           >
-            <van-image custom-class="p-presets-item-avatar" width="32" height="32" src="{{item.coverImg}}" />
+            <!-- <van-image custom-class="p-presets-item-avatar" width="32" height="32" src="{{item.coverImg || '../../images/icon.png'}}" /> -->
+            <van-icon custom-class="p-presets-item-avatar" size="32" color="rgb(248, 158, 50)" name="star" />
             <view class="p-presets-item-content">
               <view class="p-presets-item-title">{{item.name}}</view>
               <view class="p-presets-item-desc">{{item.des}}</view>

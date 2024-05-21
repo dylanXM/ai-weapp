@@ -135,6 +135,7 @@ Page({
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.uploadFile({
       url: `${config.url}/upload/file`,
+      // url: 'https://admin.winmume.com/api/upload/file',
       filePath: file.url,
       name: 'file',
       header: {
@@ -171,7 +172,7 @@ Page({
       public: checked,
     };
     for (let key in params) {
-      if (!params[key] && !['public', 'coverImg'].includes(key)) {
+      if (!params[key] && !['public', 'coverImg', 'demoData'].includes(key)) {
         wx.showToast({ title: presetError[key], icon: 'none' });
         return;
       }

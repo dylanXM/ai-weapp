@@ -145,8 +145,15 @@ Page({
     this.setData({ query: query });
   },
   toCreatePreset: function() {
+    const _this = this;
     wx.navigateTo({
       url: '../create-presets/index',
+      events: {
+        refresh: () => {
+          _this.getMyPresets();
+          _this.getPresets();
+        }
+      }
     })
   }
 })
