@@ -24,9 +24,7 @@ export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
   try {
     const uint8Array = new Uint8Array(arrayBuffer);
     const decoder = new encoding.TextDecoder('utf-8');
-    console.log('decoder', decoder);
     const str = decoder.decode(uint8Array);
-    console.log('str', str);
     return str; 
   } catch (err) {
     console.error(err);

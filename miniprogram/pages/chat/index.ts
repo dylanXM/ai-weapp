@@ -11,6 +11,7 @@ import config, { groupActions, modelTypeMap, defaultAvatar } from '../../const/c
 import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { getUserInfo, updateUserInfo } from '../../api/index';
+import { uint8ArrayToString } from '../../utils/util';
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
@@ -339,14 +340,74 @@ Component({
             }
           }
           requestAnimationFrame(update) // 启动动画循环
-          wx.request({
-            url: 'https://service.winmume.com/api/chatgpt/chat-process',
+          const handleRequest = function(responseText: string) {
+            if (typeof responseText !== 'string') {
+              data = responseText;
+            } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
+              const lines = responseText
+                .toString()
+                .split('\n')
+                .filter((line: string) => line.trim() !== '');
+
+              let cacheResult = ''; // 拿到本轮传入的所有字段信息
+              let tem: any = {};
+              for (const line of lines) {
+                try {
+                  const parseData = JSON.parse(line);
+                  cacheResult += parseData.result;
+                  tem = parseData;
+                }
+                catch (error) {
+                }
+              }
+              tem.result = cacheResult;
+              data = tem;
+            } else {
+              const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
+              let chunk = responseText;
+              if (lastIndex !== -1) {
+                chunk = responseText.substring(lastIndex);
+              }
+
+              try {
+                data = JSON.parse(chunk);
+              } catch (error) {
+                /* 二次解析 */
+                // const parseData = parseTextToJSON(responseText)
+                // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
+                if (chunk.includes('OpenAI timed out waiting for response')) {
+                  wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
+                }
+              }
+            } 
+
+            try {
+              /* 如果出现输出内容不一致就需要处理了 */
+              if ([1, 5].includes(model.keyType)) {
+                cacheResText = data.text;
+                if (data?.userBanance) {
+                  userBalance = data?.userBanance;
+                }
+                if (data?.id || data?.is_end) {
+                  isStreamIn = false;
+                }
+              } else {
+                const { text, is_end } = data;
+                cacheResText = text;
+                isStreamIn = !is_end;
+                data?.userBanance && (userBalance = data?.userBanance);
+              }
+            } catch (error) {}
+          }
+          const requestTask = wx.request({
+            url: `${config.url}/chatgpt/chat-process`,
             method: 'POST',
             data: {
               appId: currentGroup.appId,
               prompt: `${value}`,
               options,
             },
+            enableChunked: true,
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
               Accept: 'application/json;charset=UTF-8',
@@ -363,69 +424,26 @@ Component({
                 });
                 _this.setData({ loading: false });
               }
-              const responseText: string = res.data as string;
-              if (typeof responseText !== 'string') {
-                data = responseText;
-              } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
-                const lines = responseText
-                  .toString()
-                  .split('\n')
-                  .filter((line: string) => line.trim() !== '');
-  
-                let cacheResult = ''; // 拿到本轮传入的所有字段信息
-                let tem: any = {};
-                for (const line of lines) {
-                  try {
-                    const parseData = JSON.parse(line);
-                    cacheResult += parseData.result;
-                    tem = parseData;
-                  }
-                  catch (error) {
-                  }
-                }
-                tem.result = cacheResult;
-                data = tem;
-              } else {
-                const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
-                let chunk = responseText;
-                if (lastIndex !== -1) {
-                  chunk = responseText.substring(lastIndex);
-                }
-  
-                try {
-                  data = JSON.parse(chunk);
-                } catch (error) {
-                  /* 二次解析 */
-                  // const parseData = parseTextToJSON(responseText)
-                  // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-                  if (chunk.includes('OpenAI timed out waiting for response')) {
-                    wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
-                  }
-                }
-              } 
-  
-              try {
-                /* 如果出现输出内容不一致就需要处理了 */
-                if ([1, 5].includes(model.keyType)) {
-                  cacheResText = data.text;
-                  if (data?.userBanance) {
-                    userBalance = data?.userBanance;
-                  }
-                  if (data?.id || data?.is_end) {
-                    isStreamIn = false;
-                  }
-                } else {
-                  const { text, is_end } = data;
-                  cacheResText = text;
-                  isStreamIn = !is_end;
-                  data?.userBanance && (userBalance = data?.userBanance);
-                }
-              } catch (error) {}
+              handleRequest(res.data as string);
+              console.log('success', res.data);
             },
             fail: function (error) {
-              console.log('error', error);
-            },
+              _this.updateGroupChat(messages.length - 1, {
+                loading: false,
+                text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+                error: true,
+                conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+                requestOptions: { prompt: value, options: { ...options } },
+              });
+              _this.setData({ loading: false });
+            }
           });
+
+          requestTask.onChunkReceived(chunk => {
+            const responseText: string = uint8ArrayToString(chunk as any);
+            console.log('stream', responseText);
+            handleRequest(responseText);
+          })
         };
         await fetchChatAPIOnce();
       } catch (error) {
@@ -836,7 +854,7 @@ Component({
   lifetimes: {
     attached() {
       this.initRecord();
-      // this.handleClickDraw();
+      // this.handleClickExplore();
     },
     detached() {
     }

@@ -1,4 +1,4 @@
-import { presetError } from '../../../../const/config/index';
+import config, { presetError } from '../../../../const/config/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { store } from '../../../../store/index';
 import { createMinePreset } from '../../../../api/index';
@@ -28,7 +28,7 @@ Page({
   onLoad() {
     this.storeBindings = createStoreBindings(this, {
       store, // 需要绑定的数据仓库
-      fields: ['allCategories'],
+      fields: ['allCategories', 'navBar'],
       actions: ['setState', 'setStates'],
     });
   },
@@ -134,10 +134,12 @@ Page({
     const { file } = event.detail;
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.uploadFile({
-      url: 'https://chat.winmume.com/api/upload/file',
+      url: `${config.url}/upload/file`,
       filePath: file.url,
       name: 'file',
-      formData: {},
+      header: {
+        'Content-Type': 'multipart/form-data',
+      },
       success(res) {
         const stringData = res.data;
         const parseData = JSON.parse(stringData);
@@ -146,6 +148,10 @@ Page({
         logos.push({ ...file, url: parseData.data });
         _this.setData({ logos });
       },
+      fail: function(err) {
+        console.error(err);
+        wx.showToast({ title: '图片上传失败', icon: 'error' });
+      }
     });
   },
 
@@ -165,7 +171,7 @@ Page({
       public: checked,
     };
     for (let key in params) {
-      if (!params[key] && key !== 'public') {
+      if (!params[key] && !['public', 'coverImg'].includes(key)) {
         wx.showToast({ title: presetError[key], icon: 'none' });
         return;
       }

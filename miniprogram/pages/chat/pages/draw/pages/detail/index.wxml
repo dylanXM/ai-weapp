@@ -23,7 +23,7 @@
 
   <view>
     <view class="p-draw-detail-title">绘画提示词</view>
-    <view class="p-draw-detail-prompt">
+    <view class="p-draw-detail-prompt" bind:longpress="copyPrompt" data-text="{{prompt}}">
       <view class="p-draw-detail-text">{{prompt}}</view>
     </view>
   </view>

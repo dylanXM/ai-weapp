@@ -10,9 +10,11 @@ Page({
    */
   data: {
     bottomSafeHeight: 0,
-    presets: [],
+    presets: {
+      all: [],
+      mine: [],
+    },
     activeKey: 'list' as 'list' | 'mineApps',
-    myPresets: [],
     query: '',
   },
 
@@ -22,14 +24,10 @@ Page({
   onLoad() {
     this.storeBindings = createStoreBindings(this, {
       store, // 需要绑定的数据仓库
-      fields: ['navBar', 'user', 'allPresets'],
+      fields: ['navBar', 'user', 'allPresets', 'allMinePresets'],
       actions: ['setState', 'setStates'],
     });
-
-    // if (this.data.activeKey === 'mineApps') {
-    //   this.getMyPresets().then(() => this.searchPresets());
-    // }
-    // this.getMyPresets();
+    this.getMyPresets();
     this.getPresets();
   },
 
@@ -103,15 +101,15 @@ Page({
     // console.log('newcategories', newcategories);
     const newPresets = presets.rows.map((item: any) => ({
       ...item,
-    }))
-    this.setData({ presets: newPresets, allPresets: newPresets });
+    }));
+    this.setData({ presets: { ...this.data.presets, all: newPresets } });
     this.setState('allPresets', newPresets);
     this.setState('allCategories', categories.rows);
   },
   getMyPresets: async function() {
     const presets = await queryMyPresetsList();
     const newPresets = presets.rows.map((item: any) => formatMyPreset(item));
-    this.setData({ myPresets: newPresets, presets: newPresets });
+    this.setData({ presets: { ...this.data.presets, mine: newPresets } });
     this.setState('allMinePresets', newPresets);
   },
   searchPresets: function () {
@@ -146,4 +144,9 @@ Page({
     const query = event.detail;
     this.setData({ query: query });
   },
+  toCreatePreset: function() {
+    wx.navigateTo({
+      url: '../create-presets/index',
+    })
+  }
 })

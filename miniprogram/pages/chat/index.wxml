@@ -249,6 +249,14 @@
           size="large"
         />
         <van-cell
+          title="文案创作"
+          icon="edit"
+          is-link
+          bind:tap="handleClickAnalyze"
+          border="{{ true }}"
+          size="large"
+        />
+        <van-cell
           title="角色预设"
           icon="coupon"
           is-link
