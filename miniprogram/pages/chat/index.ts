@@ -854,7 +854,7 @@ Component({
   lifetimes: {
     attached() {
       this.initRecord();
-      this.handleClickExplore();
+      // this.handleClickExplore();
     },
     detached() {
     }

@@ -13,8 +13,9 @@ Page({
     presets: {
       all: [],
       mine: [],
+      showAll: [],
+      showMy: [],
     },
-    activeKey: 'list' as 'list' | 'mineApps',
     query: '',
   },
 
