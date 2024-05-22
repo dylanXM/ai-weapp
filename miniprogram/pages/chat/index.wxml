@@ -266,10 +266,11 @@
           size="large"
         />
       </van-cell-group>
-      <view style="position: relative;">
-        <van-cell-group title="会话历史" wx:if="{{ groups.length }}" inset border="{{ false }}">
+      <view style="position: relative;" wx:if="{{ groups.length }}">
+        <van-cell-group title="会话历史" inset border="{{ false }}" />
+        <view style="padding: 0 15px;">
           <van-cell
-            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}};"
+            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}}; margin-bottom: 8px; border-radius: 8px;"
             title="{{group.title}}"
             bind:tap="chooseGroup"
             data-text="{{group.id}}"
@@ -281,9 +282,8 @@
             wx:key="id"
             wx:for-item="group"
             border="{{false}}"
-            size="large"
           />
-        </van-cell-group>
+        </view>
       </view>
     </view>
     <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px" class="p-common-blur"></view>
