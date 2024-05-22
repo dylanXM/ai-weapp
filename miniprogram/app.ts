@@ -11,6 +11,7 @@ import {
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { login } from './utils/login';
+import { formatMyPreset } from './utils/preset';
 
 // app.ts
 App<IAppOption>({
@@ -62,8 +63,8 @@ App<IAppOption>({
     queryModelList().then(res => this.setState('modelList', res));
     // @ts-ignore 获取所有预设数据
     queryPresetsList().then(res => this.setState('allPresets', res.rows));
-    // @ts-ignore 获取所有我创建的预设数据
-    queryMyPresetsList().then(res => this.setState('allMinePresets', res.rows))
+    // @ts-ignore 获取所有我的预设数据
+    queryMyPresetsList().then(res => this.setState('allMinePresets', res.rows.map((item: any) => formatMyPreset(item))))
   },
 
   shareConfig() {
