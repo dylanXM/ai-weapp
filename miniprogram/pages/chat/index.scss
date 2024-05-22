@@ -461,4 +461,22 @@ button[style="color: #07c160"] > view {
   content: "\e71b";
 }
 
+.p-chat-userinfo-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-chat-userinfo-button {
+  width: 60px;
+  height: 60px;
+  padding: 1px;
+  outline: none;
+  border: none;
+}
+
+.p-chat-userinfo-image {
+  border: 1px solid white;
+}
+
 

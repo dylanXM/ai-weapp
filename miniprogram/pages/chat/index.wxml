@@ -240,22 +240,22 @@
           border="{{ true }}"
           size="large"
         />
-        <van-cell
+        <!-- <van-cell
           title="文档解读"
           icon="description"
           is-link
           bind:tap="handleClickAnalyze"
           border="{{ true }}"
           size="large"
-        />
-        <van-cell
+        /> -->
+        <!-- <van-cell
           title="文案创作"
           icon="edit"
           is-link
           bind:tap="handleClickAnalyze"
           border="{{ true }}"
           size="large"
-        />
+        /> -->
         <van-cell
           title="角色预设"
           icon="coupon"
@@ -270,7 +270,7 @@
         <van-cell-group title="会话历史" inset border="{{ false }}" />
         <view style="padding: 0 15px;">
           <van-cell
-            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}}; margin-bottom: 8px; border-radius: 8px;"
+            custom-style="background: {{group.id === currentGroup.id ? 'linear-gradient(to right, #6190E8, #A7BFE8)' : 'white'}}; margin-bottom: 8px; border-radius: 8px; color: {{group.id === currentGroup.id ? 'white' : 'black'}}"
             title="{{group.title}}"
             bind:tap="chooseGroup"
             data-text="{{group.id}}"
@@ -328,7 +328,24 @@
 </van-dialog>
 
 <van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
-  <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)">
+  <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px); overflow-y: auto;">
+    <view class="p-chat-userinfo-avatar">
+      <button class="p-chat-userinfo-button">
+        <van-image
+          width="60"
+          height="60"
+          radius="{{ 4 }}"
+          src="http://tmp/BGmWMT9UwnW5ac629f19287e9b671e9db2e401d9b6bc.jpeg"
+          custom-style="border-radius: 12px;"
+        />
+    </button>
+  </view>
+
+    <van-cell-group title="用户信息" inset>
+      <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" />
+      <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" />
+    </van-cell-group>
+  
     <van-cell-group title="积分" inset>
       <van-cell size="large" title="普通模型积分" value="{{user.userBalance.model3Count}}" />
       <van-cell size="large" title="高级模型积分" value="{{user.userBalance.model4Count}}" />
@@ -344,11 +361,5 @@
       <van-cell size="large" icon="miniprogram-o" title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
       <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
-
-    <van-cell-group title="操作" inset>
-      <van-cell size="large" title="体验版尝鲜" icon="new-o" is-link bind:tap="handleClickTestVersion" />
-      <van-cell size="large" wx:if="{{ defaultAvatar === user.userInfo.avatar }}" title="使用微信信息" icon="wechat" is-link bind:tap="useWXInfo" />
-    </van-cell-group>
-  
   </view>
 </van-action-sheet>

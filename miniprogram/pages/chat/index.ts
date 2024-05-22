@@ -428,14 +428,15 @@ Component({
               console.log('success', res.data);
             },
             fail: function (error) {
-              _this.updateGroupChat(messages.length - 1, {
-                loading: false,
-                text: '遇到错误了，请检查积分是否充足或联系系统管理员',
-                error: true,
-                conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
-                requestOptions: { prompt: value, options: { ...options } },
-              });
+              // _this.updateGroupChat(messages.length - 1, {
+              //   loading: false,
+              //   text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+              //   error: true,
+              //   conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+              //   requestOptions: { prompt: value, options: { ...options } },
+              // });
               _this.setData({ loading: false });
+              _this.queryChatList(currentGroup.id);
             }
           });
 
@@ -838,8 +839,9 @@ Component({
       const _this = this;
       wx.showLoading({ title: '正在更新用户信息' });
       wx.getUserProfile({
-        desc: '用于完善用户信息',
+        desc: '获取你的昵称、头像、地区及性别',
         success: function(res: any) {
+          console.log('res', res);
           const { nickName, avatarUrl } = res.userInfo;
           updateUserInfo({ username: nickName, avatar: avatarUrl }).then(() => {
             getUserInfo().then(user => _this.setState('user', user));
@@ -848,6 +850,13 @@ Component({
           });
         }
       })
+    },
+
+    /**
+     * 更新头像
+     */
+    onChooseAvatar: function(event: any) {
+      console.log('event', event);
     }
   },
 
@@ -855,6 +864,7 @@ Component({
     attached() {
       this.initRecord();
       // this.handleClickExplore();
+      // this.handleClickDraw();
     },
     detached() {
     }
