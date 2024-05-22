@@ -430,15 +430,14 @@ Component({
               console.log('success', res.data);
             },
             fail: function (error) {
-              // _this.updateGroupChat(messages.length - 1, {
-              //   loading: false,
-              //   text: '遇到错误了，请检查积分是否充足或联系系统管理员',
-              //   error: true,
-              //   conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
-              //   requestOptions: { prompt: value, options: { ...options } },
-              // });
+              _this.updateGroupChat(messages.length - 1, {
+                loading: false,
+                text: '遇到错误了，请检查积分是否充足或联系系统管理员',
+                error: true,
+                conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
+                requestOptions: { prompt: value, options: { ...options } },
+              });
               _this.setData({ loading: false });
-              _this.queryChatList(currentGroup.id);
             }
           });
 
@@ -859,6 +858,17 @@ Component({
      */
     onChooseAvatar: function(event: any) {
       console.log('event', event);
+    },
+
+    /**
+     * 重新拉取会话列表
+     */
+    refetchChatList: function(event: any) {
+      const { currentGroup } = this.data;
+      console.log('currentGroup', currentGroup);
+      setTimeout(() => {
+        this.queryChatList(currentGroup.id);
+      }, 200);
     }
   },
 

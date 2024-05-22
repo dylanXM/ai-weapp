@@ -99,9 +99,20 @@
                 size="small"
                 data-text="{{message.originText}}"
                 bind:tap="continuePrompt"
-                wx:if="{{ !message.inversion && message.originText && idx === messageMap[currentGroup.id].length - 1 }}"
+                wx:if="{{ !message.inversion && message.originText && idx === messageMap[currentGroup.id].length - 1 && !message.error }}"
               >
                 继续
+              </van-button>
+            </view>
+            <view wx:if="{{message.error}}" class="p-chat-robot-operate">
+              <van-button
+                custom-class="p-common-no-border"
+                icon="replay"
+                type="default"
+                size="small"
+                bind:tap="refetchChatList"
+              >
+                刷新列表
               </van-button>
             </view>
           </view>
