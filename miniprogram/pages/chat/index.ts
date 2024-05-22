@@ -110,6 +110,7 @@ Component({
       }
     },
     currentGroup: function (data) {
+      console.log('currentGroup', data);
       const { allPresets, allMinePresets } = this.data;
       if (!data.id) {
         return;
@@ -130,6 +131,7 @@ Component({
       this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
     },
     currentApp: function (data) {
+      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }

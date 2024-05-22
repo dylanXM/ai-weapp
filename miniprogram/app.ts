@@ -6,6 +6,7 @@ import {
   getSignList,
   queryPresetsList,
   getUserInfo,
+  queryMyPresetsList,
 } from './api/index';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
@@ -61,6 +62,8 @@ App<IAppOption>({
     queryModelList().then(res => this.setState('modelList', res));
     // @ts-ignore 获取所有预设数据
     queryPresetsList().then(res => this.setState('allPresets', res.rows));
+    // @ts-ignore 获取所有我创建的预设数据
+    queryMyPresetsList().then(res => this.setState('allMinePresets', res.rows))
   },
 
   shareConfig() {
