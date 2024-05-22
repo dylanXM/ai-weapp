@@ -13,8 +13,6 @@ Page({
     presets: {
       all: [],
       mine: [],
-      showAll: [],
-      showMy: [],
     },
     query: '',
   },
@@ -88,18 +86,6 @@ Page({
   // 初始数据获取
   getPresets: async function () {
     const [categories, presets] = await Promise.all([queryPresetsCats(), queryPresetsList()]);
-    // console.log('categories', categories, presets);
-    const firstCategory = {
-      id: 0,
-      name: 'ALL',
-      list: presets.rows,
-    };
-    // const presets = await queryPresetsList();
-    const newcategories = [firstCategory, ...categories.rows.map((cat: any) => {
-      const list = presets.rows.filter((it: any) => it.catId === cat.id);
-      return { ...cat, list };
-    })];
-    // console.log('newcategories', newcategories);
     const newPresets = presets.rows.map((item: any) => ({
       ...item,
     }));
@@ -114,22 +100,24 @@ Page({
     this.setState('allMinePresets', newPresets);
   },
   searchPresets: function () {
-    const { activeKey, query } = this.data;
     // @ts-ignore
-    const { allPresets, myPresets, allMimePresets } = this.data;
-    const searchPresets = activeKey === 'list' ? allPresets : allMimePresets;
+    const { query, allPresets, allMinePresets } = this.data;
     if (!query) {
-      this.setData({ presets: searchPresets });
-      this.setState('allPresets', allPresets);   
+      this.setData({ presets: { all: allPresets, mine: allMinePresets } });
       return; 
     }
     const formatedQuery = query.toLowerCase().trim();
-    const newPresets = searchPresets.filter((preset: any) => {
+    const searchAllPresets = allPresets.filter((preset: any) => {
       const name = preset.name || preset.appName;
       const des = preset.des || preset.appDes;
       return name.toLowerCase().includes(formatedQuery) || des.toLowerCase().includes(formatedQuery);
     });
-    this.setData({ presets: newPresets });
+    const searchMinePresets = allMinePresets.filter((preset: any) => {
+      const name = preset.name || preset.appName;
+      const des = preset.des || preset.appDes;
+      return name.toLowerCase().includes(formatedQuery) || des.toLowerCase().includes(formatedQuery);
+    });
+    this.setData({ presets: { all: searchAllPresets, mine: searchMinePresets } });
   },
   handleClickPreset: function (event: any) {
     const eventChannel = this.getOpenerEventChannel();
@@ -137,9 +125,6 @@ Page({
     wx.navigateBack().then(() => {
       eventChannel.emit('createChatGroup', { detail: { key: appId } });
     });
-  },
-  handleClickActiveTab: function(event: any) {
-    this.setData({ activeKey: event.currentTarget.dataset.tab });
   },
   handleQueryChange: function(event: any) {
     const query = event.detail;

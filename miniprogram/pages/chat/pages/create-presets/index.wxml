@@ -2,59 +2,62 @@
   <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
 </van-nav-bar>
 
-<view style="height: calc(100vh - {{navBar.navBarHeight + 30}}px); overflow-y: auto;">
+<view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px); overflow-y: auto;">
   <van-cell-group>
     <van-cell size="large" bind:tap="openAppPicker" title="应用分类" value="{{ appClassify.chooseApp.label || ''}}" is-link />
     <van-field
       model:value="{{ appName }}"
       label="应用名称"
-      input-align="right"
       size="large"
+      placeholder="请输入您的应用名称"
     />
     <van-field
       model:value="{{ preset }}"
       label="预设指令"
-      input-align="right"
       type="textarea"
       autosize
       size="large"
+      placeholder="请输入prompt预设指令（核心）"
     />
     <van-field
       model:value="{{ appDesc }}"
       label="应用描述"
-      input-align="right"
       type="textarea"
       autosize
       size="large"
+      placeholder="请对你的应用做以简单的描述"
     />
     <van-field
       model:value="{{ demo }}"
       label="示例内容"
-      input-align="right"
       type="textarea"
       autosize
       size="large"
+      placeholder="每次换行则是新增一条示例"
     />
     <!-- <van-cell title="应用Logo">
       <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" />
     </van-cell> -->
     <van-cell size="large">
       <view slot="title" style="margin-top: 4px;">是否共享</view>
-      <van-switch style="display: flex; flex-flow: row-reverse;" active-color="linear-gradient(to right, #4bb0ff, #6149f6)" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />
+      <van-switch style="display: flex; flex-flow: row-reverse;" active-color="#FF626E" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />
     </van-cell>
   </van-cell-group>
-
-  <van-button
-    type="primary"
-    custom-class="p-create-presets-btn"
-    block
-    bind:tap="createPreset"
-    color="linear-gradient(to right, #4bb0ff, #6149f6)"
-  >
-    新建预设
-  </van-button>
 </view>
 
+<view class="p-create-presets-btn">
+  <van-button
+    type="primary"
+    block
+    bind:tap="createPreset"
+    color="linear-gradient(to right, #FF626E, #FFBE71)"
+    icon="add"
+    custom-style="border-radius: 8px;"
+    size="large"
+  >
+    新建角色预设
+  </van-button>
+</view>
 
 <van-action-sheet show="{{ appClassify.visible }}">
   <van-picker columns="{{ appClassify.options }}" show-toolbar bind:cancel="closeAppPicker" bind:confirm="selectApp" />

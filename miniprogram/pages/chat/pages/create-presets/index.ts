@@ -181,6 +181,8 @@ Page({
     createMinePreset(params).then(() => {
       // 返回
       this.onBack();
+      const eventChannel = this.getOpenerEventChannel();
+      eventChannel.emit('refresh', {});
     });
   },
 })

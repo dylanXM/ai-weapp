@@ -112,10 +112,16 @@
   margin-bottom: 24px;
 }
 
+.p-preset-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
 .p-preset-block-title {
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 12px;
 }
 
 .p-preset-block-list {
@@ -128,4 +134,8 @@
 .p-preset-none-list {
   font-size: 12px;
   color: #888888;
+}
+
+.p-preset-action-button {
+  padding: 0 12px;
 }
