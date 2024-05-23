@@ -94,7 +94,7 @@ export const useKami = async ({ code }: { code: string }) => {
  */
 export const advCharge = async ({ id }: { id: number }) => {
   const res = await request<any>({
-    url: `${config.url}/user/recharge`,
+    url: `${config.url}/user/advcharge`,
     method: 'POST',
     data: {
       model3Count: 20,
