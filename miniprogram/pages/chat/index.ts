@@ -767,9 +767,6 @@ Component({
               getUserInfo().then(user => this.setState('user', user));
             });
           }
-          advCharge({ id: user.userInfo.id }).then(() => {
-            getUserInfo().then(user => this.setState('user', user));
-          });
         })
       }
 
