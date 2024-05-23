@@ -1,0 +1,3 @@
+<van-nav-bar title="积分商城" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>

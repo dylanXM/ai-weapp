@@ -341,12 +341,12 @@
 <van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
   <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px); overflow-y: auto;">
     <view class="p-chat-userinfo-avatar">
-      <button class="p-chat-userinfo-button">
+      <button class="p-chat-userinfo-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
         <van-image
           width="60"
           height="60"
           radius="{{ 4 }}"
-          src="http://tmp/BGmWMT9UwnW5ac629f19287e9b671e9db2e401d9b6bc.jpeg"
+          src="{{ user.userInfo.avatar }}"
           custom-style="border-radius: 12px;"
         />
     </button>
@@ -365,7 +365,8 @@
 
     <van-cell-group title="积分获取" inset>
       <van-cell icon="gift-o" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
-      <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKaimi" />
+      <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKami" />
+      <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>

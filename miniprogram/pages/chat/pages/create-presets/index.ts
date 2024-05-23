@@ -2,6 +2,7 @@ import config, { presetError } from '../../../../const/config/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { store } from '../../../../store/index';
 import { createMinePreset } from '../../../../api/index';
+import { uploadFile } from '../../../../utils/upload';
 
 Page({
 
@@ -129,31 +130,21 @@ Page({
   /**
    * 上传文件
    */
-  afterUpload(event: any) {
+  afterUpload: async function(event: any) {
     const _this = this;
     const { file } = event.detail;
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    wx.uploadFile({
-      url: `${config.url}/upload/file`,
-      // url: 'https://admin.winmume.com/api/upload/file',
-      filePath: file.url,
-      name: 'file',
-      header: {
-        'Content-Type': 'multipart/form-data',
-      },
-      success(res) {
-        const stringData = res.data;
-        const parseData = JSON.parse(stringData);
-        // 上传完成需要更新 fileList
-        const { logos = [] } = _this.data;
-        logos.push({ ...file, url: parseData.data });
-        _this.setData({ logos });
-      },
-      fail: function(err) {
-        console.error(err);
-        wx.showToast({ title: '图片上传失败', icon: 'error' });
-      }
-    });
+    try {
+      const res = await uploadFile(file.url);
+      const stringData = res.data;
+      const parseData = JSON.parse(stringData);
+      // 上传完成需要更新 fileList
+      const { logos = [] } = _this.data;
+      logos.push({ ...file, url: parseData.data });
+      _this.setData({ logos });
+    } catch (err) {
+
+    }
   },
 
   /**

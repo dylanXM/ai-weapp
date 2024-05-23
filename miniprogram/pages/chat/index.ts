@@ -12,6 +12,7 @@ import { store } from '../../store/index';
 import { storeBindingsBehavior } from 'mobx-miniprogram-bindings';
 import { getUserInfo, updateUserInfo } from '../../api/index';
 import { uint8ArrayToString } from '../../utils/util';
+import { uploadFile } from '../../utils/upload';
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
@@ -727,9 +728,18 @@ Component({
     /**
      * 点击积分兑换
      */
-    handleClickKaimi: function() {
+    handleClickKami: function() {
       wx.navigateTo({
         url: '../chat/pages/kami/index',
+      });
+    },
+
+    /**
+     * 点击积分商城
+     */
+    handleClickShop: function() {
+      wx.navigateTo({
+        url: '../chat/pages/shop/index',
       });
     },
 
@@ -838,26 +848,47 @@ Component({
      */
     useWXInfo: function() {
       const _this = this;
-      wx.showLoading({ title: '正在更新用户信息' });
       wx.getUserProfile({
         desc: '获取你的昵称、头像、地区及性别',
         success: function(res: any) {
           console.log('res', res);
           const { nickName, avatarUrl } = res.userInfo;
-          updateUserInfo({ username: nickName, avatar: avatarUrl }).then(() => {
-            getUserInfo().then(user => _this.setState('user', user));
-          }).catch(console.error).finally(() => {
-            wx.hideLoading();
-          });
+          _this.updateUserInfo({ username: nickName, avatar: avatarUrl });
         }
       })
     },
 
     /**
+     * 更新用户信息
+     */
+    updateUserInfo: function({ username, avatar }: { username?: string; avatar?: string }) {
+      const _this = this;
+      const { user } = _this.data;
+      const params = {
+        username: username || user.userInfo.username,
+        avatar: avatar || user.userInfo.avatar,
+      };
+      wx.showLoading({ title: '正在更新用户信息' });
+      updateUserInfo(params).then(() => {
+        getUserInfo().then(user => _this.setState('user', user));
+      }).catch(console.error).finally(() => {
+        wx.hideLoading();
+      });
+    },
+
+    /**
      * 更新头像
      */
-    onChooseAvatar: function(event: any) {
+    onChooseAvatar: async function(event: any) {
       console.log('event', event);
+      const url = event.detail.avatarUrl;
+      try {
+        const res = await uploadFile(url);
+        const avatar = JSON.parse(res.data).data;
+        this.updateUserInfo({ avatar });
+      } catch (err) {
+
+      }
     },
 
     /**

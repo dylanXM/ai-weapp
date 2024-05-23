@@ -35,9 +35,9 @@
       size="large"
       placeholder="每次换行则是新增一条示例"
     />
-    <!-- <van-cell title="应用Logo">
+    <van-cell title="应用Logo">
       <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" />
-    </van-cell> -->
+    </van-cell>
     <van-cell size="large">
       <view slot="title" style="margin-top: 4px;">是否共享</view>
       <van-switch style="display: flex; flex-flow: row-reverse;" active-color="#FF626E" size="24px" checked="{{ checked }}" bind:change="onCheckedChange" />

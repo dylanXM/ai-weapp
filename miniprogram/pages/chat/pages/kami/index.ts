@@ -2,7 +2,6 @@ import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { useKami } from '../../../../api/index';
 import { getUserInfo } from '../../../../api/index';
-import { login } from 'miniprogram/utils/login';
 
 Page({
 
@@ -18,7 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.storeBindings = createStoreBindings(this, {
+    createStoreBindings(this, {
       store, // 需要绑定的数据仓库
       fields: ['navBar'],
       actions: ['setState', 'setStates'],
