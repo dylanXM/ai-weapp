@@ -2,7 +2,6 @@
   "usingComponents": {
     "t-navbar": "tdesign-miniprogram/navbar/navbar",
     "t-input": "tdesign-miniprogram/input/input",
-    "van-cell-group": "@vant/weapp/cell-group/index",
     "t-button": "tdesign-miniprogram/button/button"
   }
 }

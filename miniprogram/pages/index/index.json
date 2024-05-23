@@ -2,7 +2,6 @@
   "usingComponents": {
     "chat": "/pages/chat/index",
     "bottom-nav": "/components/bottom-nav/bottom-nav",
-    "van-toast": "@vant/weapp/toast/index",
     "user": "/pages/user/index",
     "presets": "/pages/presets/index",
     "apps": "/pages/apps/index",
