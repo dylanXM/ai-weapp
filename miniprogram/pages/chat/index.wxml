@@ -215,7 +215,7 @@
       class="p-chat-group-search"
       bind:tap="handleClickSetting"
     >
-      <van-cell border="{{ false }}" value="可签到获取积分">
+      <van-cell border="{{ false }}" value="查看广告获取积分">
         <view slot="title" class="p-chat-user-info">
           <van-image
             width="26px"
@@ -366,7 +366,8 @@
     <van-cell-group title="积分获取" inset>
       <van-cell icon="gift-o" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
       <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKami" />
-      <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" />
+      <!-- <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" /> -->
+      <van-cell icon="gem-o" value="所有积分+20" size="large" title="查看广告获取积分" is-link bind:tap="handleClickAdv" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>

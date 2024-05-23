@@ -87,4 +87,21 @@ export const useKami = async ({ code }: { code: string }) => {
     data: { code },
   });
   return res.data;
+};
+
+/**
+ * 广告奖励
+ */
+export const advCharge = async ({ id }: { id: number }) => {
+  const res = await request<any>({
+    url: `${config.url}/user/recharge`,
+    method: 'POST',
+    data: {
+      model3Count: 20,
+      model4Count: 20,
+      drawMjCount: 20,
+      userId: id,
+  },
+  });
+  return res.data;
 }
