@@ -22,8 +22,11 @@ const formatNumber = (n: number) => {
 
 export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
   try {
+    console.log('step1 - ', arrayBuffer);
     const uint8Array = new Uint8Array(arrayBuffer);
+    console.log('step2 - ', uint8Array);
     const decoder = new encoding.TextDecoder('utf-8');
+    console.log('step3 - ', decoder.decode(uint8Array), decoder.decode(arrayBuffer));
     const str = decoder.decode(uint8Array);
     return str; 
   } catch (err) {

@@ -411,6 +411,7 @@ Component({
               options,
             },
             enableChunked: true,
+            timeout: 360000,
             header: {
               Authorization: `Bearer ${wx.getStorageSync('token')}`,
               Accept: 'application/json;charset=UTF-8',
@@ -443,7 +444,7 @@ Component({
           });
 
           requestTask.onChunkReceived(chunk => {
-            const responseText: string = uint8ArrayToString(chunk as any);
+            const responseText: string = uint8ArrayToString(chunk.data as any);
             console.log('stream', responseText);
             handleRequest(responseText);
           })

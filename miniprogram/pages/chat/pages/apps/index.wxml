@@ -27,7 +27,7 @@
       <view class="p-preset-block-container">
         <view class="p-preset-block-header">
           <view class="p-preset-block-title">系统角色预设</view>
-          <van-button bind:tap="getPresets" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
+          <van-button bind:tap="getPresets" wx:if="{{ !query }}" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
         </view>
         <view class="p-preset-block-list">
           <view wx:if="{{!presets.all.length}}" class="p-preset-none-list">暂无数据</view>
@@ -56,7 +56,7 @@
       <view class="p-preset-block-container">
         <view class="p-preset-block-header">
           <view class="p-preset-block-title">我的角色预设</view>
-          <van-button bind:tap="getMyPresets" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
+          <van-button wx:if="{{ !query }}" bind:tap="getMyPresets" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
         </view>
         <view class="p-preset-block-list">
           <view wx:if="{{!presets.mine.length}}" class="p-preset-none-list">暂无数据</view>

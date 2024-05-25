@@ -92,14 +92,14 @@ export const useKami = async ({ code }: { code: string }) => {
 /**
  * 广告奖励
  */
-export const advCharge = async ({ id }: { id: number }) => {
+export const advCharge = async ({ id, count }: { id: number; count?: number }) => {
   const res = await request<any>({
     url: `${config.url}/user/advcharge`,
     method: 'POST',
     data: {
-      model3Count: 20,
-      model4Count: 20,
-      drawMjCount: 20,
+      model3Count: count || 10,
+      model4Count: count || 10,
+      drawMjCount: count || 10,
       userId: id,
   },
   });
