@@ -43,6 +43,34 @@ function replaceMarkdownLinks(text: string) {
   return updatedText;
 }
 
+function processString2(input: string) {
+  // 匹配以"检索"开头，以"..."结尾的字符串
+  const regex = /检索[^(检索)]*\.\.\./g;
+  const matches = input.match(regex);
+
+  if (!matches) {
+    return input; // 如果没有匹配项，返回原始输入
+  }
+
+  // 处理每一个匹配项
+  const processedMatches = matches.map((match, index) => {
+    // 替换链接为Markdown格式
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    const processedMatch = match.replace(linkRegex, '[$1]($1)');
+    
+    // 为匹配项添加编号
+    return `${processedMatch}\n\n`;
+  });
+
+  // 创建新的字符串，替换原始匹配项
+  let result = input;
+  matches.forEach((match, index) => {
+    result = result.replace(match, processedMatches[index]);
+  });
+
+  return result;
+}
+
 export const formatAiText = (text: string) => {
   if (text === null) {
     return '无回复内容';
@@ -53,6 +81,8 @@ export const formatAiText = (text: string) => {
   let result = text.replace(/↵/g, '\n');
 
   result = processString(text);
+
+  result = processString2(result);
   
   result = replaceMarkdownLinks(result);
 

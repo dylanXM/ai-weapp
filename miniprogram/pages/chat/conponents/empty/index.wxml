@@ -1,7 +1,7 @@
 <!--pages/chat/conponents/empty/index.wxml-->
 <view class="c-empty-container">
   <view>
-    <van-icon name="comment-o" color="#1989fa" size="60" />
+    <van-icon name="comment-o" color="rgb(210, 0, 255)" size="60" />
   </view>
   <view class="c-empty-title">
     对话聊天

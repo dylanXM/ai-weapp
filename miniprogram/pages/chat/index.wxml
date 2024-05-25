@@ -156,14 +156,14 @@
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
       /> -->
       <view class="p-chat-search">
-        <view class="p-chat-search-border">
+        <view class="p-chat-search-border" style="border: {{ inputFocus ? '1px solid rgb(210, 0, 255)' : '1px solid transparent' }}">
           <view class="icon-yuyin-container" wx:if="{{!loading && !value.length && inputState === 'text'}}">
             <text bind:tap="handleClickVoice" class="iconfont icon-yuyin"></text>
           </view>
           <text bind:tap="handleClickCancelVoice" wx:if="{{inputState === 'voice' && !recordState.isSpeeching}}" class="iconfont icon-keyboard"></text>
           <van-field
             wx:if="{{inputState === 'text'}}"
-            placeholder="{{ loading && model.keyType !== 1 ? '模型可能思考时间较长，请耐心等待...' : '请输入你的问题或需求' }}"
+            placeholder="{{ loading ? '模型正在思考中，请耐心等待...' : '请输入你的问题或需求' }}"
             border="{{ false }}"
             custom-style="padding: 0px;"
             style="flex: 1;"
@@ -179,6 +179,8 @@
             autosize
             type="textarea"
             size="large"
+            bind:focus="handleInputFocus"
+            bind:blur="handleInputBlur"
           />
           <text bindtouchstart="startRecord" bindtouchend="stopRecord" class="p-chat-voice-text" wx:if="{{inputState === 'voice'}}">{{recordState.speechText}}</text>
           <text
@@ -350,6 +352,25 @@
   />
 </van-dialog>
 
+<van-dialog
+  use-slot
+  title="修改用户名"
+  show="{{ userOperate.renameVisible }}"
+  show-cancel-button
+  bind:confirm="confirmRenameUser"
+>
+  <van-field
+    value="{{ userOperate.newName }}"
+    placeholder="{{ user.userInfo.username }}"
+    title="修改用户名"
+    bind:change="userNewNameChange"
+    size="large"
+    custom-class="p-chat-rename-field"
+    border="{{ false }}"
+    clearable
+  />
+</van-dialog>
+
 <van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
   <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px); overflow-y: auto;">
     <view class="p-chat-userinfo-avatar">
@@ -365,7 +386,7 @@
   </view>
 
     <van-cell-group title="用户信息" inset>
-      <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" />
+      <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
       <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" />
     </van-cell-group>
   

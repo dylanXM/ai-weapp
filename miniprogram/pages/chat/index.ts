@@ -60,10 +60,15 @@ Component({
       visible: false,
     },
     inputState: 'text' as 'text' | 'voice',
+    inputFocus: false,
     recordState: {
       isSpeeching: false,
       speechText: '按住 说话'
-    }
+    },
+    userOperate: {
+      renameVisible: false,
+      newName: '',
+    },
   },
 
   // @ts-ignore
@@ -933,6 +938,38 @@ Component({
     },
 
     /**
+     * 开启更换用户名Modal
+     */
+    showUsernameChangeModal: function() {
+      const { userOperate } = this.data;
+      this.setData({ userOperate: { ...userOperate, renameVisible: true } });
+    },
+
+    /**
+     * 关闭更换用户名Modal
+     */
+    closeUsernameChangeModal: function() {
+      const { userOperate } = this.data;
+      this.setData({ userOperate: { ...userOperate, renameVisible: false } });
+    },
+
+    /**
+     * 用户名change事件
+     */
+    userNewNameChange: async function(event: any) {
+      const { userOperate } = this.data;
+      this.setData({ userOperate: { ...userOperate, newName: event.detail } });
+    },
+
+    /**
+     * 更改用户名
+     */
+    confirmRenameUser: async function() {
+      const { userOperate } = this.data;
+      this.updateUserInfo({ username: userOperate.newName });
+    },
+
+    /**
      * 重新拉取会话列表
      */
     refetchChatList: function(event: any) {
@@ -942,6 +979,20 @@ Component({
         this.queryChatList(currentGroup.id);
       }, 200);
     },
+
+    /**
+     * 输入框激活
+     */
+    handleInputFocus: function() {
+      this.setData({ inputFocus: true });
+    },
+
+    /**
+     * 输入框失活
+     */
+    handleInputBlur: function() {
+      this.setData({ inputFocus: false });
+    }
   },
 
   lifetimes: {
