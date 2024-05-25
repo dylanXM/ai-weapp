@@ -33,7 +33,7 @@
         data-text="{{item.prompt}}"
         round
         size="small"
-        color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
         custom-style="margin-right: 8px;"
         bind:tap="applyPrompt"
       >
@@ -104,7 +104,7 @@
 
 <view class="p-dp-generate-btn">
   <van-button
-    color="linear-gradient(to right, #4bb0ff, #6149f6)"
+    color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
     bind:tap="generatePicture"
     type="info"
     block

@@ -50,7 +50,7 @@
     type="primary"
     block
     bind:tap="createPreset"
-    color="linear-gradient(to right, #FF626E, #FFBE71)"
+    color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
     icon="add"
     custom-style="border-radius: 8px;"
     size="large"

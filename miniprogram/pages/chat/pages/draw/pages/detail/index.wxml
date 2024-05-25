@@ -46,7 +46,7 @@
   </view>
   <view style="width: 45%">
     <van-button
-      color="linear-gradient(to right, #4bb0ff, #6149f6)"
+      color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
       bind:tap="toDrawPicture"
       type="info"
       icon="photo"
