@@ -368,6 +368,7 @@
     custom-class="p-chat-rename-field"
     border="{{ false }}"
     clearable
+    type="nickname"
   />
 </van-dialog>
 
