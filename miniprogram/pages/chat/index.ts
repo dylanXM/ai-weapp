@@ -386,7 +386,12 @@ Component({
 
             try {
               /* 如果出现输出内容不一致就需要处理了 */
-              if ([1, 5].includes(model.keyType)) {
+              if ([2, 3, 4].includes(model.keyType)) {
+                  const { text, is_end } = data;
+                  cacheResText = text;
+                  isStreamIn = !is_end;
+                  data?.userBanance && (userBalance = data?.userBanance);
+              } else {
                 cacheResText = data.text;
                 if (data?.userBanance) {
                   userBalance = data?.userBanance;
@@ -394,11 +399,6 @@ Component({
                 if (data?.id || data?.is_end) {
                   isStreamIn = false;
                 }
-              } else {
-                const { text, is_end } = data;
-                cacheResText = text;
-                isStreamIn = !is_end;
-                data?.userBanance && (userBalance = data?.userBanance);
               }
             } catch (error) {}
           }
