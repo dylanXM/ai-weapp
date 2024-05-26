@@ -131,6 +131,7 @@ App<IAppOption>({
           const user = await getUserInfo();
           // @ts-ignore
           _this.setStates({ user, globalLoading: false });
+          wx.hideToast();
         } catch (err) {
           // wx.navigateTo({
           //   url: '../login/index',
