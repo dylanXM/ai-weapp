@@ -99,7 +99,7 @@ Page({
             }
           });
         } catch (err) {
-          wx.showToast({ title: '正在登录中...', icon: 'loading' });
+          wx.showToast({ title: '正在登录中...', icon: 'loading', mask: true });
           this.reLogin();
         } finally {
           this.setData({ loading: false });
