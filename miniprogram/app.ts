@@ -130,18 +130,19 @@ App<IAppOption>({
       // @ts-ignore
       this.setStates({ user, globalLoading: false });
     } catch (err) {
-      wx.navigateTo({
-        url: '../login/index',
-        fail: function(err) {
-          console.error('err', err);
-        },
-        events: {
-          'reLogin': function() {
-            _this.getConfigs();
-          }
-        }
-      })
-      // this.loginSuccess(code);
+      // wx.navigateTo({
+      //   url: '../login/index',
+      //   fail: function(err) {
+      //     console.error('err', err);
+      //   },
+      //   events: {
+      //     'reLogin': function() {
+      //       _this.getConfigs();
+      //     }
+      //   }
+      // })
+      wx.showToast({ title: '正在登录中...', icon: 'loading' });
+      this.loginSuccess(code);
     }
   },
 
