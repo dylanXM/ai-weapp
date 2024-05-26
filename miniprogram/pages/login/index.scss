@@ -1,5 +1,19 @@
+.p-login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 200px 0;
+  box-sizing: border-box;
+}
+
+.p-login-desc {
+  color: #888888;
+  margin-top: 100px;
+}
+
 .p-login-btn {
   width: calc(100% - 32px) !important;
-  margin: 300px 16px;
-  height: 36px !important;
+  border-radius: 8px !important;
+  margin-top: 40px;
 }

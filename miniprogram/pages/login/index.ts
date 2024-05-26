@@ -19,7 +19,7 @@ Page({
   onLoad() {
     this.storeBindings = createStoreBindings(this, {
       store, // 需要绑定的数据仓库
-      fields: [],
+      fields: ['navBar'],
       actions: ['setState', 'setStates'],
     });
   },
@@ -85,6 +85,8 @@ Page({
       success: async res => {
         try {
           this.setData({ loading: true });
+          const eventChannel = this.getOpenerEventChannel();
+          eventChannel.emit('reLogin', { newCode: res.code });
           const token = await login(res.code);
           if (!token) return;
           const user = await getUserInfo();
@@ -97,7 +99,8 @@ Page({
             }
           });
         } catch (err) {
-          wx.showToast({ title: '登录失败，请重试', icon: 'none' });
+          wx.showToast({ title: '正在登录中...', icon: 'loading' });
+          this.reLogin();
         } finally {
           this.setData({ loading: false });
         }

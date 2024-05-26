@@ -227,22 +227,20 @@
           border="{{ false }}"
           clickable
           custom-class="p-common-user-operate"
-          custom-style="border: 1px solid #ff7e5f;"
         >
-          <van-icon color="#ff7e5f" slot="icon" size="20" name="add" custom-style="margin-right: 6px;" />
-          <view slot="title" style="color: #ff7e5f;">新建会话</view>
-          <van-icon color="#ff7e5f" slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
+          <van-icon slot="icon" size="20" name="add" custom-style="margin-right: 6px;" />
+          <view slot="title">新建会话</view>
+          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
         </van-cell>
         <van-cell
           bind:tap="handleClickDraw"
           border="{{ false }}"
           custom-class="p-common-user-operate"
           clickable
-          custom-style="border: 1px solid #45b649;"
         >
-          <van-icon color="#45b649" slot="icon" size="20" name="photo" custom-style="margin-right: 6px;" />
-          <view slot="title" style="color: #45b649;">图片生成</view>
-          <van-icon color="#45b649" slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
+          <van-icon slot="icon" size="20" name="photo" custom-style="margin-right: 6px;" />
+          <view slot="title">图片生成</view>
+          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
         </van-cell>
         <!-- <van-cell
           title="文档解读"
@@ -266,11 +264,10 @@
           border="{{ false }}"
           clickable
           custom-class="p-common-user-operate"
-          custom-style="border: 1px solid #3494e6;"
         >
-        <van-icon color="#3494e6" slot="icon" size="20" name="coupon" custom-style="margin-right: 6px;" />
-        <view slot="title" style="color: #3494e6;">角色预设</view>
-        <van-icon color="#3494e6" slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
+        <van-icon slot="icon" size="20" name="coupon" custom-style="margin-right: 6px;" />
+        <view slot="title">角色预设</view>
+        <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
         </van-cell>
       </view>
     </view>
@@ -296,7 +293,7 @@
     </view>
     <view style="border-top: 1px solid #f1f1f1;">
       <van-cell border="{{ false }}">
-        <view bind:tap="handleClickSetting" slot="title" class="p-chat-user-info">
+        <view bind:tap="handleClickSetting" slot="title" class="p-chat-user-info" size="large">
           <van-image
             width="26px"
             height="26px"

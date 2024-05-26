@@ -756,7 +756,17 @@ Component({
       const { user } = this.data;
       // 若在开发者工具中无法预览广告，请切换开发者工具中的基础库版本
       // 在页面中定义激励视频广告
-      let videoAd: any = null
+      let videoAd: any = null;
+
+      const addKami = async () => {
+        try {
+          await advCharge({ id: user.userInfo.id });
+          getUserInfo().then(user => this.setState('user', user));
+          wx.showToast({ title: '积分已增加', icon: 'success' });
+        } catch (err) {
+          addKami();
+        }
+      };
 
       // 在页面onLoad回调事件中创建激励视频广告实例
       if (wx.createRewardedVideoAd) {
@@ -769,9 +779,7 @@ Component({
         })
         videoAd.onClose((res: any) => {
           if (res?.isEnded) {
-            advCharge({ id: user.userInfo.id }).then(() => {
-              getUserInfo().then(user => this.setState('user', user));
-            });
+            addKami();
           }
         })
       }

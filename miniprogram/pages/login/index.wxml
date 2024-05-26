@@ -2,19 +2,23 @@
   <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
 </van-nav-bar>
 
-<view>
+<view class="p-login-container" style="height: calc(100vh - {{navBar.navBarHeight}}px); border:">
+  <van-image src="/pages/chat/images/icon.png" width="200" height="200" />
+  <view class="p-login-desc">
+    sweetAI 将在您授权后使用您的微信和用户名
+  </view>
   <van-button
-    loading="{{ loading }}"
+    style="width: 100%;"
+    disabled="{{ loading }}"
     custom-class="p-login-btn"
-    round
     block
     hairline
     type="info"
     size="default"
     bind:tap="reLogin"
-    loading-text="重新登录"
-    
+    icon="wechat"
+    color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
   >
-    重新登录
+    登录
   </van-button>
 </view>
