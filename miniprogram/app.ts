@@ -120,30 +120,33 @@ App<IAppOption>({
   },
 
   async loginSuccess(code: string) {
-    const _this = this;
-    try {
-      const token = await login(code);
-      if (!token) return;
-      // 获取签到数据
-      getSignList().then(res => this.setState('signList', res));
-      const user = await getUserInfo();
-      // @ts-ignore
-      this.setStates({ user, globalLoading: false });
-    } catch (err) {
-      // wx.navigateTo({
-      //   url: '../login/index',
-      //   fail: function(err) {
-      //     console.error('err', err);
-      //   },
-      //   events: {
-      //     'reLogin': function() {
-      //       _this.getConfigs();
-      //     }
-      //   }
-      // })
-      wx.showToast({ title: '正在登录中...', icon: 'loading' });
-      this.loginSuccess(code);
-    }
+    wx.login({
+      success: async res => {
+        try {
+          const token = await login(res.code);
+          if (!token) return;
+          // 获取签到数据
+          getSignList().then(res => this.setState('signList', res));
+          const user = await getUserInfo();
+          // @ts-ignore
+          this.setStates({ user, globalLoading: false });
+        } catch (err) {
+          // wx.navigateTo({
+          //   url: '../login/index',
+          //   fail: function(err) {
+          //     console.error('err', err);
+          //   },
+          //   events: {
+          //     'reLogin': function() {
+          //       _this.getConfigs();
+          //     }
+          //   }
+          // })
+          wx.showToast({ title: '正在登录中...', icon: 'loading' });
+          this.loginSuccess(code);
+        }
+      },
+    });
   },
 
 })
