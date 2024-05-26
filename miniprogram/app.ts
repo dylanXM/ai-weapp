@@ -55,16 +55,61 @@ App<IAppOption>({
   },
 
   getConfigs() {
-    // @ts-ignore 获取页面配置信息
-    queryFront().then(res => this.setStates({ ...res }));
-    // @ts-ignore 获取模型数据
-    queryBaseModel().then(res => this.setState('model', res.modelInfo));
-    // @ts-ignore
-    queryModelList().then(res => this.setState('modelList', res));
-    // @ts-ignore 获取所有预设数据
-    queryPresetsList().then(res => this.setState('allPresets', res.rows));
-    // @ts-ignore 获取所有我的预设数据
-    queryMyPresetsList().then(res => this.setState('allMinePresets', res.rows.map((item: any) => formatMyPreset(item))))
+    const _this = this;
+    const queryFrontFn = async function() {
+      try {
+        const res = await queryFront();
+        // @ts-ignore 获取页面配置信息
+        _this.setStates({ ...res })
+      } catch (err) {
+        queryFrontFn();
+      }
+    }
+    queryFrontFn();
+
+    const queryBaseModelFn = async function() {
+      try {
+        const res = await queryBaseModel();
+        // @ts-ignore 获取模型数据
+        _this.setState('model', res.modelInfo)
+      } catch (err) {
+        queryBaseModelFn();
+      }
+    };
+    queryBaseModelFn();
+
+    const queryModelListFn = async function() {
+      try {
+        const res = await queryModelList();
+        // @ts-ignore
+        _this.setState('modelList', res)
+      } catch (err) {
+        queryModelListFn();
+      }
+    };
+    queryModelListFn();
+
+    const queryPresetsListFn = async function() {
+      try {
+        const res = await queryPresetsList();
+        // @ts-ignore 获取所有预设数据
+        _this.setState('allPresets', res.rows)
+      } catch (err) {
+        queryPresetsListFn();
+      }
+    };
+    queryPresetsListFn();
+
+    const queryMyPresetsListFn = async function() {
+      try {
+        const res = await queryMyPresetsList();
+        // @ts-ignore 获取所有我的预设数据
+        _this.setState('allMinePresets', res.rows.map((item: any) => formatMyPreset(item)))
+      } catch (err) {
+        queryMyPresetsListFn();
+      }
+    };
+    queryMyPresetsListFn();
   },
 
   shareConfig() {

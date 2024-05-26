@@ -85,8 +85,8 @@ Page({
       success: async res => {
         try {
           this.setData({ loading: true });
-          const eventChannel = this.getOpenerEventChannel();
-          eventChannel.emit('reLogin', { newCode: res.code });
+          // const eventChannel = this.getOpenerEventChannel();
+          // eventChannel.emit('reLogin', { newCode: res.code });
           const token = await login(res.code);
           if (!token) return;
           const user = await getUserInfo();
