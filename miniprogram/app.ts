@@ -77,7 +77,6 @@ App<IAppOption>({
   async loginSuccess(code: string) {
     const _this = this;
     try {
-      throw new Error('11');
       const token = await login(code);
       if (!token) return;
       // 获取签到数据

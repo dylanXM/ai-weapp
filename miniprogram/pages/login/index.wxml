@@ -10,7 +10,6 @@
     </view>
   </view>
   <van-button
-    disabled="{{ loading }}"
     custom-class="p-login-btn"
     hairline
     round

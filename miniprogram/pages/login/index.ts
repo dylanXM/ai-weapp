@@ -92,7 +92,7 @@ Page({
           const user = await getUserInfo();
           // @ts-ignore
           this.setStates({ user, globalLoading: false });
-          wx.navigateTo({
+          wx.redirectTo({
             url: '../index/index',
             fail: function(err) {
               console.error(err);

@@ -759,10 +759,12 @@ Component({
       let videoAd: any = null;
 
       const addKami = async () => {
+        console.log('开始增加积分');
         try {
           await advCharge({ id: user.userInfo.id });
           getUserInfo().then(user => this.setState('user', user));
           wx.showToast({ title: '积分已增加', icon: 'success' });
+          console.log('增加积分');
         } catch (err) {
           addKami();
         }
@@ -772,16 +774,16 @@ Component({
       if (wx.createRewardedVideoAd) {
         videoAd = wx.createRewardedVideoAd({
           adUnitId: 'adunit-ab296bb18eecb0b8'
-        })
-        videoAd.onLoad(() => {})
+        });
+        videoAd.onLoad(() => {});
         videoAd.onError((err: Error) => {
           console.error('激励视频光告加载失败', err)
-        })
+        });
         videoAd.onClose((res: any) => {
           if (res?.isEnded) {
             addKami();
           }
-        })
+        });
       }
 
       // 用户触发广告后，显示激励视频广告
@@ -792,8 +794,8 @@ Component({
             .then(() => videoAd.show())
             .catch((err: Error) => {
               console.error('激励视频 广告显示失败', err)
-            })
-        })
+            });
+        });
       }
     },
 
