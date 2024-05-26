@@ -143,6 +143,7 @@ App<IAppOption>({
           //     }
           //   }
           // })
+          console.log('重新登录中...')
           wx.showToast({ title: '正在登录中...', icon: 'loading' });
           _this.loginSuccess(code);
         }
