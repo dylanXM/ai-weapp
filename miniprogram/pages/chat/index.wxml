@@ -406,9 +406,9 @@
       <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
 
-    <!-- <van-cell-group inset>
-      <van-cell size="large" icon="link-o" title="系统公告" is-link bind:tap="handleClickWXAdmin" />
-    </van-cell-group> -->
+    <van-cell-group title="系统" inset>
+      <van-cell size="large" icon="smile-comment-o" title="系统公告" is-link bind:tap="handleClickNotice" />
+    </van-cell-group>
 
   </view>
 </van-action-sheet>

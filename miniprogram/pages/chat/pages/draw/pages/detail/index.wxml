@@ -11,7 +11,9 @@
     <canvas
       canvas-id="image"
       style="width: {{windowWidth - 24}}px; height: {{windowWidth - 24}}px;"
-    ></canvas>
+      bind:tap="handlePreview"
+    >
+    </canvas>
   </view>
 
   <!-- <van-image

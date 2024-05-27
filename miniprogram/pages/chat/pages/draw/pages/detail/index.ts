@@ -180,5 +180,15 @@ Page({
          });
        }
      })
+   },
+   /**
+    * 预览图片
+    */
+   handlePreview() {
+     const { url } = this.data;
+     wx.previewImage({
+       current: url,
+       urls: [url],
+     });
    }
 })

@@ -14,7 +14,8 @@
     "pages/chat/pages/draw/pages/detail/index",
     "pages/chat/pages/draw/pages/draw-picture/index",
     "pages/chat/pages/test-version/index",
-    "pages/chat/pages/shop/index"
+    "pages/chat/pages/shop/index",
+    "pages/chat/pages/notice/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

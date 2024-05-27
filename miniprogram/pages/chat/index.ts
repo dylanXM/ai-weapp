@@ -1002,6 +1002,15 @@ Component({
      */
     handleInputBlur: function() {
       this.setData({ inputFocus: false });
+    },
+
+    /**
+     * 点击系统公告
+     */
+    handleClickNotice: function() {
+      wx.navigateTo({
+        url: '../chat/pages/notice/index',
+      });
     }
   },
 
