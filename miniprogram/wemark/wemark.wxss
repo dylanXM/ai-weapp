@@ -127,6 +127,7 @@
 	word-wrap:break-word;
 }
 .wemark_inline_image{
+  border-radius: 8px;
 	width:100%;
 	height:auto;
 }
