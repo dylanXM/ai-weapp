@@ -136,7 +136,6 @@ Page({
    * 跳往图片详情页
    */
   toImageDetail: function(event: any) {
-    console.log('event', event);
     const { image } = event.target.dataset;
     const url = `?url=${image.answer}&prompt=${image.prompt}`;
     wx.navigateTo({

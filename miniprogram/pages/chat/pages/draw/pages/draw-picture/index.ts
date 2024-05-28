@@ -127,7 +127,6 @@ Page({
    * 图片质量变化
    */
   handleQualityChange: function(event: any) {
-    console.log('event', event);
     const { formData } = this.data;
     const quality = event.detail;
     this.setData({ formData: { ...formData, quality } });
@@ -137,7 +136,6 @@ Page({
    * 图片尺寸变化
    */
   handleSizeChange: function(event: any) {
-    console.log('event', event);
     const { formData } = this.data;
     const size = event.detail;
     this.setData({ formData: { ...formData, size } });
@@ -148,7 +146,6 @@ Page({
    */
   handleTypeClick: function(event: any) {
     const type = event.currentTarget.dataset.type;
-    console.log('event', event, type);
     const { formData } = this.data;
     const { prompt } = formData;
     this.setData({ formData: { ...formData, prompt: `${prompt}${prompt ? '，' : ''}${type}` } });
@@ -167,7 +164,6 @@ Page({
       this.setData({ state: { ...state, loading: true } });
       const res =  await drawPicture(formData);
       getUserInfo().then(user => this.setState('user', user));
-      console.log('res', res);
       const resUrl = res?.[0];
       drawMap[resUrl] = formData.prompt;
       const url: string[] = [resUrl, ...(state.url || [])];

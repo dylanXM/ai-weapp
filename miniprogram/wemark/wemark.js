@@ -71,6 +71,15 @@ Component({
         handleClickNavigator(event) {
           const { url } = event.target.dataset;
           wx.showToast({ title: '暂不支持打开外部链接', icon: 'none' });
+        },
+
+        handleClickImage(event) {
+          console.log('event', event);
+          const url = event?.target?.dataset?.src;
+          wx.previewImage({
+            current: url,
+            urls: [url],
+          });
         }
     }
 });

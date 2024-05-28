@@ -114,7 +114,6 @@ Page({
     const { allCategories, appClassify } = this.data;
     const { value } = event.detail;
     const appId = allCategories.find(cat => cat.name === value).id;
-    console.log('selectApp', allCategories, value, appId);
     this.setData({ appClassify: { ...appClassify, chooseApp: { label: value, value: appId }, visible: false } });
   },
 
@@ -168,7 +167,6 @@ Page({
         return;
       }
     }
-    console.log('params', params);
     createMinePreset(params).then(() => {
       // 返回
       this.onBack();

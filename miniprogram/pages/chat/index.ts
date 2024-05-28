@@ -116,7 +116,6 @@ Component({
       }
     },
     currentGroup: function (data) {
-      console.log('currentGroup', data);
       const { allPresets, allMinePresets } = this.data;
       if (!data.id) {
         return;
@@ -137,7 +136,6 @@ Component({
       this.setData({ currentApp: { ...currentApp, appDemo }, model: modelInfo });
     },
     currentApp: function (data) {
-      console.log('currentApp', data);
       if (data.coverImg) {
         this.setData({ coverImg: data.coverImg });
       }
@@ -434,7 +432,6 @@ Component({
                 _this.setData({ loading: false });
               }
               handleRequest(res.data as string);
-              console.log('success', res.data);
             },
             fail: function (error) {
               _this.updateGroupChat(messages.length - 1, {
@@ -450,7 +447,6 @@ Component({
 
           requestTask.onChunkReceived(chunk => {
             const responseText: string = uint8ArrayToString(chunk.data as any);
-            console.log('stream', responseText);
             handleRequest(responseText);
           })
         };
@@ -715,7 +711,6 @@ Component({
      * 点击管理员
      */
     handleClickWXAdmin: function() {
-      console.log('wx-admin to');
       wx.navigateTo({
         url: '../chat/pages/wx-admin/index',
       });
@@ -725,7 +720,6 @@ Component({
      * 点击体验版
      */
     handleClickTestVersion: function() {
-      console.log('wx-admin to');
       wx.navigateTo({
         url: '../chat/pages/test-version/index',
       });
@@ -759,12 +753,10 @@ Component({
       let videoAd: any = null;
 
       const addKami = async () => {
-        console.log('开始增加积分');
         try {
           await advCharge({ id: user.userInfo.id });
           getUserInfo().then(user => this.setState('user', user));
           wx.showToast({ title: '积分已增加', icon: 'success' });
-          console.log('增加积分');
         } catch (err) {
           addKami();
         }
@@ -872,7 +864,6 @@ Component({
           return;
         }
         let msg = res.result.substr(0, res.result.length - 1);
-        console.log('msg', msg);
         that.chatProcess(msg);
       };
     },
@@ -907,7 +898,6 @@ Component({
       wx.getUserProfile({
         desc: '获取你的昵称、头像、地区及性别',
         success: function(res: any) {
-          console.log('res', res);
           const { nickName, avatarUrl } = res.userInfo;
           _this.updateUserInfo({ username: nickName, avatar: avatarUrl });
         }
@@ -936,7 +926,6 @@ Component({
      * 更新头像
      */
     onChooseAvatar: async function(event: any) {
-      console.log('event', event);
       const url = event.detail.avatarUrl;
       try {
         const res = await uploadFile(url);
@@ -984,7 +973,6 @@ Component({
      */
     refetchChatList: function(event: any) {
       const { currentGroup } = this.data;
-      console.log('currentGroup', currentGroup);
       setTimeout(() => {
         this.queryChatList(currentGroup.id);
       }, 200);

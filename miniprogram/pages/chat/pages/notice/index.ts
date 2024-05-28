@@ -87,7 +87,6 @@ Page({
   getNotice: async function() {
     try {
       const res = await queryNotice();
-      console.log('res', res);
       this.setData({ notice: res.noticeInfo || '', title: res.noticeTitle || 'sweetAI 欢迎您' });
     } catch (err) {
       console.error(err);
