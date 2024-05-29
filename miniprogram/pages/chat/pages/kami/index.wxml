@@ -22,7 +22,7 @@
     size="default"
     bind:tap="usekami"
     loading-text="激活兑换码"
-    color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
+    color="#1aad19"
     round
   >
     激活兑换码

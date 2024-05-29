@@ -33,7 +33,7 @@
         data-text="{{item.prompt}}"
         round
         size="small"
-        color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
+        color="#1aad19"
         custom-style="margin-right: 8px;"
         bind:tap="applyPrompt"
       >
@@ -45,17 +45,17 @@
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">图片质量</view>
     <van-radio-group value="{{ formData.quality }}" bind:change="handleQualityChange" direction="horizontal">
-      <van-radio name="standard">标准（5绘画积分）</van-radio>
-      <van-radio name="hq">高级（10绘画积分）</van-radio>
+      <van-radio name="standard" checked-color="#1aad19">标准（5绘画积分）</van-radio>
+      <van-radio name="hq" checked-color="#1aad19">高级（10绘画积分）</van-radio>
     </van-radio-group>
   </view>
 
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">图片尺寸</view>
     <van-radio-group value="{{ formData.size }}" bind:change="handleSizeChange" direction="horizontal">
-      <van-radio name="1024x1024">1024 x 1024</van-radio>
-      <van-radio name="1024x1792">1024 x 1792</van-radio>
-      <van-radio name="1794x1024">1794 x 1024</van-radio>
+      <van-radio name="1024x1024" checked-color="#1aad19">1024 x 1024</van-radio>
+      <van-radio name="1024x1792" checked-color="#1aad19">1024 x 1792</van-radio>
+      <van-radio name="1794x1024" checked-color="#1aad19">1794 x 1024</van-radio>
     </van-radio-group>
   </view>
 
@@ -104,7 +104,7 @@
 
 <view class="p-dp-generate-btn">
   <van-button
-    color="linear-gradient(to right top, rgb(127, 0, 255), rgb(225, 0, 255))"
+    color="#1aad19"
     bind:tap="generatePicture"
     type="info"
     block
