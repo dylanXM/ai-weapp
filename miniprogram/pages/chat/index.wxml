@@ -275,7 +275,7 @@
       <view style="position: relative;" wx:if="{{ groups.length }}">
         <view style="padding: 0 15px;">
           <van-cell
-            custom-style="background: {{group.id === currentGroup.id ? '#f1f1f1' : 'white'}}; margin-bottom: 8px; border-radius: 8px; color: {{group.id === currentGroup.id ? 'white' : 'black'}}"
+            custom-style="background: {{group.id === currentGroup.id ? '#aaaaaa' : 'white'}}; margin-bottom: 8px; border-radius: 8px; color: {{group.id === currentGroup.id ? 'white' : 'black'}}"
             title="{{group.title}}"
             bind:tap="chooseGroup"
             data-text="{{group.id}}"

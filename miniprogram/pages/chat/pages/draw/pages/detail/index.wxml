@@ -4,7 +4,7 @@
 
 <view
   class="p-draw-detail-container"
-  style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
 >
 
   <view class="p-draw-detail-canvas">

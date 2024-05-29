@@ -11,7 +11,7 @@
 
 <view
   class="p-presets-container"
-  style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
 >
   <van-search
     background="#f1f1f1"

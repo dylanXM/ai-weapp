@@ -4,7 +4,7 @@
 
 <view
   class="p-dp-container"
-  style="height: calc(100vh - {{navBar.navBarHeight + 80}}px)"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
 >
   <view class="p-dp-field-container">
     <view class="p-dp-field-title">输入描述词</view>
