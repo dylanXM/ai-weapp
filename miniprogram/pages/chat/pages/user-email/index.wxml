@@ -1,0 +1,51 @@
+<van-nav-bar title="关联邮箱" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view style="height: calc(100vh - {{navBar.navBarHeight + 30}}px)" class="p-email-container">
+  <view class="p-email-field">
+    <view class="p-email-field-title">
+      邮箱
+    </view>
+    <view class="p-email-field-content">
+      <van-field
+        value="{{ email }}"
+        placeholder="请输入邮箱"
+        clickable
+        clearable
+        bind:change="handleEmailChange"
+      />
+    </view>
+  </view>
+  <view class="p-email-field">
+    <view class="p-email-field-title">
+      密码
+    </view>
+    <view class="p-email-field-content">
+      <van-field
+        value="{{ password }}"
+        placeholder="请输入邮箱"
+        clickable
+        type="password"
+        clearable
+        bind:change="handlePasswordChange"
+      />
+    </view>
+  </view>
+  <van-button
+    loading="{{ loading }}"
+    custom-class="p-email-btn"
+    block
+    hairline
+    type="info"
+    size="default"
+    bind:tap="updateUserInfoFromEmail"
+    loading-text="激活兑换码"
+    color="#1aad19"
+    round
+  >
+    绑定邮箱
+  </van-button>
+</view>
+
+<van-dialog id="van-dialog" />

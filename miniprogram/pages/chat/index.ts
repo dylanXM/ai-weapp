@@ -999,6 +999,15 @@ Component({
       wx.navigateTo({
         url: '../chat/pages/notice/index',
       });
+    },
+
+    /**
+     * 用户点击邮箱
+     */
+    toUserEmail: function() {
+      wx.navigateTo({
+        url: '../chat/pages/user-email/index',
+      });
     }
   },
 
@@ -1007,6 +1016,7 @@ Component({
       this.initRecord();
       // this.handleClickExplore();
       // this.handleClickDraw();
+      // this.toUserEmail();
     },
     detached() {
     }

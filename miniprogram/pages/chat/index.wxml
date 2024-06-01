@@ -385,6 +385,7 @@
 
     <van-cell-group title="用户信息" inset>
       <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
+      <!-- <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" /> -->
       <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" />
     </van-cell-group>
   
