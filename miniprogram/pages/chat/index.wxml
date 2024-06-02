@@ -251,13 +251,15 @@
           custom-class="p-common-user-operate"
         /> -->
         <!-- <van-cell
-          title="文案创作"
-          icon="edit"
-          bind:tap="handleClickAnalyze"
+          bind:tap="handleClickCreation"
           border="{{ false }}"
           clickable
           custom-class="p-common-user-operate"
-        /> -->
+        >
+          <van-icon slot="icon" size="20" name="edit" custom-style="margin-right: 6px;" />
+          <view slot="title">文案创作</view>
+          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
+        </van-cell> -->
         <van-cell
           data-key="presets"
           bind:tap="handleClickExplore"
@@ -265,9 +267,9 @@
           clickable
           custom-class="p-common-user-operate"
         >
-        <van-icon slot="icon" size="20" name="coupon" custom-style="margin-right: 6px;" />
-        <view slot="title">角色预设</view>
-        <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
+          <van-icon slot="icon" size="20" name="coupon" custom-style="margin-right: 6px;" />
+          <view slot="title">角色预设</view>
+          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
         </van-cell>
       </view>
     </view>
@@ -385,8 +387,7 @@
 
     <van-cell-group title="用户信息" inset>
       <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
-      <!-- <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" /> -->
-      <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" />
+      <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" />
     </van-cell-group>
   
     <van-cell-group title="积分" inset>

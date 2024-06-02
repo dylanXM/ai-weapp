@@ -105,3 +105,15 @@ export const advCharge = async ({ id, count }: { id: number; count?: number }) =
   });
   return res.data;
 }
+
+/**
+ * 激活卡密
+ */
+export const userConnectEmail = async (data: { email: string; password: string; }) => {
+  const res = await request<any>({
+    url: `${config.url}/auth/updateUserInfoUseEmail`,
+    method: 'POST',
+    data,
+  });
+  return res.data;
+};

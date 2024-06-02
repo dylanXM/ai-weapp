@@ -14,6 +14,8 @@
         clickable
         clearable
         bind:change="handleEmailChange"
+        border="{{ false }}"
+        custom-style="border-radius: 8px;"
       />
     </view>
   </view>
@@ -24,11 +26,13 @@
     <view class="p-email-field-content">
       <van-field
         value="{{ password }}"
-        placeholder="请输入邮箱"
+        placeholder="请输入密码"
         clickable
         type="password"
         clearable
         bind:change="handlePasswordChange"
+        border="{{ false }}"
+        custom-style="border-radius: 8px;"
       />
     </view>
   </view>

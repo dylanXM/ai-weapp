@@ -3,6 +3,7 @@ import { createStoreBindings } from 'mobx-miniprogram-bindings';
 import { validateEmail } from '../../../../utils/email';
 // @ts-ignore
 import Dialog from '@vant/weapp/dialog/dialog';
+import { userConnectEmail } from '../../../../api/index';
 
 Page({
 
@@ -102,7 +103,8 @@ Page({
    * 使用邮箱关联用户信息
    */
   updateUserInfoFromEmail: function() {
-    const { email, password } = this.data;
+    const _this = this;
+    const { email, password } = _this.data;
     if (!email || !validateEmail(email)) {
       wx.showToast({ title: '邮箱格式错误', icon: 'error' });
       return;
@@ -115,11 +117,17 @@ Page({
       title: '是否确定关联邮箱',
       message: '如果邮箱已被注册，则将原绑定邮箱的账户删除，并将邮箱关联至该账号，原账号积分将加在该账号',
     })
-      .then(() => {
-        // on confirm
+      .then(async () => {
+        try {
+          await userConnectEmail({ email, password })
+          wx.showToast({ title: '绑定成功', icon: 'success' });
+          this.onBack();
+        } catch (err) {
+          wx.showToast({ title: '绑定失败', icon: 'error' });
+        }
       })
       .catch(() => {
-        // on cancel
+        wx.showToast({ title: '绑定失败', icon: 'error' });
       });
   }
 })

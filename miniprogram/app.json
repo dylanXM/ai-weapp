@@ -6,6 +6,7 @@
     "pages/chat/pages/kami/index",
     "pages/chat/pages/apps/index",
     "pages/chat/pages/create-presets/index",
+    "pages/chat/pages/user-email/index",
     "pages/chat/pages/sign-in/index",
     "pages/chat/pages/chat-groups/index",
     "pages/login/index",
@@ -16,7 +17,7 @@
     "pages/chat/pages/test-version/index",
     "pages/chat/pages/shop/index",
     "pages/chat/pages/notice/index",
-    "pages/chat/pages/user-email/index"
+    "pages/chat/pages/creation/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

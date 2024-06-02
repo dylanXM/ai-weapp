@@ -1008,6 +1008,15 @@ Component({
       wx.navigateTo({
         url: '../chat/pages/user-email/index',
       });
+    },
+
+    /**
+     * 点击创作
+     */
+    handleClickCreation: function() {
+      wx.navigateTo({
+        url: '../chat/pages/creation/index',
+      });
     }
   },
 
