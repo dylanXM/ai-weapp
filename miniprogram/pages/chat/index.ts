@@ -999,6 +999,15 @@ Component({
       wx.navigateTo({
         url: '../chat/pages/notice/index',
       });
+    },
+
+    /**
+     * 点击创作
+     */
+    handleClickCreation: function() {
+      wx.navigateTo({
+        url: '../chat/pages/creation/index',
+      });
     }
   },
 
