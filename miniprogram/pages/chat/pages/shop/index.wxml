@@ -9,6 +9,7 @@
     wx:key="id"
     wx:for-index="idx"
     class="p-shop-product"
+    bind:tap="buy"
   >
     <view class="p-shop-header">
       <image src="{{product.coverImg}}" class="p-shop-cover" />
@@ -23,7 +24,7 @@
       <van-cell title="高级积分" value="{{product.model4Count}}" border="{{ false }}" />
       <van-cell title="绘画积分" value="{{product.drawMjCount}}" border="{{ false }}" />
     </view>
-    <view class="p-shop-operate" hover-class="custom-hover">
+    <view class="p-shop-operate">
       <view class="p-shop-operate-desc">
         <view>套餐有效期</view>
         <view class="p-shop-operate-desc-expired">{{product.days}} 天</view>

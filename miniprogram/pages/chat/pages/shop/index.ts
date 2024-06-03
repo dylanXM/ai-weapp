@@ -91,5 +91,12 @@ Page({
     } catch (error) {
 
     }
+  },
+
+  /**
+   * 唤起支付页面
+   */
+  async buy() {
+    wx.requestPayment({});
   }
 })

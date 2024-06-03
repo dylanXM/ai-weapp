@@ -63,6 +63,10 @@
   border-radius: 0 0 8px 8px;
 }
 
+.p-shop-operate:active {
+  background-color: #f1f1f1; /* 按下时的背景颜色 */
+}
+
 .p-shop-operate-desc {
   display: flex;
   align-items: center;
@@ -78,9 +82,4 @@
 
 .p-shop-operate-icon {
   transform: rotate(270deg);
-}
-
-.custom-hover {
-  background-color: #f1f1f1; /* 按下时的背景颜色 */
-  color: #333; /* 按下时的文字颜色 */
 }
