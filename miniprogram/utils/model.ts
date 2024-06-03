@@ -18,7 +18,7 @@ export const ModelsMapDesc = (key: number, deductType: number, deduct: number) =
   const desc = {
     1: {
       1: `支持智能对话，速度更快，每次消耗基础模型 ${deduct} 积分`,
-      2: `拥有更强的推理能力，每次消耗高级模型 ${deduct} 积分`
+      2: `拥有更强的推理能力，模型速度快，每次消耗高级模型 ${deduct} 积分`
     },
     2: {
       1: `每次消耗基础模型 ${deduct} 积分`,
@@ -33,12 +33,12 @@ export const ModelsMapDesc = (key: number, deductType: number, deduct: number) =
       2: `每次消耗高级模型 ${deduct} 积分`,
     },
     5: {
-      1: `支持联网查询总结、链接/文档分析，每次消耗基础模型 ${deduct} 积分`,
-      2: `支持联网查询总结、链接/文档分析，每次消耗高级模型 ${deduct} 积分`,
+      1: `支持联网查询总结、链接/文档分析，模型思考时间较长，每次消耗基础模型 ${deduct} 积分`,
+      2: `支持联网查询总结、链接/文档分析，模型思考时间较长，每次消耗高级模型 ${deduct} 积分`,
     },
     6: {
-      1: `支持联网查询总结、绘画、链接/文档分析，每次消耗基础模型 ${deduct} 积分`,
-      2: `支持联网查询总结、绘画、链接/文档分析，每次消耗高级模型 ${deduct} 积分`,
+      1: `支持联网查询总结、绘画、链接/文档分析，模型思考时间较长，每次消耗基础模型 ${deduct} 积分`,
+      2: `支持联网查询总结、绘画、链接/文档分析，模型思考时间较长，每次消耗高级模型 ${deduct} 积分`,
     }
   };
   return desc[key][deductType];

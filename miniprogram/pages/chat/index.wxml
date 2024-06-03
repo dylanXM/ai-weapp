@@ -397,14 +397,14 @@
     </van-cell-group>
 
     <van-cell-group title="积分获取" inset>
-      <van-cell icon="gift-o" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
+      <van-cell icon="gift-o" value="所有积分+5" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
       <!-- <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKami" /> -->
-      <!-- <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" /> -->
       <van-cell icon="gem-o" value="所有积分+10" size="large" title="查看广告获取积分" is-link bind:tap="handleClickAdv" />
+      <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
-      <van-cell size="large" icon="miniprogram-o" title="公众号" is-link bind:tap="handleClickWXofficial" value="可购买积分" />
+      <van-cell size="large" icon="miniprogram-o" title="公众号" is-link bind:tap="handleClickWXofficial" />
       <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
     </van-cell-group>
 

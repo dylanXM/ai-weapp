@@ -1,5 +1,6 @@
 import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import { queryProducts } from '../../../../api/index';
 
 Page({
 
@@ -7,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    products: [] as any[],
   },
 
   /**
@@ -19,6 +20,8 @@ Page({
       fields: ['navBar'],
       actions: ['setState', 'setStates'],
     });
+
+    this.getProducts();
   },
 
   /**
@@ -76,4 +79,17 @@ Page({
   onBack() {
     wx.navigateBack();
   },
+
+  /**
+   * 获取商品
+   */
+  async getProducts() {
+    try {
+      const data = await queryProducts();
+      console.log('orders', data);
+      this.setData({ products: data?.rows });
+    } catch (error) {
+
+    }
+  }
 })

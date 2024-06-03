@@ -1026,6 +1026,7 @@ Component({
       // this.handleClickExplore();
       // this.handleClickDraw();
       // this.toUserEmail();
+      // this.handleClickShop();
     },
     detached() {
     }

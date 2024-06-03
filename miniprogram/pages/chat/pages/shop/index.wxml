@@ -1,3 +1,34 @@
 <van-nav-bar title="积分商城" border="{{none}}" custom-style="background: #f1f1f1;">
   <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
 </van-nav-bar>
+
+<view style="height: calc(100vh - {{navBar.navBarHeight + 30}}px)" class="p-shop-container">
+  <view
+    wx:for="{{products}}"
+    wx:for-item="product"
+    wx:key="id"
+    wx:for-index="idx"
+    class="p-shop-product"
+  >
+    <view class="p-shop-header">
+      <image src="{{product.coverImg}}" class="p-shop-cover" />
+      <view class="p-shop-title">{{product.name}}</view>
+    </view>
+    <view class="p-shop-desc">
+      <view class="p-shop-desc-content">{{product.des}}</view>
+      <view class="p-shop-desc-price">¥ {{product.price}}</view>
+    </view>
+    <view class="p-shop-count">
+      <van-cell title="基础积分" value="{{product.model3Count}}" border="{{ false }}" />
+      <van-cell title="高级积分" value="{{product.model4Count}}" border="{{ false }}" />
+      <van-cell title="绘画积分" value="{{product.drawMjCount}}" border="{{ false }}" />
+    </view>
+    <view class="p-shop-operate" hover-class="custom-hover">
+      <view class="p-shop-operate-desc">
+        <view>套餐有效期</view>
+        <view class="p-shop-operate-desc-expired">{{product.days}} 天</view>
+      </view>
+      <van-icon custom-class="p-shop-operate-icon" name="down" />
+    </view>
+  </view>
+</view>
