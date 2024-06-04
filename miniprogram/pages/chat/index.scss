@@ -585,3 +585,42 @@ button[style="color: #07c160"] > view {
     transform: scale(0.01);
   }
 }
+
+.p-side-card {
+  margin: 0 12px 12px;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  background: #fff;
+  padding: 12px;
+}
+
+.p-side-card-header {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-side-card-content {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.p-side-card-content-item {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-side-card-content-item-count {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.p-side-card-content-item-title {
+  margin-top: 8px;
+  font-size: 14px;
+}

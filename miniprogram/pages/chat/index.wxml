@@ -221,79 +221,6 @@
       style="padding-top: {{navBar.menuTop - 8}}px;"
       class="p-chat-group-search"
     >
-      <view style="margin: 0 12px 8px;">
-        <van-cell
-          bind:tap="createChatGroup"
-          border="{{ false }}"
-          clickable
-          custom-class="p-common-user-operate"
-        >
-          <van-icon slot="icon" size="20" name="add" custom-style="margin-right: 6px;" />
-          <view slot="title">新建会话</view>
-          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
-        </van-cell>
-        <van-cell
-          bind:tap="handleClickDraw"
-          border="{{ false }}"
-          custom-class="p-common-user-operate"
-          clickable
-        >
-          <van-icon slot="icon" size="20" name="photo" custom-style="margin-right: 6px;" />
-          <view slot="title">图片生成</view>
-          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
-        </van-cell>
-        <!-- <van-cell
-          title="文档解读"
-          icon="description"
-          bind:tap="handleClickAnalyze"
-          border="{{ false }}"
-          clickable
-          custom-class="p-common-user-operate"
-        /> -->
-        <!-- <van-cell
-          bind:tap="handleClickCreation"
-          border="{{ false }}"
-          clickable
-          custom-class="p-common-user-operate"
-        >
-          <van-icon slot="icon" size="20" name="edit" custom-style="margin-right: 6px;" />
-          <view slot="title">文案创作</view>
-          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
-        </van-cell> -->
-        <van-cell
-          data-key="presets"
-          bind:tap="handleClickExplore"
-          border="{{ false }}"
-          clickable
-          custom-class="p-common-user-operate"
-        >
-          <van-icon slot="icon" size="20" name="coupon" custom-style="margin-right: 6px;" />
-          <view slot="title">角色预设</view>
-          <van-icon slot="right-icon" size="16" name="arrow" custom-style="margin-right: 6px;" />
-        </van-cell>
-      </view>
-    </view>
-    <view class="p-chat-group-list p-common-blur">
-      <view style="position: relative;" wx:if="{{ groups.length }}">
-        <view style="padding: 0 15px;">
-          <van-cell
-            custom-style="border: 1px solid {{group.id === currentGroup.id ? '#007AFF' : '#f1f1f1'}}; margin-bottom: 8px; border-radius: 8px;"
-            title="{{group.title}}"
-            bind:tap="chooseGroup"
-            data-text="{{group.id}}"
-            icon="chat"
-            title-class="p-common-ellipsis"
-            data-group="{{group}}"
-            bind:longpress="showGroupOperate"
-            wx:for="{{groups}}"
-            wx:key="id"
-            wx:for-item="group"
-            border="{{false}}"
-          />
-        </view>
-      </view>
-    </view>
-    <view style="border-top: 1px solid #f1f1f1;">
       <van-cell border="{{ false }}">
         <view bind:tap="handleClickSetting" slot="title" class="p-chat-user-info" size="large">
           <van-image
@@ -306,9 +233,89 @@
           />
           <view>{{user.userInfo.username}}</view>
         </view>
-        <view style="color: #888888; font-size: 12px;" bind:tap="handleClickAdv" slot="right-icon">查看广告获取积分</view>
-        <!-- <van-icon slot="right-icon" name="ellipsis" size="26" bind:tap="handleClickSetting" /> -->
+        <van-button icon="add-o" size="small" round bind:tap="createChatGroup" slot="right-icon">新建会话</van-button>
       </van-cell>
+    </view>
+    <view class="p-chat-group-list p-common-blur">
+      <view class="p-side-card">
+        <view class="p-side-card-header">
+          <view>我的积分</view>
+        </view>
+        <view class="p-side-card-content">
+          <view class="p-side-card-content-item">
+            <view class="p-side-card-content-item-count">{{user.userBalance.model3Count}}</view>
+            <view class="p-side-card-content-item-title">基础积分</view>
+          </view>
+          <view class="p-side-card-content-item">
+            <view class="p-side-card-content-item-count">{{user.userBalance.model4Count}}</view>
+            <view class="p-side-card-content-item-title">高级积分</view>
+          </view>
+          <view class="p-side-card-content-item">
+            <view class="p-side-card-content-item-count">{{user.userBalance.drawMjCount}}</view>
+            <view class="p-side-card-content-item-title">绘画积分</view>
+          </view>
+        </view>
+      </view>
+      <view class="p-side-card">
+        这里是广告
+      </view>
+      <view class="p-side-card">
+        <view class="p-side-card-header">
+          <view>获取积分</view>
+        </view>
+        <view class="p-side-card-content">
+          <view class="p-side-card-content-item" bind:tap="handleClickSignIn">
+            <van-icon name="gift-o" size="24" />
+            <view class="p-side-card-content-item-title">签到 +5</view>
+          </view>
+          <view class="p-side-card-content-item" bind:tap="handleClickAdv">
+            <van-icon name="gem-o" size="24" />
+            <view class="p-side-card-content-item-title">广告 +10</view>
+          </view>
+          <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
+            <van-icon name="shop" size="24" />
+            <view class="p-side-card-content-item-title">积分商城</view>
+          </view>
+        </view>
+      </view>
+      <view class="p-side-card">
+        <view class="p-side-card-header">
+          <view>探索</view>
+        </view>
+        <view class="p-side-card-content">
+          <view class="p-side-card-content-item" bind:tap="handleClickDraw">
+            <van-icon name="photo" size="24" />
+            <view class="p-side-card-content-item-title">图片生成</view>
+          </view>
+          <view class="p-side-card-content-item" bind:tap="handleClickExplore">
+            <van-icon name="coupon" size="24" />
+            <view class="p-side-card-content-item-title">角色预设</view>
+          </view>
+          <view class="p-side-card-content-item" bind:tap="handleClickEdit">
+            <van-icon name="edit" size="24" />
+            <view class="p-side-card-content-item-title">文案创作</view>
+          </view>
+        </view>
+      </view>
+      <view style="position: relative;" class="p-side-card" wx:if="{{ groups.length }}">
+        <view class="p-side-card-header">
+          <view>会话历史</view>
+        </view>
+        <van-cell
+          custom-style="color: {{group.id === currentGroup.id ? '#007AFF' : '#000'}}; padding: 2px 0; margin-top: 4px;"
+          title="{{group.title}}"
+          bind:tap="chooseGroup"
+          data-text="{{group.id}}"
+          icon="chat"
+          title-class="p-common-ellipsis"
+          data-group="{{group}}"
+          bind:longpress="showGroupOperate"
+          wx:for="{{groups}}"
+          wx:key="id"
+          wx:for-item="group"
+          border="{{false}}"
+        />
+      </view>
     </view>
     <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px"></view>
   </view>
@@ -388,19 +395,6 @@
     <van-cell-group title="用户信息" inset>
       <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
       <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" />
-    </van-cell-group>
-  
-    <van-cell-group title="积分" inset>
-      <van-cell size="large" title="普通模型积分" value="{{user.userBalance.model3Count}}" />
-      <van-cell size="large" title="高级模型积分" value="{{user.userBalance.model4Count}}" />
-      <van-cell size="large" title="绘画积分" value="{{user.userBalance.drawMjCount}}" />
-    </van-cell-group>
-
-    <van-cell-group title="积分获取" inset>
-      <van-cell icon="gift-o" value="所有积分+5" size="large" title="签到获取积分" is-link bind:tap="handleClickSignIn" />
-      <!-- <van-cell icon="balance-list-o" size="large" title="积分兑换" is-link bind:tap="handleClickKami" /> -->
-      <van-cell icon="gem-o" value="所有积分+10" size="large" title="查看广告获取积分" is-link bind:tap="handleClickAdv" />
-      <van-cell icon="shop" size="large" title="积分商城" is-link bind:tap="handleClickShop" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
