@@ -97,6 +97,14 @@ Page({
    * 唤起支付页面
    */
   async buy() {
-    wx.requestPayment({});
+    wx.requestPayment({
+      timeStamp: '',
+      nonceStr: '',
+      package: '',
+      signType: 'MD5',
+      paySign: '',
+      success (res) { },
+      fail (res) { }
+    });
   }
 })

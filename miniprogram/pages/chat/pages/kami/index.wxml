@@ -22,7 +22,7 @@
     size="default"
     bind:tap="usekami"
     loading-text="激活兑换码"
-    color="#1aad19"
+    color="#007AFF"
     round
   >
     激活兑换码

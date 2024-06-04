@@ -48,7 +48,7 @@
   </view>
   <view style="width: 45%">
     <van-button
-      color="#1aad19"
+      color="#007AFF"
       bind:tap="toDrawPicture"
       type="info"
       icon="photo"

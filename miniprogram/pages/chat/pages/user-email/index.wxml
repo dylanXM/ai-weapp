@@ -45,7 +45,7 @@
     size="default"
     bind:tap="updateUserInfoFromEmail"
     loading-text="激活兑换码"
-    color="#1aad19"
+    color="#007AFF"
     round
   >
     绑定邮箱

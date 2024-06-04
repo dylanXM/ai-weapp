@@ -66,7 +66,7 @@
 
 <view class="p-draw-generate-btn">
   <van-button
-    color="#1aad19"
+    color="#007AFF"
     type="info"
     block
     bind:tap="toDrawPage"

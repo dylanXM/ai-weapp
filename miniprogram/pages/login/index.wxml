@@ -17,7 +17,7 @@
     size="default"
     bind:tap="reLogin"
     icon="wechat"
-    color="#1aad19"
+    color="#007AFF"
   >
     微信登录
   </van-button>

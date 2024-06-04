@@ -88,7 +88,7 @@
 
 <view class="p-preset-action-button">
   <van-button
-    color="#1aad19"
+    color="#007AFF"
     type="info"
     block
     bind:tap="toCreatePreset"

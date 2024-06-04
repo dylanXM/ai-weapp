@@ -156,7 +156,7 @@
         wx:if="{{ !isScrollToLower && messageMap[currentGroup.id].length && !loading }}"
       /> -->
       <view class="p-chat-search">
-        <view class="p-chat-search-border" style="border: {{ inputFocus ? '1px solid #1aad19' : '1px solid transparent' }}">
+        <view class="p-chat-search-border" style="border: {{ inputFocus ? '1px solid #007AFF' : '1px solid transparent' }}">
           <view class="icon-yuyin-container" wx:if="{{!loading && !value.length && inputState === 'text'}}">
             <text bind:tap="handleClickVoice" class="iconfont icon-yuyin"></text>
           </view>
@@ -277,7 +277,7 @@
       <view style="position: relative;" wx:if="{{ groups.length }}">
         <view style="padding: 0 15px;">
           <van-cell
-            custom-style="border: 1px solid {{group.id === currentGroup.id ? '#1aad19' : '#f1f1f1'}}; margin-bottom: 8px; border-radius: 8px;"
+            custom-style="border: 1px solid {{group.id === currentGroup.id ? '#007AFF' : '#f1f1f1'}}; margin-bottom: 8px; border-radius: 8px;"
             title="{{group.title}}"
             bind:tap="chooseGroup"
             data-text="{{group.id}}"
