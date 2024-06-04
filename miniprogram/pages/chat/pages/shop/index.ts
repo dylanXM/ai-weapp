@@ -85,9 +85,9 @@ Page({
    */
   async getProducts() {
     try {
-      const data = await queryProducts();
-      console.log('orders', data);
-      this.setData({ products: data?.rows });
+      const [products1, products2] = await Promise.all([queryProducts({ type: 1 }), queryProducts({ type: -1 })]);
+      console.log('orders', products1, products2);
+      this.setData({ products: [...products1.rows, ...products2.rows] });
     } catch (error) {
 
     }

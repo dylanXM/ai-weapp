@@ -4,13 +4,13 @@ import request from '../../utils/api';
 /**
  * 获取商品
  */
-export async function queryProducts() {
+export async function queryProducts({ type = 1 }: { type?: number }) {
   const res = await request({
     url: `${config.url}/crami/queryAllPackage`,
     method: 'GET',
     data: {
       status: 1,
-      type: 1,
+      type,
       size: 50
     },
   });

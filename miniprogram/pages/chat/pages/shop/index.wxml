@@ -26,7 +26,12 @@
     <view class="p-shop-operate" bind:tap="buy" data-product="{{ product }}">
       <view class="p-shop-operate-desc">
         <view>套餐有效期</view>
-        <view class="p-shop-operate-desc-expired">{{product.days}} 天</view>
+        <view class="p-shop-operate-desc-expired" wx:if="{{product.days <= 0}}">
+          永久有效
+        </view>
+        <view class="p-shop-operate-desc-expired" wx:if="{{product.days > 0}}">
+          {{product.days}} 天
+        </view>
       </view>
       <van-icon color="#007AFF" custom-class="p-shop-operate-icon" name="down" />
     </view>
