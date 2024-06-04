@@ -329,9 +329,8 @@ Component({
                 _this.updateUserBalance({ userBalance }, model);
 
                 if (messages.length === 2 && !currentGroup.appId) {
-                  const message = messages[1].originText || messages[1].text;
-                  const title = message.length > 15 ? message.slice(0, 15) : message;
-                  _this.updateGroup(title);
+                  const message = messages[0].originText || messages[0].text;
+                  _this.updateGroup(message);
                 }
                 shouldContinue = false // 结束动画循环
               }

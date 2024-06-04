@@ -44,6 +44,7 @@
 }
 
 .p-shop-desc-price {
+  margin-top: 12px;
   width: 100%;
   display: flex;
   justify-content: flex-end;
@@ -54,6 +55,10 @@
 
 .p-shop-count {
   border-bottom: 1px solid #f1f1f1;
+}
+
+.p-shop-content-item {
+  padding: 4px 12px !important;
 }
 
 .p-shop-operate {
@@ -82,4 +87,9 @@
 
 .p-shop-operate-icon {
   transform: rotate(270deg);
+}
+
+.p-ad-container {
+  border-radius: 1px solid #f1f1f1;
+  padding: 4px;
 }

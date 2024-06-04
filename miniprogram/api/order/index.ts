@@ -16,3 +16,15 @@ export async function queryProducts() {
   });
   return res.data;
 }
+
+/**
+ * 获取订单
+ */
+export async function queryOrder({ goodsId }: { goodsId: number }) {
+  const res = await request({
+    url: `${config.url}/order/buy`,
+    method: 'POST',
+    data: { goodsId, payType: 'jsapi' },
+  });
+  return res.data;
+}

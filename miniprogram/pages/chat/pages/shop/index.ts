@@ -1,6 +1,6 @@
 import { store } from '../../../../store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
-import { queryProducts } from '../../../../api/index';
+import { queryProducts, queryOrder, getUserInfo } from '../../../../api/index';
 
 Page({
 
@@ -96,15 +96,25 @@ Page({
   /**
    * 唤起支付页面
    */
-  async buy() {
+  async buy(event: any) {
+    const _this = this;
+    const { product } = event.target.dataset;
+    const order: any = await queryOrder({ goodsId: product.id });
     wx.requestPayment({
-      timeStamp: '',
-      nonceStr: '',
-      package: '',
-      signType: 'MD5',
-      paySign: '',
-      success (res) { },
-      fail (res) { }
+      timeStamp: order?.timeStamp,
+      nonceStr: order?.nonceStr,
+      package: order?.package,
+      signType: order?.signType,
+      paySign: order?.paySign,
+      success (res) {
+        setTimeout(() => {
+          getUserInfo().then(user => _this.setState('user', user));
+          wx.showToast({ title: '积分已增加', icon: 'success' });
+        }, 1000);
+      },
+      fail (error) {
+        // wx.showToast({ title: '支付失败', icon: 'error' });
+      }
     });
   }
 })

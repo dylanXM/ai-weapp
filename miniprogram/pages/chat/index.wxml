@@ -214,7 +214,7 @@
   show="{{ popupVisible }}"
   bind:close="closePopup"
   custom-class="p-chat-sidesheet"
-  custom-style="width: 75%;"
+  custom-style="width: 75%; overflow-x: hidden;"
 >
   <view class="p-chat-group-container">
     <view
@@ -243,21 +243,21 @@
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.model3Count}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.memberModel3Count}}</view>
             <view class="p-side-card-content-item-title">基础积分</view>
           </view>
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.model4Count}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.memberModel4Count}}</view>
             <view class="p-side-card-content-item-title">高级积分</view>
           </view>
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.drawMjCount}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.memberDrawMjCount}}</view>
             <view class="p-side-card-content-item-title">绘画积分</view>
           </view>
         </view>
       </view>
-      <view class="p-side-card">
-        这里是广告
+      <view class="p-side-adcard">
+        <ad-custom style="overflow-x: auto; width: fit-content;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
       </view>
       <view class="p-side-card">
         <view class="p-side-card-header">
@@ -266,11 +266,11 @@
         <view class="p-side-card-content">
           <view class="p-side-card-content-item" bind:tap="handleClickSignIn">
             <van-icon name="gift-o" size="24" />
-            <view class="p-side-card-content-item-title">签到 +5</view>
+            <view class="p-side-card-content-item-title">签到+5</view>
           </view>
           <view class="p-side-card-content-item" bind:tap="handleClickAdv">
             <van-icon name="gem-o" size="24" />
-            <view class="p-side-card-content-item-title">广告 +10</view>
+            <view class="p-side-card-content-item-title">广告+10</view>
           </view>
           <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
             <van-icon name="shop" size="24" />
@@ -302,7 +302,7 @@
           <view>会话历史</view>
         </view>
         <van-cell
-          custom-style="color: {{group.id === currentGroup.id ? '#007AFF' : '#000'}}; padding: 2px 0; margin-top: 4px;"
+          custom-style="color: {{group.id === currentGroup.id ? '#007AFF' : '#000'}}; padding: 3px 0; margin-top: 6px; font-size: 16px;"
           title="{{group.title}}"
           bind:tap="chooseGroup"
           data-text="{{group.id}}"
@@ -317,7 +317,7 @@
         />
       </view>
     </view>
-    <view style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px"></view>
+    <view class="p-common-blur" style="height: {{keyboardHeight > 0 ? 0 : bottomSafeHeight}}px"></view>
   </view>
 </van-popup>
 
@@ -406,5 +406,8 @@
       <van-cell size="large" icon="smile-comment-o" title="系统公告" is-link bind:tap="handleClickNotice" />
     </van-cell-group>
 
+    <view class="p-ad-container">
+      <ad-custom style="width: 100%;" unit-id="adunit-bacca9079f8a547f"></ad-custom>
+    </view>
   </view>
 </van-action-sheet>
