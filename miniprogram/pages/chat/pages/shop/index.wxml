@@ -11,7 +11,7 @@
     class="p-shop-product"
   >
     <view class="p-shop-header">
-      <image src="{{product.coverImg}}" class="p-shop-cover" />
+      <image mode="aspectFill" src="{{product.coverImg}}" class="p-shop-cover" />
       <view class="p-shop-title">{{product.name}}</view>
     </view>
     <view class="p-shop-desc">
