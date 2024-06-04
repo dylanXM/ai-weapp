@@ -1013,6 +1013,8 @@ Component({
      * 点击创作
      */
     handleClickCreation: function() {
+      wx.showToast({ title: '功能开发中...', icon: 'none' });
+      return;
       wx.navigateTo({
         url: '../chat/pages/creation/index',
       });

@@ -291,7 +291,7 @@
             <van-icon name="coupon" size="24" />
             <view class="p-side-card-content-item-title">角色预设</view>
           </view>
-          <view class="p-side-card-content-item" bind:tap="handleClickEdit">
+          <view class="p-side-card-content-item" bind:tap="handleClickCreation">
             <van-icon name="edit" size="24" />
             <view class="p-side-card-content-item-title">文案创作</view>
           </view>
