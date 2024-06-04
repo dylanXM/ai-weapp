@@ -74,6 +74,6 @@
     size="large"
     custom-style="border-radius: 8px;"
   >
-    生成图片 (您的积分：{{user.userBalance.drawMjCount}})
+    生成图片 (您的积分：{{user.userBalance.memberDrawMjCount}})
   </van-button>
 </view>
