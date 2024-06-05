@@ -114,6 +114,6 @@
     custom-style="border-radius: 8px;"
     size="large"
   >
-    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.memberDrawMjCount}} 积分）
+    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.sumDrawMjCount}} 积分）
   </van-button>
 </view>
