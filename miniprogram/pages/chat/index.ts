@@ -328,7 +328,7 @@ Component({
                 _this.setData({ loading: false });
                 _this.updateUserBalance({ userBalance }, model);
 
-                if (messages.length === 2 && !currentGroup.appId) {
+                if (messages.length >= 2 && !currentGroup.appId) {
                   const message = messages[0].originText || messages[0].text;
                   _this.updateGroup(message);
                 }
