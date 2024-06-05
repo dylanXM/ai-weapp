@@ -15,7 +15,7 @@
       <view class="p-shop-title">{{product.name}}</view>
     </view>
     <view class="p-shop-desc">
-      <view class="p-shop-desc-content">{{product.des}}-{{product.price}}</view>
+      <view class="p-shop-desc-content">{{product.des}}</view>
       <text class="p-shop-desc-price">¥ {{product.price}}</text>
     </view>
     <view class="p-shop-count">
