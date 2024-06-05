@@ -243,15 +243,15 @@
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.memberModel3Count}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.sumModel3Count}}</view>
             <view class="p-side-card-content-item-title">基础积分</view>
           </view>
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.memberModel4Count}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.sumModel4Count}}</view>
             <view class="p-side-card-content-item-title">高级积分</view>
           </view>
           <view class="p-side-card-content-item">
-            <view class="p-side-card-content-item-count">{{user.userBalance.memberDrawMjCount}}</view>
+            <view class="p-side-card-content-item-count">{{user.userBalance.sumDrawMjCount}}</view>
             <view class="p-side-card-content-item-title">绘画积分</view>
           </view>
         </view>
