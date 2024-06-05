@@ -265,15 +265,15 @@
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item" bind:tap="handleClickSignIn">
-            <van-icon name="gift-o" size="24" />
-            <view class="p-side-card-content-item-title">签到+5</view>
+            <van-icon name="gift-o" size="24" info="+5" />
+            <view class="p-side-card-content-item-title">签到</view>
           </view>
           <view class="p-side-card-content-item" bind:tap="handleClickAdv">
-            <van-icon name="gem-o" size="24" />
-            <view class="p-side-card-content-item-title">广告+10</view>
+            <van-icon name="gem-o" size="24"  info="+10" />
+            <view class="p-side-card-content-item-title">广告</view>
           </view>
           <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
-            <van-icon name="shop" size="24" />
+            <van-icon name="shop-o" size="24" />
             <view class="p-side-card-content-item-title">积分商城</view>
           </view>
         </view>
@@ -284,11 +284,11 @@
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item" bind:tap="handleClickDraw">
-            <van-icon name="photo" size="24" />
+            <van-icon name="photo-o" size="24" />
             <view class="p-side-card-content-item-title">图片生成</view>
           </view>
           <view class="p-side-card-content-item" bind:tap="handleClickExplore">
-            <van-icon name="coupon" size="24" />
+            <van-icon name="coupon-o" size="24" />
             <view class="p-side-card-content-item-title">角色预设</view>
           </view>
           <view class="p-side-card-content-item" bind:tap="handleClickCreation">
@@ -393,13 +393,13 @@
   </view>
 
     <van-cell-group title="用户信息" inset>
-      <van-cell size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
-      <van-cell size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" />
+      <van-cell icon="user-o" size="user" title="用户名称" value="{{user.userInfo.username}}" is-link bind:tap="showUsernameChangeModal" />
+      <van-cell icon="envelop-o" size="user" title="用户邮箱" value="{{user.userInfo.email}}" is-link bind:tap="toUserEmail" />
     </van-cell-group>
 
     <van-cell-group title="联系我们" inset>
       <van-cell size="large" icon="miniprogram-o" title="公众号" is-link bind:tap="handleClickWXofficial" />
-      <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" value="联系合作" />
+      <van-cell size="large" icon="link-o" title="管理员" is-link bind:tap="handleClickWXAdmin" />
     </van-cell-group>
 
     <van-cell-group title="系统" inset>

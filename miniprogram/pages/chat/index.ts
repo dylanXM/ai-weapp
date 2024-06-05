@@ -168,7 +168,12 @@ Component({
     },
     createChatGroup: async function(event: any) {
       const appId = event.detail.key;
-      const { allGroups, loading } = this.data;
+      const { allGroups, loading, currentGroup, messageMap } = this.data;
+      const messages = messageMap[currentGroup.id];
+      if (!messages?.length && !appId) {
+        wx.showToast({ title: '已是最新会话', icon: 'none' });
+        return;
+      }
       if (loading) {
         wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
         return;
