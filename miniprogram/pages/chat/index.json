@@ -17,6 +17,7 @@
     "van-transition": "@vant/weapp/transition/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-nav-bar": "@vant/weapp/nav-bar/index",
-    "wemark": "/wemark/wemark"
+    "wemark": "/wemark/wemark",
+    "van-tag": "@vant/weapp/tag/index"
   }
 }

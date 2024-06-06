@@ -265,12 +265,16 @@
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item" bind:tap="handleClickSignIn">
-            <van-icon name="gift-o" size="24" info="+5" />
-            <view class="p-side-card-content-item-title">签到</view>
+            <van-icon name="gift-o" size="24" info="+5" info-class="icon-info-class" />
+            <view class="p-side-card-content-item-title">
+              签到
+            </view>
           </view>
           <view class="p-side-card-content-item" bind:tap="handleClickAdv">
-            <van-icon name="gem-o" size="24"  info="+10" />
-            <view class="p-side-card-content-item-title">广告</view>
+            <van-icon name="gem-o" size="24" info="+10" info-class="icon-info-class" />
+            <view class="p-side-card-content-item-title">
+              广告
+            </view>
           </view>
           <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
             <van-icon name="shop-o" size="24" />
@@ -378,7 +382,7 @@
   />
 </van-dialog>
 
-<van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="Settings">
+<van-action-sheet bind:close="closeSetting" custom-class="p-common-bg" show="{{ settings.visible }}" title="设置">
   <view style="height: calc(100vh - {{navBar.navBarHeight + 80}}px); overflow-y: auto;">
     <view class="p-chat-userinfo-avatar">
       <button class="p-chat-userinfo-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
