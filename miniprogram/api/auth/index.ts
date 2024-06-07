@@ -117,3 +117,15 @@ export const userConnectEmail = async (data: { email: string; password: string; 
   });
   return res.data;
 };
+
+/**
+ * 获取个人积分详情
+ */
+export const queryBounsDetail = async ({ page = 1, pageSize = 10 }) => {
+  const res = await request<any>({
+    url: `${config.url}/balance/rechargeLog`,
+    method: 'GET',
+    data: { page, pageSize },
+  });
+  return res.data;
+};

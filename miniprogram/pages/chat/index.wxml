@@ -262,6 +262,15 @@
       <view class="p-side-card">
         <view class="p-side-card-header">
           <view>获取积分</view>
+          <view class="p-side-card-header-operate" bind:tap="handleClickBounsDetail">
+            <view>积分详情</view>
+            <van-icon
+              name="arrow"
+              color="#aaaaaa"
+              slot="left"
+              size="16"
+            />
+          </view>
         </view>
         <view class="p-side-card-content">
           <view class="p-side-card-content-item" bind:tap="handleClickSignIn">
@@ -295,10 +304,10 @@
             <van-icon name="coupon-o" size="24" />
             <view class="p-side-card-content-item-title">角色预设</view>
           </view>
-          <view class="p-side-card-content-item" bind:tap="handleClickCreation">
+          <!-- <view class="p-side-card-content-item" bind:tap="handleClickCreation">
             <van-icon name="edit" size="24" />
             <view class="p-side-card-content-item-title">文案创作</view>
-          </view>
+          </view> -->
         </view>
       </view>
       <view style="position: relative;" class="p-side-card" wx:if="{{ groups.length }}">

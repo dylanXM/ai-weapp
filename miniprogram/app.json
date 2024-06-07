@@ -17,7 +17,8 @@
     "pages/chat/pages/test-version/index",
     "pages/chat/pages/shop/index",
     "pages/chat/pages/notice/index",
-    "pages/chat/pages/creation/index"
+    "pages/chat/pages/creation/index",
+    "pages/chat/pages/bonus-detail/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f1f1f1",

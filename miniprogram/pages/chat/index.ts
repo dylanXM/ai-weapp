@@ -1023,6 +1023,15 @@ Component({
       wx.navigateTo({
         url: '../chat/pages/creation/index',
       });
+    },
+
+    /**
+     * 点击积分详情
+     */
+    handleClickBounsDetail: function() {
+      wx.navigateTo({
+        url: '../chat/pages/bonus-detail/index',
+      });
     }
   },
 
@@ -1033,6 +1042,7 @@ Component({
       // this.handleClickDraw();
       // this.toUserEmail();
       // this.handleClickShop();
+      this.handleClickBounsDetail();
     },
     detached() {
     }

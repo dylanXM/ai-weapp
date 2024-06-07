@@ -1,0 +1,20 @@
+<van-nav-bar title="积分详情" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view style="height: calc(100vh - {{navBar.navBarHeight + 34}}px)" class="p-bouns-container">
+  <scroll-view>
+    <van-collapse>
+      <van-collapse-item
+        wx:for="{{data}}"
+        wx:for-item="bound"
+        wx:for-index="idx"
+        title="{{bound.rechargeType}}"
+        name="{{idx}}"
+        value="{{bound.createdAt}}"
+      >
+        
+      </van-collapse-item>
+    </van-collapse>
+  </scroll-view>
+</view>

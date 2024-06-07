@@ -42,3 +42,18 @@ export const presetError = {
 };
 
 export const defaultAvatar = 'https://img.zcool.cn/community/01a6095f110b9fa8012066219b67d4.png?x-oss-process=image/auto-orient,1/resize,m_lfit,w_1280,limit_1/sharpen,100';
+
+interface RechargeType {
+  [key: number]: string
+}
+
+export const RechargeTypeMap: RechargeType = {
+  1: '注册赠送',
+  2: '受邀请赠送',
+  3: '邀请他人赠送',
+  4: '购买卡密充值',
+  5: '管理员赠送',
+  6: '扫码购买充值',
+  7: 'MJ绘画失败退款',
+  8: '签到奖励',
+}
