@@ -2,19 +2,33 @@
   <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
 </van-nav-bar>
 
-<view style="height: calc(100vh - {{navBar.navBarHeight + 34}}px)" class="p-bouns-container">
-  <scroll-view>
-    <van-collapse>
-      <van-collapse-item
-        wx:for="{{data}}"
-        wx:for-item="bound"
-        wx:for-index="idx"
-        title="{{bound.rechargeType}}"
-        name="{{idx}}"
-        value="{{bound.createdAt}}"
-      >
-        
-      </van-collapse-item>
-    </van-collapse>
-  </scroll-view>
-</view>
+<scroll-view
+  scroll-y="{{true}}"
+  refresher-enabled="{{true}}"
+  refresher-threshold="{{10}}"
+  style="height: calc(100vh - {{navBar.navBarHeight + 34}}px)"
+  bindrefresherrefresh="reload"
+  bindscrolltolower="loadMore"
+  lower-threshold="{{40}}"
+>
+  <view slot="refresher" style="height: 20px">loading</view>
+  <van-collapse accordion value="{{ collapseState.activeName }}" bind:change="onChange">
+    <van-collapse-item
+      wx:for="{{data}}"
+      wx:for-item="bound"
+      wx:for-index="idx"
+      wx:key="id"
+      title="{{bound.rechargeType}}"
+      name="{{bound.id}}"
+      value="{{bound.createdAt}}"
+    >
+      <van-cell-group border="{{ false }}">
+        <van-cell title="基础积分" value="{{bound.model3Count}}" border="{{ false }}" />
+        <van-cell title="高级积分" value="{{bound.model4Count}}" border="{{ false }}" />
+        <van-cell title="绘画积分" value="{{bound.drawMjCount}}" border="{{ false }}" />
+        <van-cell title="有效期" value="{{bound.expireDateCn}}" border="{{ false }}" />
+      </van-cell-group>
+    </van-collapse-item>
+  </van-collapse>
+  <view style="height: 10px;"></view>
+</scroll-view>

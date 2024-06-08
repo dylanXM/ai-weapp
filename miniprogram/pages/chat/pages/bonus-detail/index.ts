@@ -14,6 +14,12 @@ Page({
     loading: false,
     data: [],
     isDone: false,
+    collapseState: {
+      activeName: '',
+    },
+    scrollState: {
+      
+    }
   },
 
   /**
@@ -91,17 +97,19 @@ Page({
   getBounsDetail: async function(props: { page: number }) {
     try {
       const { page, pageSize, data } = { ...this.data, ...props };
-      this.setData({ loading: false });
+      this.setData({ loading: true });
+      wx.showLoading({ title: '加载中...' });
       const res: any = await queryBounsDetail({ page, pageSize });
-      console.log('res', res);
       const { count, rows } = res || {};
-      const bounds = (page === 1 ? rows : [...data, rows]).map(item => ({ ...item, rechargeType: RechargeTypeMap[item.rechargeType] }));
+      const formatRows = rows.map(item => ({ ...item, rechargeType: RechargeTypeMap[item.rechargeType] }))
+      const bounds = page === 1 ? formatRows : [...data, ...formatRows];
       const isDone = bounds.length === count;
       this.setData({ ...this.data, ...props, data: bounds, isDone });
     } catch (err) {
 
     } finally {
       this.setData({ loading: false });
+      wx.hideLoading();
     }
   },
 
@@ -114,5 +122,28 @@ Page({
       return;
     }
     this.getBounsDetail({ page: page + 1 });
+  },
+
+  /**
+   * 重新拉取
+   */
+  reload: function() {
+    this.getBounsDetail({ page: 1 });
+  },
+
+  /**
+   * 折叠onChange事件
+   */
+  onChange: function(event: any) {
+    console.log('event', event);
+    this.setData({ collapseState: { activeName: event.detail } });
+  },
+
+  /**
+   * 滚动组件状态变更
+   */
+  handleStatusChange: function(event: any) {
+    const { status } = event.detail;
+    console.log('status', status);
   }
 })

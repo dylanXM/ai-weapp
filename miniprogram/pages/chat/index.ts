@@ -1042,7 +1042,7 @@ Component({
       // this.handleClickDraw();
       // this.toUserEmail();
       // this.handleClickShop();
-      this.handleClickBounsDetail();
+      // this.handleClickBounsDetail();
     },
     detached() {
     }
