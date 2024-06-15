@@ -20,8 +20,16 @@
       wx:key="id"
       style="margin-top: 12px;"
     >
+      <!-- <ad
+        wx:if="{{ idx > 0 && idx % 6 === 0 && idx % 10 !== 0 }}"
+        unit-id="adunit-283fa80e1b824dd7"
+        style="width: calc(100% - 24px); margin: 12px; border-radius: 8px;"
+      ></ad> -->
       <ad
         wx:if="{{ idx > 0 && idx % 6 === 0 && idx % 10 !== 0 }}"
+        unit-id="adunit-aec6682d6f013379"
+        ad-type="video"
+        ad-theme="white"
         unit-id="adunit-283fa80e1b824dd7"
         style="width: calc(100% - 24px); margin: 12px; border-radius: 8px;"
       ></ad>
