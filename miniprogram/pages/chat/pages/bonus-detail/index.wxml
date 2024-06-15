@@ -28,7 +28,7 @@
       <view class="p-bouns-card">
         <view class="p-bouns-card-header">
           <view>{{bound.rechargeType}}</view>
-          <view class="p-bounds-card-header-operate">{{bound.createdAt}}</view>
+          <view class="p-bouns-card-header-operate">{{bound.createdAt}}</view>
         </view>
         <view class="p-bouns-card-content">
           <view class="p-bouns-card-content-item">
