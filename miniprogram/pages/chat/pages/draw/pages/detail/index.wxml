@@ -29,6 +29,7 @@
       <view class="p-draw-detail-text">{{prompt}}</view>
     </view>
   </view>
+  <ad unit-id="adunit-f48dbacbffeae0cf" style="margin-top: 20px; border-radius: 8px;"></ad>
 </view>
 
 <view class="p-draw-detail-generate-btn">

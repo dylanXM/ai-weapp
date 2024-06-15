@@ -50,6 +50,32 @@ Page({
     });
     const { formData } = this.data;
     this.setData({ formData: { ...formData, prompt: option.prompt } });
+
+    this.showAd();
+  },
+
+  showAd: function() {
+    // 在页面中定义插屏广告
+    let interstitialAd = null;
+
+    // 在页面onLoad回调事件中创建插屏广告实例
+    if (wx.createInterstitialAd) {
+      interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-1a8001ec00a4322d'
+      });
+      interstitialAd.onLoad(() => {});
+      interstitialAd.onError((err) => {
+        console.error('插屏广告加载失败', err)
+      });
+      interstitialAd.onClose(() => {});
+    }
+
+    // 在适合的场景显示插屏广告
+    if (interstitialAd) {
+      interstitialAd.show().catch((err) => {
+        console.error('插屏广告显示失败', err);
+      });
+    }
   },
 
   /**

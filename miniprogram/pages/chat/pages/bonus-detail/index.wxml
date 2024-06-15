@@ -13,7 +13,44 @@
 >
   <view slot="refresher" style="height: 20px">loading</view>
   <van-collapse accordion value="{{ collapseState.activeName }}" bind:change="onChange">
-    <van-collapse-item
+    <view
+      wx:for="{{data}}"
+      wx:for-item="bound"
+      wx:for-index="idx"
+      wx:key="id"
+      style="margin-top: 12px;"
+    >
+      <ad
+        wx:if="{{ idx > 0 && idx % 6 === 0 && idx % 10 !== 0 }}"
+        unit-id="adunit-283fa80e1b824dd7"
+        style="width: calc(100% - 24px); margin: 12px; border-radius: 8px;"
+      ></ad>
+      <view class="p-bouns-card">
+        <view class="p-bouns-card-header">
+          <view>{{bound.rechargeType}}</view>
+          <view class="p-bounds-card-header-operate">{{bound.createdAt}}</view>
+        </view>
+        <view class="p-bouns-card-content">
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.model3Count}}</view>
+            <view class="p-bouns-card-content-item-title">基础积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.model4Count}}</view>
+            <view class="p-bouns-card-content-item-title">高级积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.drawMjCount}}</view>
+            <view class="p-bouns-card-content-item-title">绘画积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.expireDateCn}}</view>
+            <view class="p-bouns-card-content-item-title">有效期</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- <van-collapse-item
       wx:for="{{data}}"
       wx:for-item="bound"
       wx:for-index="idx"
@@ -28,7 +65,7 @@
         <van-cell title="绘画积分" value="{{bound.drawMjCount}}" border="{{ false }}" />
         <van-cell title="有效期" value="{{bound.expireDateCn}}" border="{{ false }}" />
       </van-cell-group>
-    </van-collapse-item>
+    </van-collapse-item> -->
   </van-collapse>
   <view style="height: 10px;"></view>
 </scroll-view>
