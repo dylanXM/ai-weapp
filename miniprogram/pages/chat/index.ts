@@ -168,9 +168,9 @@ Component({
     },
     createChatGroup: async function(event: any) {
       const appId = event.detail.key;
-      const { allGroups, loading, currentGroup, messageMap } = this.data;
+      const { allGroups, loading, currentGroup, messageMap, currentApp } = this.data;
       const messages = messageMap[currentGroup.id];
-      if (!messages?.length && !appId) {
+      if (!messages?.length && !appId && !currentApp.id) {
         wx.showToast({ title: '已是最新会话', icon: 'none' });
         return;
       }

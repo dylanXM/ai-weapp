@@ -143,6 +143,8 @@
             <view slot="title">{{item}}</view>
           </van-cell>
         </view>
+        <ad unit-id="adunit-ff5c9ffbc7658f1c" style="width: 85%; border-radius: 8px; margin-top: 40px;"></ad>
+
       </view>
     </view>
     <!-- 搜索区 -->
