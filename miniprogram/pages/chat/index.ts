@@ -170,7 +170,7 @@ Component({
       const appId = event.detail.key;
       const { allGroups, loading, currentGroup, messageMap, currentApp } = this.data;
       const messages = messageMap[currentGroup.id];
-      if (!messages?.length && !appId && !currentApp.id) {
+      if (!messages?.length && !appId && !currentApp.id && currentGroup.id) {
         wx.showToast({ title: '已是最新会话', icon: 'none' });
         return;
       }
@@ -758,7 +758,7 @@ Component({
 
       const addKami = async () => {
         try {
-          await advCharge({ id: user.userInfo.id });
+          await advCharge({ id: user.userInfo.id, count: 10 });
           getUserInfo().then(user => this.setState('user', user));
           wx.showToast({ title: '积分已增加', icon: 'success' });
         } catch (err) {

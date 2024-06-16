@@ -143,7 +143,8 @@
             <view slot="title">{{item}}</view>
           </van-cell>
         </view>
-        <ad unit-id="adunit-ff5c9ffbc7658f1c" style="width: 85%; border-radius: 8px; margin-top: 40px;"></ad>
+
+        <ad-custom style="overflow-x: auto; width: fit-content; border-radius: 8px; margin-top: 40px;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
 
       </view>
     </view>
@@ -239,6 +240,9 @@
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
+      <view class="p-side-adcard">
+        <ad-custom style="overflow-x: auto; width: fit-content;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
+      </view>
       <view class="p-side-card">
         <view class="p-side-card-header">
           <view>我的积分</view>
@@ -258,9 +262,8 @@
           </view>
         </view>
       </view>
-      <view class="p-side-adcard">
-        <ad-custom style="overflow-x: auto; width: fit-content;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
-      </view>
+      <!-- <ad unit-id="adunit-ff5c9ffbc7658f1c" style="width: calc(100% - 24px); border-radius: 8px; margin: 12px;"></ad> -->
+
       <view class="p-side-card">
         <view class="p-side-card-header">
           <view>获取积分</view>
