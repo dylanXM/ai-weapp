@@ -144,7 +144,7 @@
           </van-cell>
         </view>
 
-        <ad-custom style="overflow-x: auto; width: fit-content; border-radius: 8px; margin-top: 40px;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
+        <!-- <ad-custom style="overflow-x: auto; width: fit-content; border-radius: 8px; margin-top: 40px;" unit-id="adunit-11c62eaa9abec780"></ad-custom> -->
 
       </view>
     </view>
