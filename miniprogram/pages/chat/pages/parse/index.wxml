@@ -1,0 +1,38 @@
+<van-nav-bar title="解析" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view class="p-parse-container" style="height: calc(100vh - {{navBar.navBarHeight + 34}}px)">
+  <view class="p-parse-field-container">
+    <view class="p-parse-field-title">选择文档解析类型</view>
+    <van-radio-group value="{{ type }}" bind:change="handleUploadTypeChange" direction="horizontal">
+      <van-radio name="image" checked-color="#007AFF">图片</van-radio>
+      <van-radio name="file" checked-color="#007AFF">文档</van-radio>
+    </van-radio-group>
+  </view>
+
+  <view class="p-parse-field-container">
+    <view class="p-parse-field-title">
+      <view>上传{{ type === 'image' ? '图片' : '文档' }}</view>
+    </view>
+    <view>
+      <!-- <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" /> -->
+      <van-uploader accept="{{ type }}" max-count="{{1}}" file-list="{{ files }}" bind:after-read="afterUpload" upload-icon="add" />
+    </view>
+  </view>
+
+  <view>
+    <van-button
+      loading="{{ state.loading }}"
+      loading-text="正在解析中"
+      icon="fire-o"
+      block
+      round
+      color="#007AFF"
+    >
+      立即解析
+    </van-button>
+  </view>
+
+  <van-divider />
+</view>

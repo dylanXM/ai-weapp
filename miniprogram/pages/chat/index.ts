@@ -1025,6 +1025,12 @@ Component({
       });
     },
 
+    handleClickContentParse: function() {
+      wx.navigateTo({
+        url: '../chat/pages/parse/index',
+      });
+    },
+
     /**
      * 点击积分详情
      */
@@ -1043,6 +1049,7 @@ Component({
       // this.toUserEmail();
       // this.handleClickShop();
       // this.handleClickBounsDetail();
+      // this.handleClickContentParse();
     },
     detached() {
     }

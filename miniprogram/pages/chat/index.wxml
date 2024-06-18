@@ -313,6 +313,10 @@
             <van-icon name="edit" size="24" />
             <view class="p-side-card-content-item-title">文案创作</view>
           </view> -->
+          <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
+            <van-icon name="fire-o" size="24" />
+            <view class="p-side-card-content-item-title">解析</view>
+          </view>
         </view>
       </view>
       <view style="position: relative;" class="p-side-card" wx:if="{{ groups.length }}">
