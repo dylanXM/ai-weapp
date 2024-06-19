@@ -37,7 +37,7 @@
       disabled="{{ !files.length }}"
       bind:tap="parse"
     >
-      立即解析（消耗基础积分：10 / {{user.userBalance.sumModel3Count}} 积分）
+      立即解析（消耗基础积分：10 / {{user.userBalance.sumModel3Count}}）
     </van-button>
   </view>
 

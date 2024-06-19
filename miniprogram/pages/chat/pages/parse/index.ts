@@ -205,7 +205,9 @@ Page({
               _this.setData({ loading: false, text: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', error: true });
             }
             handleRequest(res?.data?.data?.text as string);
-            getUserInfo().then(user => this.setState('user', user));
+            setTimeout(() => {
+              getUserInfo().then(user => _this.setState('user', user));
+            }, 100);
           },
           fail: function (error) {
             _this.setData({ loading: false, text: '遇到错误了，请检查积分是否充足或联系系统管理员', error: true })
