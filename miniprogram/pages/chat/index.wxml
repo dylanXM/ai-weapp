@@ -290,10 +290,10 @@
               广告
             </view>
           </view>
-          <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
+          <!-- <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
             <van-icon name="shop-o" size="24" />
             <view class="p-side-card-content-item-title">积分商城</view>
-          </view>
+          </view> -->
         </view>
       </view>
       <view class="p-side-card">
