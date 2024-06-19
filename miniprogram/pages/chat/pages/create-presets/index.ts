@@ -199,4 +199,11 @@ Page({
       eventChannel.emit('refresh', {});
     });
   },
+
+  /**
+   * 删除应用logo
+   */
+  deleteLogos: function() {
+    this.setData({ logos: [] });
+  }
 })

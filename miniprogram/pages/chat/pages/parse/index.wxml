@@ -22,7 +22,7 @@
     </view>
     <view>
       <!-- <van-uploader accept="image" max-count="1" file-list="{{ logos }}" bind:after-read="afterUpload" /> -->
-      <van-uploader accept="{{ type }}" max-count="{{1}}" file-list="{{ files }}" bind:after-read="afterUpload" upload-icon="add" />
+      <van-uploader accept="{{ type }}" max-count="{{1}}" file-list="{{ files }}" bind:after-read="afterUpload" upload-icon="add" bind:delete="deleteFiles" />
     </view>
   </view>
 

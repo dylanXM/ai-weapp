@@ -229,4 +229,11 @@ Page({
     const { text } = event.currentTarget.dataset;
     wx.setClipboardData({ data: text });
   },
+
+  /**
+   * 删除文件
+   */
+  deleteFiles: function() {
+    this.setData({ files: [] });
+  }
 })
