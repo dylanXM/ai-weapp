@@ -4,6 +4,10 @@ import { uploadFile } from '../../../../utils/upload';
 import config from '../../../../const/config/index';
 // @ts-ignore
 import { requestAnimationFrame } from '@vant/weapp/common/utils';
+import { parseParams } from '../../../../utils/parse-params';
+import { getUserInfo } from '../../../../api/index';
+
+const bottomId = 'id-bottom-bar';
 
 // pages/chat/pages/parse/index.ts
 Page({
@@ -12,9 +16,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type: 'image',
+    type: 'image' as 'image' | 'file',
     files: [] as any,
+    loading: false,
+    error: false,
     value: '',
+    toView: bottomId,
   },
 
   /**
@@ -23,7 +30,7 @@ Page({
   onLoad() {
     createStoreBindings(this, {
       store, // 需要绑定的数据仓库
-      fields: ['navBar'],
+      fields: ['navBar', 'user'],
       actions: ['setState', 'setStates'],
     });
   },
@@ -84,6 +91,13 @@ Page({
     wx.navigateBack();
   },
 
+  scrollIntoBottom: function() {
+    const _this = this;
+    _this.setData({ toView: '' }, () => {
+      _this.setData({ toView: bottomId });
+    });
+  },
+
   /**
    * 上传文件
    */
@@ -113,21 +127,23 @@ Page({
     this.setData({ type });
   },
 
-  chatProcess: async function() {
+  parse: async function() {
     const _this = this;
     // @ts-ignore
-    const { loading,  currentGroup, model, messageMap, userBalance: balance } = _this.data;
-    const messages = messageMap[currentGroup.id];
+    const { type, loading, files } = _this.data;
     if (loading) {
-      wx.showToast({ title: '请等待当前会话结束', icon: 'none' });
+      wx.showToast({ title: '请等待当前解析结束', icon: 'none' });
       return;
     }
-    const options: Record<string, any> = {};
-    this.setData({ loading: true, value: '' });
+    const fileUrl = files?.[0]?.url;
+    if (!fileUrl) {
+      wx.showToast({ title: `请上传${type === 'image' ? '图片' : '聊天记录文档'}`, icon: 'none' });
+      return;
+    }
+    this.setData({ loading: true, value: '', error: false });
     let cacheResText = '';
     let data: any = null;
     let isStreamIn = true;
-    let userBalance: any = {};
 
     // 匀速输出
     try {
@@ -138,8 +154,6 @@ Page({
         async function update() {
           if (shouldContinue) {
             if (cacheResText && cacheResText[i]) {
-              _this.setData({ typingStatusEnd: false });
-
               /* 如果缓存字数太多则一次全加了 */
               if (cacheResText.length - i > 150) {
                 currentText += cacheResText.substring(i, i + 10)
@@ -151,19 +165,13 @@ Page({
                 currentText += cacheResText[i]
                 i++
               }
+              _this.setData({ loading: true, value: currentText, error: false });
+              _this.scrollIntoBottom();
             }
             const curLen = currentText ? currentText.length : 0
             const cacheResLen = cacheResText ? cacheResText.length : 0
             if (!isStreamIn && curLen === cacheResLen) {
-              _this.setData({ typingStatusEnd: true });
-              _this.updateGroupChat(messages.length - 1, {
-                loading: false,
-                conversationOptions: { conversationId: data?.conversationId, parentMessageId: data?.id },
-                requestOptions: { prompt: value, options: { ...options } },
-              });
-              _this.setData({ loading: false });
-              _this.updateUserBalance({ userBalance }, model);
-
+              _this.setData({ loading: false, error: false });
               shouldContinue = false // 结束动画循环
             }
             /* 有多余的再请求下一帧 */
@@ -171,70 +179,21 @@ Page({
               requestAnimationFrame(update);
             } else {
               setTimeout(() => {
-                requestAnimationFrame(update)
+                requestAnimationFrame(update);
               }, 1000)
             }
           }
         }
         requestAnimationFrame(update) // 启动动画循环
         const handleRequest = function(responseText: string) {
-          if (typeof responseText !== 'string') {
-            data = responseText;
-          } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
-            const lines = responseText
-              .toString()
-              .split('\n')
-              .filter((line: string) => line.trim() !== '');
-
-            let cacheResult = ''; // 拿到本轮传入的所有字段信息
-            let tem: any = {};
-            for (const line of lines) {
-              try {
-                const parseData = JSON.parse(line);
-                cacheResult += parseData.result;
-                tem = parseData;
-              }
-              catch (error) {
-              }
-            }
-            tem.result = cacheResult;
-            data = tem;
-          } else {
-            const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
-            let chunk = responseText;
-            if (lastIndex !== -1) {
-              chunk = responseText.substring(lastIndex);
-            }
-
-            try {
-              data = JSON.parse(chunk);
-            } catch (error) {
-              /* 二次解析 */
-              // const parseData = parseTextToJSON(responseText)
-              // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
-              if (chunk.includes('OpenAI timed out waiting for response')) {
-                wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
-              }
-            }
-          } 
-
-          try {
-            cacheResText = data.text;
-            if (data?.userBanance) {
-              userBalance = data?.userBanance;
-            }
-            if (data?.id || data?.is_end) {
-              isStreamIn = false;
-            }
-          } catch (error) {}
+          cacheResText = responseText;
+          isStreamIn = false;
         }
+        const params = parseParams(type, fileUrl);
         wx.request({
-          url: `${config.url}/chatgpt/content-parse`,
+          url: `${config.url}/chatgpt/contentParse`,
           method: 'POST',
-          data: {
-            appId: currentGroup.appId,
-            messages: messages,
-          },
+          data: { ...params },
           timeout: 360000,
           header: {
             Authorization: `Bearer ${wx.getStorageSync('token')}`,
@@ -243,22 +202,13 @@ Page({
           success: function (res) {
             if (res.statusCode !== 200) {
               wx.showToast({ title: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', icon: 'none' });
-              _this.updateGroupChat(messages.length - 1, {
-                loading: false,
-                text: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员',
-                error: true,
-              });
-              _this.setData({ loading: false });
+              _this.setData({ loading: false, text: res?.data?.message || '遇到错误了，请检查积分是否充足或联系系统管理员', error: true });
             }
-            handleRequest(res.data as string);
+            handleRequest(res?.data?.data?.text as string);
+            getUserInfo().then(user => this.setState('user', user));
           },
           fail: function (error) {
-            _this.updateGroupChat(messages.length - 1, {
-              loading: false,
-              text: '遇到错误了，请检查积分是否充足或联系系统管理员',
-              error: true,
-            });
-            _this.setData({ loading: false });
+            _this.setData({ loading: false, text: '遇到错误了，请检查积分是否充足或联系系统管理员', error: true })
           }
         });
       };
@@ -268,5 +218,13 @@ Page({
     } finally {
 
     }
+  },
+
+  /**
+   * 复制解析结果
+   */
+  copyValue: function (event: any) {
+    const { text } = event.currentTarget.dataset;
+    wx.setClipboardData({ data: text });
   },
 })
