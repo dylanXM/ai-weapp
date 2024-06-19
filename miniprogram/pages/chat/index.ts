@@ -1045,7 +1045,7 @@ Component({
     attached() {
       this.initRecord();
       // this.handleClickExplore();
-      this.handleClickDraw();
+      // this.handleClickDraw();
       // this.toUserEmail();
       // this.handleClickShop();
       // this.handleClickBounsDetail();
