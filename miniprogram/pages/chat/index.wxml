@@ -166,7 +166,7 @@
           <text bind:tap="handleClickCancelVoice" wx:if="{{inputState === 'voice' && !recordState.isSpeeching}}" class="iconfont icon-keyboard"></text>
           <van-field
             wx:if="{{inputState === 'text'}}"
-            placeholder="{{ loading ? '模型正在思考中，请耐心等待...' : '请输入你的问题或需求' }}"
+            placeholder="{{ loading ? '模型正在思考中，请耐心等待...' : '输入你的问题或需求' }}"
             border="{{ false }}"
             custom-style="padding: 0px;"
             style="flex: 1;"
