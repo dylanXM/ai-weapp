@@ -27,6 +27,10 @@
     <view class="p-draw-detail-title">绘画提示词</view>
     <view class="p-draw-detail-prompt" bind:longpress="copyPrompt" data-text="{{prompt}}">
       <view class="p-draw-detail-text">{{prompt}}</view>
+      <view>
+        <van-divider />
+        <view style="color: #888888; font-size: 12px;">长按复制绘画提示词</view>
+      </view>
     </view>
   </view>
   <ad unit-id="adunit-f48dbacbffeae0cf" style="margin-top: 20px; border-radius: 8px;"></ad>

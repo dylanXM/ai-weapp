@@ -144,7 +144,7 @@
           </van-cell>
         </view>
 
-        <ad-custom style="overflow-x: auto; width: fit-content; border-radius: 8px; margin-top: 40px;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
+        <!-- <ad-custom style="overflow-x: auto; width: fit-content; border-radius: 8px; margin-top: 40px;" unit-id="adunit-11c62eaa9abec780"></ad-custom> -->
 
       </view>
     </view>
@@ -240,9 +240,9 @@
       </van-cell>
     </view>
     <view class="p-chat-group-list p-common-blur">
-      <view class="p-side-adcard">
+      <!-- <view class="p-side-adcard">
         <ad-custom style="overflow-x: auto; width: fit-content;" unit-id="adunit-11c62eaa9abec780"></ad-custom>
-      </view>
+      </view> -->
       <view class="p-side-card">
         <view class="p-side-card-header">
           <view>我的积分</view>
@@ -290,10 +290,10 @@
               广告
             </view>
           </view>
-          <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
+          <!-- <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
             <van-icon name="shop-o" size="24" />
             <view class="p-side-card-content-item-title">积分商城</view>
-          </view>
+          </view> -->
         </view>
       </view>
       <view class="p-side-card">
@@ -313,6 +313,10 @@
             <van-icon name="edit" size="24" />
             <view class="p-side-card-content-item-title">文案创作</view>
           </view> -->
+          <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
+            <van-icon name="fire-o" size="24" />
+            <view class="p-side-card-content-item-title">解析</view>
+          </view>
         </view>
       </view>
       <view style="position: relative;" class="p-side-card" wx:if="{{ groups.length }}">
@@ -424,8 +428,8 @@
       <van-cell size="large" icon="smile-comment-o" title="系统公告" is-link bind:tap="handleClickNotice" />
     </van-cell-group>
 
-    <view class="p-ad-container">
+    <!-- <view class="p-ad-container">
       <ad-custom style="width: 100%;" unit-id="adunit-bacca9079f8a547f"></ad-custom>
-    </view>
+    </view> -->
   </view>
 </van-action-sheet>

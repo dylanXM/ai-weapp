@@ -109,7 +109,7 @@
     type="info"
     block
     loading="{{ state.loading }}"
-    loading-text="绘制时间较长，请耐心等待..."
+    loading-text="正在绘制中，请耐心等待..."
     icon="photo"
     custom-style="border-radius: 8px;"
     size="large"
