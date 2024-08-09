@@ -27,7 +27,7 @@
   <view
     class="p-chat-container p-common-bg"
     wx:if="{{groups.length !== 0}}"
-    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 50)}}px);"
+    style="height: calc(100% - {{navBar.navBarHeight + (keyboardHeight > 0 ? keyboardHeight : bottomSafeHeight + 54)}}px);"
   >
     <!-- 聊天记录区 -->
     <scroll-view
