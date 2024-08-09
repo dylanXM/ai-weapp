@@ -13,17 +13,30 @@ interface IRes<T> {
 
 const request = async <T>(params: IParams): Promise<IRes<T>> => {
   const token = wx.getStorageSync('token');
-  const header: { Authorization?: string } = {};
+  const header: { Authorization?: string; Accept: string } = {
+    Accept: 'application/json;charset=UTF-8',
+  };
   if (token) {
     header.Authorization = `Bearer ${wx.getStorageSync('token')}`;
   }
   return new Promise((resolve, reject) => {
-    wx.request({
-      ...params,
-      header,
-      success: res => resolve(res?.data as unknown as IRes<T>),
-      fail: error => reject(error), 
-    });
+    try {
+      wx.request({
+        ...params,
+        header,
+        timeout: 120000,
+        success: res => {
+          if (res.statusCode === 200) {
+            resolve(res?.data as unknown as IRes<T>)
+          } else {
+            reject(res.data);
+          }
+        },
+        fail: err => reject(err), 
+      });
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 

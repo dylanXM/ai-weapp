@@ -1,10 +1,37 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/chat/pages/wx-admin/index",
+    "pages/chat/pages/wx-official/index",
+    "pages/chat/pages/kami/index",
+    "pages/chat/pages/apps/index",
+    "pages/chat/pages/create-presets/index",
+    "pages/chat/pages/user-email/index",
+    "pages/chat/pages/sign-in/index",
+    "pages/chat/pages/chat-groups/index",
+    "pages/login/index",
+    "pages/chat/pages/draw/index",
+    "pages/chat/pages/analyze/index",
+    "pages/chat/pages/draw/pages/detail/index",
+    "pages/chat/pages/draw/pages/draw-picture/index",
+    "pages/chat/pages/test-version/index",
+    "pages/chat/pages/shop/index",
+    "pages/chat/pages/notice/index",
+    "pages/chat/pages/creation/index",
+    "pages/chat/pages/bonus-detail/index",
+    "pages/chat/pages/parse/index"
   ],
   "window": {
+    "navigationBarBackgroundColor": "#f1f1f1",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "navigationStyle": "custom",
+    "disableScroll": true
+  },
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.5",
+      "provider": "wx069ba97219f66d99"
+    }
   },
   "rendererOptions": {
     "skyline": {

@@ -1,0 +1,27 @@
+.p-login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 60px;
+}
+
+.p-login-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-login-desc {
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 40px;
+}
+
+.p-login-btn {
+  // border-radius: 8px !important;
+  // padding: 4px 64px !important;
+  width: calc(100vw - 80px);
+}

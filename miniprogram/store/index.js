@@ -6,19 +6,26 @@ export const store = observable({
   user: {},
   model: {}, 
   modelList: {},
-  loading: true,
+  globalLoading: true,
+  bottomSafeHeight: 0,
   navBar: {
     navBarHeight: 0, // 导航栏高度
     menuRight: 0, // 胶囊距右方间距（方保持左、右间距一致）
     menuTop: 0, // 胶囊距底部间距（保持底部间距一致）
     menuHeight: 0, // 胶囊高度（自定义内容可与胶囊高度保证一致）
   },
+  groups: [],
+  allGroups: [],
   userBalance: {
     modelCount: 0,
     useModelToken: 0,
     modelPrice: 0,
     modelType: 1,
   },
+  allPresets: [],
+  allMinePresets: [],
+  allCategories: [],
+  signList: [],
 
   // 计算属性, 暂时不需要
   // get sum() {

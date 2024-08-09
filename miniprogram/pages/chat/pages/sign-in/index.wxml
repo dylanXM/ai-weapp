@@ -1,0 +1,22 @@
+<van-nav-bar title="签到" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view wx:if="{{ calendar.visible }}">
+  <van-calendar
+    show
+    min-date="{{ calendar.minDay }}"
+    max-date="{{ calendar.maxDay }}"
+    bind:confirm="confirmSignOn"
+    formatter="{{ formatter }}"
+    readonly
+    show-title="{{ false }}"
+    confirm-text="签到"
+    class="p-user-calendar"
+    poppable="{{ false }}"
+    color="#007AFF"
+    custom-style="border-radius: 8px;"
+  />
+
+  <ad unit-id="adunit-f8a25678b3cb061a" style="margin-top: 20px;"></ad>
+</view>

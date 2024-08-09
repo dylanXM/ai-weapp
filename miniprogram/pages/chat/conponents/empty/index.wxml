@@ -1,7 +1,7 @@
 <!--pages/chat/conponents/empty/index.wxml-->
 <view class="c-empty-container">
   <view>
-    <van-icon name="comment-o" color="#1989fa" size="60" />
+    <van-icon name="comment-o" color="#007AFF" size="60" />
   </view>
   <view class="c-empty-title">
     对话聊天
@@ -9,7 +9,7 @@
   <view class="c-empty-desc">
     点击下方按钮，开始一个新的对话吧
   </view>
-  <view>
-    <van-button type="info" bind:tap="createChatGroup">新建对话</van-button>
+  <view style="width: 40%">
+    <van-button type="primary" round block color="#007AFF" bind:tap="createChatGroup">新建对话</van-button>
   </view>
 </view>

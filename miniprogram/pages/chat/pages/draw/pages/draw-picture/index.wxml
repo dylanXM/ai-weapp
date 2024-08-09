@@ -1,0 +1,119 @@
+<van-nav-bar title="AI绘画" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view
+  class="p-dp-container"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
+>
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">输入描述词</view>
+    <view class="p-dp-field-textarea-constainer">
+      <van-field
+        value="{{ formData.prompt }}"
+        custom-style="border-radius: 12px"
+        custom-class="p-dp-field-textarea"
+        type="textarea"
+        placeholder="请输入描述词..."
+        autosize
+        border="{{ false }}"
+        bind:change="handlePromptChange"
+        maxlength="{{ 400 }}"
+      />
+      <view class="p-dp-info-container">
+        <view class="p-dp-info-number">{{ formData.prompt.length || 0 }} / 400</view>
+        <view class="p-dp-info-clear" bind:tap="clearPrompt">清空</view>
+      </view>
+    </view>
+    <view style="margin-top: 12px;">
+      <van-button
+        wx:for="{{ initPrompts }}"
+        wx:for-item="item"
+        wx:for-index="idx"
+        data-text="{{item.prompt}}"
+        round
+        size="small"
+        color="#007AFF"
+        custom-style="margin-right: 8px;"
+        bind:tap="applyPrompt"
+      >
+        {{ item.title }}
+      </van-button>
+    </view>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图片质量</view>
+    <van-radio-group value="{{ formData.quality }}" bind:change="handleQualityChange" direction="horizontal">
+      <van-radio name="standard" checked-color="#007AFF">标准（5绘画积分）</van-radio>
+      <van-radio name="hq" checked-color="#007AFF">高级（10绘画积分）</van-radio>
+    </van-radio-group>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图片尺寸</view>
+    <van-radio-group value="{{ formData.size }}" bind:change="handleSizeChange" direction="horizontal">
+      <van-radio name="1024x1024" checked-color="#007AFF">1024 x 1024</van-radio>
+      <van-radio name="1024x1792" checked-color="#007AFF">1024 x 1792</van-radio>
+      <van-radio name="1794x1024" checked-color="#007AFF">1794 x 1024</van-radio>
+    </van-radio-group>
+  </view>
+
+  <view class="p-dp-field-container">
+    <view class="p-dp-field-title">图像类型</view>
+    <view class="p-dp-pic-types">
+      <view
+        wx:for="{{typeActions}}"
+        wx:for-item="item"
+        wx:for-index="idx"
+        class="p-dp-pic-types-item"
+        wx:key="item"
+      >
+        <van-button bind:tap="handleTypeClick" round size="small" data-type="{{item}}">{{item}}</van-button>
+      </view>
+    </view>
+  </view>
+
+  <view class="p-dp-field-container" style="margin-top: -12px;">
+    <view class="p-dp-field-title">我的生成</view>
+    <view class="p-dp-all-list">
+      <view wx:if="{{!state.url.length && !state.loading}}" class="p-dp-none-list">暂无数据</view>
+      <van-image wx:if="{{state.loading}}" use-loading-slot width="200" height="200">
+        <van-loading radius="8" slot="loading" type="spinner" width="200" height="200" vertical />
+      </van-image>
+      <view
+        wx:if="{{state.url.length}}"
+        wx:for="{{state.url}}"
+        wx:fot-item="item"
+        wx:key="id"
+        wx:for-index="idx"
+        style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+      >
+        <van-image
+          width="200"
+          height="200"
+          src="{{item}}"
+          radius="8"
+          data-url="{{item}}"
+          bind:tap="previewPicture"
+        />
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="p-dp-generate-btn">
+  <van-button
+    color="#007AFF"
+    bind:tap="generatePicture"
+    type="info"
+    block
+    loading="{{ state.loading }}"
+    loading-text="正在绘制中，请耐心等待..."
+    icon="photo"
+    custom-style="border-radius: 8px;"
+    size="large"
+  >
+    立即生成（消耗：{{formData.quality === 'hq' ? 10 : 5}} / {{user.userBalance.sumDrawMjCount}} 积分）
+  </van-button>
+</view>

@@ -1,0 +1,24 @@
+<van-nav-bar title="登录" border="{{none}}" custom-style="background: #f1f1f1;">
+
+</van-nav-bar>
+
+<view class="p-login-container" style="height: calc(100vh - {{navBar.navBarHeight}}px);">
+  <view class="p-login-logo">
+    <van-image src="/pages/chat/images/icon.png" width="200" height="200" />
+    <view class="p-login-desc">
+      sweetAI
+    </view>
+  </view>
+  <van-button
+    custom-class="p-login-btn"
+    hairline
+    round
+    type="info"
+    size="default"
+    bind:tap="reLogin"
+    icon="wechat"
+    color="#007AFF"
+  >
+    微信登录
+  </van-button>
+</view>

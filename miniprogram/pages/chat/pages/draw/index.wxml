@@ -1,0 +1,81 @@
+<van-nav-bar title="图片生成" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view
+  class="p-draw-container"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
+>
+  <view class="p-draw-item">
+    <view class="p-draw-item-header">
+      <view class="p-draw-item-header-title">绘画广场</view>
+      <van-button bind:tap="getAllDrawList" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
+      <!-- <view class="p-draw-item-header-operate">查看更多</view> -->
+    </view>
+    <view class="p-draw-all-list">
+      <view wx:if="{{!allDrawList.rows.length}}" class="p-draw-none-list">暂无数据</view>
+      <view
+        wx:if="{{allDrawList.rows.length}}"
+        wx:for="{{allDrawList.rows}}"
+        wx:fot-item="item"
+        wx:key="id"
+        wx:for-index="idx"
+        style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+        class="p-draw-img"
+      >
+        <van-image
+          width="200"
+          height="200"
+          src="{{item.answer}}"
+          radius="8"
+          data-image="{{item}}"
+          bind:tap="toImageDetail"
+        />
+      </view>
+    </view>
+  </view>
+
+  <view class="p-draw-item">
+    <view class="p-draw-item-header">
+      <view class="p-draw-item-header-title">我的绘画</view>
+      <van-button bind:tap="getMyDrawList" size="small" icon="replay" type="default" custom-style="border: none;">刷新</van-button>
+    </view>
+    <view class="p-draw-all-list">
+      <view wx:if="{{!myDrawList.length}}" class="p-draw-none-list">暂无数据</view>
+      <view
+        wx:if="{{myDrawList.length}}"
+        wx:for="{{myDrawList}}"
+        wx:fot-item="item"
+        wx:key="id"
+        wx:for-index="idx"
+        style="margin-left: {{ idx === 0 ? 0 : 12 }}px;"
+        class="p-draw-img"
+      >
+        <van-image
+          width="200"
+          height="200"
+          src="{{item.answer}}"
+          radius="8"
+          data-image="{{item}}"
+          bind:tap="toImageDetail"
+        />
+      </view>
+    </view>
+
+    <ad unit-id="adunit-1874cae73381ee92" style="border-radius: 8px;"></ad>
+  </view>
+</view>
+
+<view class="p-draw-generate-btn">
+  <van-button
+    color="#007AFF"
+    type="info"
+    block
+    bind:tap="toDrawPage"
+    icon="photo"
+    size="large"
+    custom-style="border-radius: 8px;"
+  >
+    生成图片 (您的积分：{{user.userBalance.sumDrawMjCount}})
+  </van-button>
+</view>

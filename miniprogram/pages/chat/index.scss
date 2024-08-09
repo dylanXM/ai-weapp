@@ -3,22 +3,52 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  background-color: transparent;
 }
 
 .p-chat-container {
   display: flex;
   flex-direction: column;
   flex: 1;
+  background-color: transparent;
 }
 
 .p-chat-messages {
-  flex: 1;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   width: 100%;
-  padding: 0 12px;
   box-sizing: border-box;
+}
+
+.p-chat-message-avatar {
+  height: 22px;
+  width: 22px;
+}
+
+.p-chat-empty-avatar {
+  height: 44px;
+  width: 44px;
+  margin-bottom: 24px;
+  border-radius: 11px;
+}
+
+.p-chat-empty-desc {
+  width: 30px;
+  animation: infinite-blink 2s infinite;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes infinite-blink {
+  0% {
+    width: 30px;
+  }
+  100% {
+    width: 170px;
+  }
 }
 
 .p-chat-operations {
@@ -28,64 +58,83 @@
   margin: 8px 8px 0;
 }
 
-.p-chat-search {
+.p-chat-search-container {
   position: relative;
-  height: 54px;
-  padding: 0 12px;
-  display: flex;
-  align-items: center;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  // border-top: 1px solid #f1f1f1;
   // background-color: #f1f1f1;
-  border-top: #f1f1f1 1px solid;
+  box-sizing: border-box;
+}
+
+.p-chat-search {
+  position: relative;
+  // min-height: 54px;
+  padding: 8px 12px 10px;
+  display: flex;
+  align-items: center;
 }
 
 .p-chat-search-border {
-  width: 100%;
-  padding: 4px 12px;
-  margin: 0 8px 0 0;
-  border: 1px solid #f1f1f1;
-  // box-shadow: 
-  //   0 -0.5px 0 0 #ebedf0, /* 上 */
-  //   0 0.5px 0 0 #ebedf0, /* 下 */
-  //   -0.5px 0 0 0 #ebedf0, /* 左 */
-  //   0.5px 0 0 0 #ebedf0; /* 右 */
-  border-radius: 16px;
+  position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 30px;
+  min-height: 46px;
+  box-sizing: content-box;
 }
 
 .p-chat-search-input {
   flex: 1;
+  background-color: transparent;
+  width: 100%;
+
+  textarea {
+    border-radius: 24px;
+    padding: 8px 16px;
+    min-height: 18px !important;
+    line-height: 18px !important;
+    font-size: 18px;
+    box-sizing: content-box;
+    background-color: transparent;
+  }
+}
+
+.p-chat-search-icon-active {
+  background: #007AFF !important;
 }
 
 .p-navbar-container {
-  display: block;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99;
-  backdrop-filter: blur(10px); /* 应用模糊效果 */
-  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
   background-color: #f1f1f1;
-  border-bottom: #f1f1f1 1px solid;
 }
 
-.p-navbar {
+.p-navbar-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 12px 12px;
-  font-weight: 600;
+  justify-content: center;
+}
+
+.p-navbar-text {
+  max-width: 60%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .p-chat-message-contianer {
-  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 18px;
+  margin: 0 18px;
 }
 
 .p-chat-message-robot-contianer {
-  margin-top: 32px;
+  padding-bottom: 18px;
+  margin: 0 18px;
 }
 
 .p-chat-message-title {
@@ -95,36 +144,69 @@
 
 .p-chat-message-title-name {
   margin-left: 8px;
-  font-weight: 600;
 }
 
-.p-chat-message-container {
-  margin-left: 30px;
-  align-items: center;
+.p-chat-message-user-container {
+  font-size: 16px;
+  line-height: 1.8em;
+  display: flex;
+  justify-content: flex-end;
+  background: #007AFF;
+  padding: 6px 12px;
+  border-radius: 6px 6px 0 6px;
+  color: #fff;
+  width: fit-content;
+  max-width: calc(100vw - 60px);
+  word-break: break-all;
 }
 
 .p-chat-message-robot {
-  margin-left: 30px;
+  margin-top: 8px;
   word-break: break-all;
+  background-color: #fff;
+  padding: 6px 12px;
+  border-radius: 0 6px 6px 6px;
+  width: fit-content;
+  max-width: calc(100vw - 60px);
   white-space: pre-line;
+  // background: linear-gradient(67deg, rgba(63, 226, 213, 0.07) 0%, rgba(64, 147, 224, 0.07) 37.36%, rgba(122, 97, 250, 0.07) 69.65%, rgba(214, 130, 235, 0.07) 100%), #FFF;
+}
+
+.p-chat-robot-operate {
+  margin-left: -10px;
+  white-space: initial;
 }
 
 .p-chat-message-to-bottom {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   background-color: white;
-  border-radius: 28px;
+  border-radius: 26px;
   margin: 0px auto;
   position: absolute;
-  top: -27px;
+  top: -44px;
   left: 0;
   right: 0;
-  transform: rotate(180deg);
+  // transform: rotate(180deg);
   z-index: 100;
+  box-shadow: 0px 0px 3px 2px #e2e2e2;
+  animation-fill-mode: forwards;
+  animation: transfer .2s;
+}
+
+@keyframes transfer {
+  0% {
+    top: -32px;
+    transform: scale(50%);
+  }
+  100% {
+    top: -44px;
+    transform: scale(100%);
+  }
 }
 
 .p-chat-message-loading {
-  margin-left: 4px;
+  margin: 4px;
   width: 15px;
   height: 15px;
   background-color: black; /* 小圆球的颜色，这里使用蓝色 */
@@ -133,17 +215,18 @@
 }
 
 .p-chat-icon-cancel {
-  animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+  // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+  position: absolute;
+  right: 8px;
+  top: 7px;
 }
 
 @keyframes ball-breath {
   0%, 100% {
     transform: scale(1); /* 原始大小 */
-    opacity: 1; /* 较高的透明度 */
   }
   50% {
     transform: scale(0.8); /* 扩大到120%的大小 */
-    opacity: 0.7; /* 不透明 */
   }
 }
 
@@ -161,11 +244,12 @@
 .p-chat-group-list {
   flex: 1;
   overflow-y: auto;
+  padding: 12px 0;
+  overflow-x: hidden;
 }
 
 .p-chat-group-user {
   border-top: 1px solid #f1f1f1;
-  min-height: 90px;
   box-sizing: border-box;
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
@@ -174,7 +258,7 @@
 
 .p-chat-group-add {
   min-height: 60px;
-  padding: 10px 16px;
+  padding: 20px 16px;
   box-sizing: border-box;
 }
 
@@ -193,9 +277,383 @@
 .p-common-blur {
   backdrop-filter: blur(10px); /* 应用模糊效果 */
   -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
-  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+  background-color: rgba(241, 241, 241, 0.5); /* 设置半透明的白色背景 */
 }
 
 .p-common-cell-padding {
-  padding: 10px 16px 0px;
+  border-bottom: 1px solid #f1f1f1;
+  backdrop-filter: blur(10px); /* 应用模糊效果 */
+  -webkit-backdrop-filter: blur(10px); /* Safari浏览器的兼容性前缀 */
+  background-color: rgba(255, 255, 255, 0.5); /* 设置半透明的白色背景 */
+}
+
+.p-chat-nomessage-container {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-chat-nomessage-desc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-chat-nomessage-demo {
+  margin: 40px 0 0;
+  width: 85%;
+}
+
+.p-chat-nomessage-demo-item {
+  margin-top: 12px;
+  border-radius: 12px;
+}
+
+.p-chat-nomessage-demo-item-title {
+  width: max-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p-common-no-border {
+  border: none;
+  background: transparent;
+  color: #888888;
+  padding: 0 6px;
+  margin: 0;
+}
+
+.p-common-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+button[style="color: #07c160"] > view {
+  color: #07c160 !important;
+}
+
+.p-search-group-field {
+  width: 100%;
+}
+
+.p-search-group-field-part {
+  width: 75%;
+}
+
+.p-chat-user-info {
+  display: flex;
+  align-items: center;
+}
+
+.p-chat-user-avatar {
+  margin-bottom: -8px;
+  margin-right: 8px;
+}
+
+.p-common-bg {
+  background-color: #f1f1f1;
+}
+
+.p-chat-rename-field {
+  width: calc(100% - 24px);
+  border: 1px solid #f1f1f1;
+  padding: 6px 12px;
+  margin: 12px;
+  border-radius: 8px;
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-send {
+  height: 32px;
+  width: 32px;
+  font-size: 20px !important;
+  padding: 3px 2px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  background-color: #f1f1f1;
+  margin-left: 6px;
+  box-sizing: border-box;
+  margin-right: 8px;
+}
+
+.icon-send:before {
+  content: "\e6fd";
+}
+
+.icon-list {
+  padding-right: 12px;
+}
+
+.icon-list:before {
+  content: "\e630";
+}
+
+.icon-yuyin-container {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-yuyin {
+  position: absolute;
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-left: 8px;
+  margin-right: -8px;
+}
+
+.icon-yuyin:before {
+  content: "\e6e1";
+}
+
+.p-chat-voice-text {
+  position: absolute;
+  width: 100%;
+  flex: 1;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  background-color: transparent;
+  z-index: 10;
+}
+
+.p-chat-voice-text:active {
+  background-color: rgb(214, 214, 214);
+}
+
+.p-chat-voice-text:after {
+  content: none;
+}
+
+.p-chat-voice-text::after {
+  border: none;
+}
+
+.icon-keyboard {
+  position: absolute;
+  z-index: 20;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-left: 8px;
+}
+.icon-keyboard:before {
+  content: "\e71b";
+}
+
+.p-chat-userinfo-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-chat-userinfo-button {
+  width: 60px;
+  height: 60px;
+  padding: 1px;
+  outline: none;
+  border: none;
+}
+
+.p-chat-userinfo-image {
+  border: 1px solid white;
+}
+
+.p-common-user-operate {
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0px 0px 2px 1px #f1f1f1;
+}
+
+/**
+ * loading
+ */
+.loading,
+.loading > view {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.loading {
+  display: block;
+  font-size: 0;
+  color: #000;
+}
+
+.loading.la-dark {
+  color: #333;
+}
+
+.loading > view {
+  display: inline-block;
+  float: none;
+  background-color: currentColor;
+  border: 0 solid currentColor;
+}
+
+.loading {
+  width: 54px;
+  height: 18px;
+}
+
+.loading > view:nth-child(1) {
+  animation-delay: -200ms;
+}
+
+.loading > view:nth-child(2) {
+  animation-delay: -100ms;
+}
+
+.loading > view:nth-child(3) {
+  animation-delay: 0ms;
+}
+
+.loading > view {
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+  border-radius: 100%;
+  animation: ball-pulse 1s ease infinite;
+}
+
+.loading.la-sm {
+  width: 26px;
+  height: 8px;
+}
+
+.loading.la-sm > view {
+  width: 4px;
+  height: 4px;
+  margin: 2px;
+}
+
+.loading.la-2x {
+  width: 108px;
+  height: 36px;
+}
+
+.loading.la-2x > view {
+  width: 20px;
+  height: 20px;
+  margin: 8px;
+}
+
+.loading.la-3x {
+  width: 162px;
+  height: 54px;
+}
+
+.loading.la-3x > view {
+  width: 30px;
+  height: 30px;
+  margin: 12px;
+}
+
+@keyframes ball-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  30% {
+    opacity: 0.1;
+    transform: scale(0.01);
+  }
+}
+
+.p-side-card {
+  margin: 0 12px 12px;
+  border: 1px solid #f1f1f1;
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px 12px 12px;
+}
+
+.p-side-card-header {
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-side-card-header-operate {
+  font-size: 14px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  color: #aaaaaa;
+}
+
+.p-side-card-content {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.p-side-adcard {
+  margin: 0 12px 12px;
+  width: calc(100% - 24px);
+  overflow-x: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding-bottom: 4px;
+}
+
+.p-side-card-content-item {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-side-card-content-item-count {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.p-side-card-content-item-title {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.p-ad-container {
+  margin: 16px;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.icon-info-class {
+  background-color: #007AFF !important;
 }

@@ -1,0 +1,62 @@
+.p-draw-container {
+  box-sizing: border-box;
+  padding-top: 12px;
+  padding-bottom: 24px;
+  overflow-y: auto;
+}
+
+.p-draw-item {
+  border-bottom: 18px;
+  padding: 12px;
+}
+
+.p-draw-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.p-draw-item-header-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.p-draw-item-header-operate {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #888888;
+}
+
+.p-draw-all-list {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: auto;
+  padding: 4px 4px 12px;
+}
+
+.p-draw-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  border: 1px solid #f1f1f1;
+}
+
+.p-draw-my-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.p-draw-none-list {
+  font-size: 14px;
+  color: #888888;
+}
+
+.p-draw-generate-btn {
+  margin: 0 12px;
+  border-radius: 12px;
+}
+

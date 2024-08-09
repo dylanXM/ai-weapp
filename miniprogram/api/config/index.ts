@@ -24,4 +24,16 @@ export const queryMenuList = async (): Promise<Menu[]> => {
     data: { menuPlatform: 0 },
   });
   return res.data;
+};
+
+/**
+ * 获取系统公告
+ */
+export const queryNotice = async () => {
+  const res = await request<any>({
+    url: `${config.url}/config/notice`,
+    method: 'GET',
+    data: { menuPlatform: 0 },
+  });
+  return res.data;
 }

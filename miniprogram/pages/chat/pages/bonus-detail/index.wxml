@@ -1,0 +1,53 @@
+<van-nav-bar title="积分详情" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<scroll-view
+  scroll-y="{{true}}"
+  refresher-enabled="{{true}}"
+  refresher-threshold="{{10}}"
+  style="height: calc(100vh - {{navBar.navBarHeight + 34}}px)"
+  bindrefresherrefresh="reload"
+  bindscrolltolower="loadMore"
+  lower-threshold="{{40}}"
+>
+  <view slot="refresher" style="height: 20px">loading</view>
+  <view
+      wx:for="{{data}}"
+      wx:for-item="bound"
+      wx:for-index="idx"
+      wx:key="id"
+      style="margin-top: 12px;"
+    >
+      <!-- <ad
+        wx:if="{{ idx > 0 && idx % 6 === 0 && idx % 10 !== 0 }}"
+        unit-id="adunit-283fa80e1b824dd7"
+        style="width: calc(100% - 24px); margin: 12px; border-radius: 8px;"
+      ></ad> -->
+      <view class="p-bouns-card">
+        <view class="p-bouns-card-header">
+          <view>{{bound.rechargeType}}</view>
+          <view class="p-bouns-card-header-operate">{{bound.createdAt}}</view>
+        </view>
+        <view class="p-bouns-card-content">
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.model3Count}}</view>
+            <view class="p-bouns-card-content-item-title">基础积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.model4Count}}</view>
+            <view class="p-bouns-card-content-item-title">高级积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.drawMjCount}}</view>
+            <view class="p-bouns-card-content-item-title">绘画积分</view>
+          </view>
+          <view class="p-bouns-card-content-item">
+            <view class="p-bouns-card-content-item-count">{{bound.expireDateCn}}</view>
+            <view class="p-bouns-card-content-item-title">有效期</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  <view style="height: 10px;"></view>
+</scroll-view>

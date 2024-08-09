@@ -1,0 +1,66 @@
+<van-nav-bar title="绘画详情" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view
+  class="p-draw-detail-container"
+  style="height: calc(100vh - {{navBar.navBarHeight + 90}}px)"
+>
+
+  <view class="p-draw-detail-canvas">
+    <canvas
+      canvas-id="image"
+      style="width: {{windowWidth - 24}}px; height: {{windowWidth - 24}}px;"
+      bind:tap="handlePreview"
+    >
+    </canvas>
+  </view>
+
+  <!-- <van-image
+    width="{{windowWidth - 24}}"
+    height="{{windowWidth - 24}}"
+    radius="8"
+    src="{{url}}"
+  /> -->
+
+  <view>
+    <view class="p-draw-detail-title">绘画提示词</view>
+    <view class="p-draw-detail-prompt" bind:longpress="copyPrompt" data-text="{{prompt}}">
+      <view class="p-draw-detail-text">{{prompt}}</view>
+      <view>
+        <van-divider />
+        <view style="color: #888888; font-size: 12px;">长按复制绘画提示词</view>
+      </view>
+    </view>
+  </view>
+  <ad unit-id="adunit-f48dbacbffeae0cf" style="margin-top: 20px; border-radius: 8px;"></ad>
+</view>
+
+<view class="p-draw-detail-generate-btn">
+  <view style="width: 45%">
+    <van-button
+      type="default"
+      bind:tap="handleClickSave"
+      custom-style="border-radius: 8px;"
+      size="large"
+      block
+      data-value="image"
+      icon="down"
+      disabled="{{downloadDisabled}}"
+    >
+      保存图片
+    </van-button>
+  </view>
+  <view style="width: 45%">
+    <van-button
+      color="#007AFF"
+      bind:tap="toDrawPicture"
+      type="info"
+      icon="photo"
+      custom-style="border-radius: 8px;"
+      size="large"
+    >
+      绘制同款
+    </van-button>
+  </view>
+</view>

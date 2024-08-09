@@ -1,0 +1,21 @@
+.p-tv-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.p-tv-image {
+  margin-top: 60px;
+  margin-bottom: 24px;
+  width: 240px;
+  height: 240px;
+}
+
+.p-tv-text {
+  display: inline-block;
+  margin: 0 auto 4px;
+  font-size: 14px;
+  color: #888888;
+}

@@ -1,22 +1,10 @@
 <!--index.wxml-->
 <view class="p-index-container">
   <chat
-    style="display: {{activeNav === 'chat' && !loading ? 'block' : 'none'}}; height: 100%;"
+    bind:onChange="handleActiveNavChange"
+    id="chat-component"
+    wx:if="{{ !globalLoading }}"
   />
-
-  <user
-    style="display: {{activeNav === 'user' ? 'block' : 'none'}}; height: 100%;"
-  />
-
-  <presets
-    style="display: {{activeNav === 'presets' ? 'block' : 'none'}}; height: 100%;"
-  />
-
-  <apps
-    style="display: {{activeNav === 'apps' ? 'block' : 'none'}}; height: 100%;"
-  />
-
-  <bottom-nav value="{{activeNav}}" bind:onChange="handleActiveNavChange" />
 
   <van-dialog id="van-dialog" />
   <van-toast id="van-toast" />

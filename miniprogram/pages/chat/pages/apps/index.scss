@@ -1,0 +1,141 @@
+.p-presets-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f1f1;
+  overflow: hidden;
+}
+
+.p-presets-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: white;
+}
+
+.p-presets-search {
+  min-height: 54px;
+}
+
+.p-presets-search > view {
+  background-color: #fff !important;
+}
+
+.p-presets-list {
+  flex: 1;
+  background-color: white;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.p-presets-item {
+  min-width: 200px;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 6px;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #f1f1f1;
+  height: fit-content;
+  box-sizing: border-box;
+}
+
+.p-presets-item-avatar {
+  margin-top: 18px;
+}
+
+.p-presets-item-content {
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-presets-item-title {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  font-size: large;
+  font-weight: 600;
+}
+
+.p-presets-item-desc {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-top: 4px;
+  color: #888888;
+  font-size: 12px;
+  text-align: center;
+}
+
+.p-presets-item-button {
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  transform: rotate(270deg);
+  background: #fff;
+  height: 40px;
+  padding: 4px;
+  border-radius: 20px;
+}
+
+.p-presets-nav-container {
+  display: flex;
+  justify-content: center;
+}
+
+.p-presets-nav-item {
+  margin: 0 6px;
+  color: #4d4d4d;
+  font-size: 14px;
+}
+
+.p-presets-nav-item-active {
+  color: unset;
+  border-bottom: 2px solid #07c160;
+  font-size: 16px;
+}
+
+.p-preset-block-container {
+  height: fit-content;
+  margin-bottom: 24px;
+}
+
+.p-preset-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.p-preset-block-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.p-preset-block-list {
+  width: calc(100vw - 26px);
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.p-preset-none-list {
+  font-size: 12px;
+  color: #888888;
+}
+
+.p-preset-action-button {
+  padding: 0 12px;
+}

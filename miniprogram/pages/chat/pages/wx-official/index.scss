@@ -1,0 +1,20 @@
+.p-wxofficial-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+.p-wxofficial-image {
+  margin: 60px auto 20px;
+  width: 240px;
+  height: 240px;
+  border-radius: 8px;
+}
+
+.p-wxofficial-text {
+  display: inline-block;
+  margin: 0 auto 4px;
+  font-size: 14px;
+  color: #888888;
+}

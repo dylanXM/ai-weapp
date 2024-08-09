@@ -17,11 +17,47 @@ export const queryChatGroup = async (): Promise<ChatGroup[]> => {
 /**
  * 更新对话组 
  */
-export const updateGroup = async ({ groupId, title }: { groupId: number; title: string }) => {
+export const updateGroup = async ({ groupId, title, modelConfig }: { groupId: number; title?: string, modelConfig?: string }) => {
+  if (!groupId) {
+    return;
+  }
+  const data = { groupId, title, config: modelConfig };
+  if (!title) {
+    delete data.title;
+  }
+  if (!modelConfig) {
+    delete data.config;
+  }
   const res = await request<ChatGroup[]>({
     url: `${config.url}/group/update`,
     method: 'POST',
-    data: { groupId, title },
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * 删除对话组
+ * @param param0 
+ */
+export const delGroup = async ({ groupId }: { groupId: number }) => {
+  const res = await request<ChatGroup[]>({
+    url: `${config.url}/group/del`,
+    method: 'POST',
+    data: { groupId },
+  });
+  return res.data;
+};
+
+/**
+ * 清空对话组聊天信息
+ * @param param0 
+ */
+export const clearGroup = async ({ groupId }: { groupId: number }) => {
+  const res = await request<ChatGroup[]>({
+    url: `${config.url}/chatlog/delByGroupId`,
+    method: 'POST',
+    data: { groupId },
   });
   return res.data;
 };

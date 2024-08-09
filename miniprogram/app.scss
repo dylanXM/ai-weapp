@@ -1,4 +1,11 @@
-/**app.wxss**/
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'iconfont';  /* Project id 4494138 */
+  src: url('//at.alicdn.com/t/c/font_4494138_auocfymti8.woff2?t=1715385667011') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4494138_auocfymti8.woff?t=1715385667011') format('woff'),
+       url('//at.alicdn.com/t/c/font_4494138_auocfymti8.ttf?t=1715385667011') format('truetype');
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -9,30 +16,6 @@
   box-sizing: border-box;
 }
 
-.h2w__main {
-  margin: 0px !important;
-  padding-top: 0px !important;
-}
-
-view .h2w-light {
-  color: unset;
-  background-color: unset;
-}
-view .h2w {
-  font-weight: unset;
-  font-size: unset;
-  line-height: unset;
-}
-
-view .h2w__p {
-  margin: 0px !important;
-}
-
-.h2w__ul, .h2w__ol {
-  margin-bottom: 0px !important;
-}
-
-.h2w__pre {
-  margin-bottom: 0px !important;
-  border-radius: 5px;
+view[class="wemark_block_p"] {
+  margin: 0 !important;
 }

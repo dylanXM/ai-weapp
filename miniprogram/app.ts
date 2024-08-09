@@ -1,33 +1,20 @@
 import { IAppOption } from '../typings';
-import { UserData } from './api/auth/type';
 import {
-  getWechatSession,
   queryFront,
-  wxLogin,
-  getUserInfo,
   queryModelList,
   queryBaseModel,
+  getSignList,
+  queryPresetsList,
+  getUserInfo,
+  queryMyPresetsList,
 } from './api/index';
-import { BaseModelData, ModelData } from './api/model/type';
 import { store } from './store/index';
 import { createStoreBindings } from 'mobx-miniprogram-bindings';
+import { login } from './utils/login';
+import { formatMyPreset } from './utils/preset';
 
 // app.ts
 App<IAppOption>({
-  towxml: require('./towxml/index'),
-  globalData: {
-    menuList: [],
-    user: {} as UserData,
-    model: {} as BaseModelData, 
-    modelList: {} as ModelData,
-    loading: true,
-    navBar: {
-      navBarHeight: 0, // 导航栏高度
-      menuRight: 0, // 胶囊距右方间距（方保持左、右间距一致）
-      menuTop: 0, // 胶囊距底部间距（保持底部间距一致）
-      menuHeight: 0, // 胶囊高度（自定义内容可与胶囊高度保证一致）
-    }
-  },
   onLaunch() {
     // @ts-ignore
     this.storeBindings = createStoreBindings(this, {
@@ -35,29 +22,20 @@ App<IAppOption>({
       actions: ['setState', 'setStates'],
     })
     this.initNavBar();
+    this.getConfigs();
+    this.shareConfig();
     // 登录
     wx.login({
       success: async res => {
-        const session = await getWechatSession({ code: res.code });
-        wx.setStorageSync('openId', session.openId);
-        wx.setStorageSync('sessionKey', session.sessionKey);
-        const token = await wxLogin({ openId: session.openId });
-        wx.setStorageSync('token', token);
-        if (!token) return;
-        const user = await getUserInfo();
-        // @ts-ignore
-        this.setStates({ user, loading: false });
+        try {
+          this.loginSuccess(res.code);
+        } catch (err) {
+          wx.navigateTo({
+            url: '../login/index',
+          })
+        }
       },
     });
-    // 获取页面配置信息
-    // @ts-ignore
-    queryFront().then(res => this.setStates({ ...res }));
-
-    // 获取模型数据
-    // @ts-ignore
-    queryBaseModel().then(res => this.setState('model', res.modelInfo));
-    // @ts-ignore
-    queryModelList().then(res => this.setState('modelList', res))
   },
 
   initNavBar() {
@@ -74,6 +52,104 @@ App<IAppOption>({
     }
     // @ts-ignore
     this.setState('navBar', navbar);
-  }
+  },
+
+  getConfigs() {
+    const _this = this;
+    const queryFrontFn = async function() {
+      try {
+        const res = await queryFront();
+        // @ts-ignore 获取页面配置信息
+        _this.setStates({ ...res })
+      } catch (err) {
+        queryFrontFn();
+      }
+    }
+    queryFrontFn();
+
+    const queryBaseModelFn = async function() {
+      try {
+        const res = await queryBaseModel();
+        // @ts-ignore 获取模型数据
+        _this.setState('model', res.modelInfo)
+      } catch (err) {
+        queryBaseModelFn();
+      }
+    };
+    queryBaseModelFn();
+
+    const queryModelListFn = async function() {
+      try {
+        const res = await queryModelList();
+        // @ts-ignore
+        _this.setState('modelList', res)
+      } catch (err) {
+        queryModelListFn();
+      }
+    };
+    queryModelListFn();
+
+    const queryPresetsListFn = async function() {
+      try {
+        const res = await queryPresetsList();
+        // @ts-ignore 获取所有预设数据
+        _this.setState('allPresets', res.rows)
+      } catch (err) {
+        queryPresetsListFn();
+      }
+    };
+    queryPresetsListFn();
+
+    const queryMyPresetsListFn = async function() {
+      try {
+        const res = await queryMyPresetsList();
+        // @ts-ignore 获取所有我的预设数据
+        _this.setState('allMinePresets', res.rows.map((item: any) => formatMyPreset(item)))
+      } catch (err) {
+        queryMyPresetsListFn();
+      }
+    };
+    queryMyPresetsListFn();
+  },
+
+  shareConfig() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
+  },
+
+  async loginSuccess(code: string) {
+    const _this = this;
+    wx.login({
+      success: async res => {
+        try {
+          const token = await login(res.code);
+          if (!token) return;
+          // 获取签到数据
+          getSignList().then(res => _this.setState('signList', res));
+          const user = await getUserInfo();
+          // @ts-ignore
+          _this.setStates({ user, globalLoading: false });
+          wx.hideToast();
+        } catch (err) {
+          // wx.navigateTo({
+          //   url: '../login/index',
+          //   fail: function(err) {
+          //     console.error('err', err);
+          //   },
+          //   events: {
+          //     'reLogin': function() {
+          //       _this.getConfigs();
+          //     }
+          //   }
+          // })
+          console.log('重新登录中...')
+          wx.showToast({ title: '正在登录中...', icon: 'loading' });
+          _this.loginSuccess(code);
+        }
+      },
+    });
+  },
 
 })

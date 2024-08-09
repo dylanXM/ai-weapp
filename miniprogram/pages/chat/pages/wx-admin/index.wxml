@@ -1,0 +1,7 @@
+<van-nav-bar title="添加管理员微信" border="{{none}}" custom-style="background: #f1f1f1;">
+  <van-icon name="arrow-left" slot="left" bind:tap="onBack" size="20" />
+</van-nav-bar>
+
+<view class="p-wxadmin-container">
+  <image src="./images/wx_admin.jpg" show-menu-by-longpress class="p-wxadmin-image" />
+</view>
