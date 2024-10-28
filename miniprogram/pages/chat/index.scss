@@ -205,6 +205,11 @@
   }
 }
 
+.p-chat-message-loading-container {
+  display: flex;
+  margin: 4px 0;
+}
+
 .p-chat-message-loading {
   margin: 4px;
   width: 15px;
@@ -214,13 +219,6 @@
   animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
 }
 
-.p-chat-icon-cancel {
-  // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
-  position: absolute;
-  right: 8px;
-  top: 7px;
-}
-
 @keyframes ball-breath {
   0%, 100% {
     transform: scale(1); /* 原始大小 */
@@ -228,6 +226,55 @@
   50% {
     transform: scale(0.8); /* 扩大到120%的大小 */
   }
+}
+
+.p-chat-message-loading-1 {
+  margin: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: black; /* 小圆球的颜色，这里使用蓝色 */
+  border-radius: 50%; /* 使元素呈现圆形 */
+  animation: ball-breath-1 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
+
+@keyframes ball-breath-1 {
+  0%, 100% {
+    transform: scale(0.9); /* 原始大小 */
+  }
+  25% {
+    transform: scale(1); /* 扩大到120%的大小 */
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  75% {
+    transform: scale(0.8); /* 扩大到120%的大小 */
+  }
+}
+
+.p-chat-message-loading-2 {
+  margin: 4px;
+  width: 15px;
+  height: 15px;
+  background-color: black; /* 小圆球的颜色，这里使用蓝色 */
+  border-radius: 50%; /* 使元素呈现圆形 */
+  animation: ball-breath-2 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+}
+
+@keyframes ball-breath-2 {
+  0%, 100% {
+    transform: scale(0.8); /* 原始大小 */
+  }
+  50% {
+    transform: scale(1); /* 扩大到120%的大小 */
+  }
+}
+
+.p-chat-icon-cancel {
+  // animation: ball-breath 2s infinite; /* 应用动画，动画周期为2秒，无限循环 */
+  position: absolute;
+  right: 8px;
+  top: 7px;
 }
 
 .p-chat-group-container {

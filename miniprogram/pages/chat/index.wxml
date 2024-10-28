@@ -60,11 +60,10 @@
           </view>
           <view class="p-chat-message-robot">
             <wemark md="{{message.originText}}" link highlight type="wemark"></wemark>
-            <!-- <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading" /> -->
-            <view wx:if="{{message.loading && !message.text}}" style="margin: 6px 0;" class="loading">
-              <view></view>
-              <view></view>
-              <view></view>
+            <view wx:if="{{message.loading && !message.text}}" class="p-chat-message-loading-container">
+              <view class="p-chat-message-loading" />
+              <view class="p-chat-message-loading-1" />
+              <view class="p-chat-message-loading-2" />
             </view>
             <view wx:if="{{!message.loading && !message.error && message.text}}" class="p-chat-robot-operate">
               <van-button
@@ -97,7 +96,7 @@
               >
                 播放
               </van-button>
-              <van-button
+              <!-- <van-button
                 custom-class="p-common-no-border"
                 icon="more-o"
                 type="default"
@@ -107,7 +106,7 @@
                 wx:if="{{ !message.inversion && message.originText && idx === messageMap[currentGroup.id].length - 1 && !message.error }}"
               >
                 继续
-              </van-button>
+              </van-button> -->
             </view>
             <view wx:if="{{message.error}}" class="p-chat-robot-operate">
               <van-button
@@ -313,10 +312,10 @@
             <van-icon name="edit" size="24" />
             <view class="p-side-card-content-item-title">文案创作</view>
           </view> -->
-          <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
+          <!-- <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
             <van-icon name="fire-o" size="24" />
             <view class="p-side-card-content-item-title">解析</view>
-          </view>
+          </view> -->
         </view>
       </view>
       <view style="position: relative;" class="p-side-card" wx:if="{{ groups.length }}">
