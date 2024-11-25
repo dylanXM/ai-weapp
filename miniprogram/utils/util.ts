@@ -61,8 +61,6 @@ function findLastJsonString(input: string) {
     }
   }
 
-  console.log(jsonObjects)
-
   if (!jsonObjects.length) {
     const newInput = lastString + input;
     lastString = '';
@@ -92,7 +90,7 @@ export function uint8ArrayToString(arrayBuffer: ArrayBuffer) {
     const uint8Array = new Uint8Array(arrayBuffer);
     const decoder = new encoding.TextDecoder('utf-8');
     const str = decoder.decode(uint8Array);
-    const res = findLastJsonString(str) || str;
+    const res = (findLastJsonString(str) || str).replace(/\【\d†source\】/g, '');
     return res;
   } catch (err) {
     console.error(err);

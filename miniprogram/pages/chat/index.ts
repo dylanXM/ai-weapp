@@ -353,25 +353,10 @@ Component({
           const handleRequest = function(responseText: string) {
             if (typeof responseText !== 'string') {
               data = responseText;
-            } else if ([2, 3, 4].includes(model.keyType) && typeof responseText === 'string') {
-              const lines = responseText
-                .toString()
-                .split('\n')
-                .filter((line: string) => line.trim() !== '');
-
-              let cacheResult = ''; // 拿到本轮传入的所有字段信息
-              let tem: any = {};
-              for (const line of lines) {
-                try {
-                  const parseData = JSON.parse(line);
-                  cacheResult += parseData.result;
-                  tem = parseData;
-                }
-                catch (error) {
-                }
-              }
-              tem.result = cacheResult;
-              data = tem;
+            } else if ([2, 3, 4].includes(model.keyType) && responseText && typeof responseText === 'string') {
+              try {
+                data = JSON.parse(responseText);
+              } catch (err) {}
             } else {
               const lastIndex = responseText.lastIndexOf('\n', responseText.length - 2);
               let chunk = responseText;
@@ -382,9 +367,6 @@ Component({
               try {
                 data = JSON.parse(chunk);
               } catch (error) {
-                /* 二次解析 */
-                // const parseData = parseTextToJSON(responseText)
-                // TODO 如果出现类似超时错误 会连接上次的内容一起发出来导致无法解析  后端需要处理 下
                 if (chunk.includes('OpenAI timed out waiting for response')) {
                   wx.showToast({ title: '会话超时了、告知管理员吧~~~', icon: 'none' });
                 }

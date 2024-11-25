@@ -96,17 +96,6 @@
               >
                 播放
               </van-button>
-              <!-- <van-button
-                custom-class="p-common-no-border"
-                icon="more-o"
-                type="default"
-                size="small"
-                data-text="{{message.originText}}"
-                bind:tap="continuePrompt"
-                wx:if="{{ !message.inversion && message.originText && idx === messageMap[currentGroup.id].length - 1 && !message.error }}"
-              >
-                继续
-              </van-button> -->
             </view>
             <view wx:if="{{message.error}}" class="p-chat-robot-operate">
               <van-button
@@ -289,10 +278,6 @@
               广告
             </view>
           </view>
-          <!-- <view class="p-side-card-content-item" is-link bind:tap="handleClickShop">
-            <van-icon name="shop-o" size="24" />
-            <view class="p-side-card-content-item-title">积分商城</view>
-          </view> -->
         </view>
       </view>
       <view class="p-side-card">
@@ -310,11 +295,11 @@
           </view>
           <!-- <view class="p-side-card-content-item" bind:tap="handleClickCreation">
             <van-icon name="edit" size="24" />
-            <view class="p-side-card-content-item-title">文案创作</view>
-          </view> -->
-          <!-- <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
+            <view class="p-side-card-content-item-title">虚拟角色</view>
+          </view>
+          <view class="p-side-card-content-item" bind:tap="handleClickContentParse">
             <van-icon name="fire-o" size="24" />
-            <view class="p-side-card-content-item-title">解析</view>
+            <view class="p-side-card-content-item-title">GPTS</view>
           </view> -->
         </view>
       </view>

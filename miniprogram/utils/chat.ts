@@ -77,8 +77,7 @@ export const formatAiText = (text: string) => {
   if (!text) {
     return '';
   }
-  let result = text.replace(/↵/g, '\n');
-
+  let result = text.replace(/↵/g, '\n').replace(/\【\d†source\】/g, '');
   result = processString(text);
 
   result = processString2(result);
